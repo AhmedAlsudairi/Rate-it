@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import MainContainer from '../mainContainer/mainContainer';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -19,9 +20,10 @@ function CenteredGrid() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <MainContainer>
+    <Grid container spacing={3}>
         <Grid item xs={12}>
-          <NavigationBar/>
+          
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>xs=6</Paper>
@@ -29,7 +31,7 @@ function CenteredGrid() {
         <Grid item xs={6}>
           <Paper className={classes.paper}>xs=6</Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Paper className={classes.paper}>xs=3</Paper>
         </Grid>
         <Grid item xs={3}>
@@ -38,10 +40,15 @@ function CenteredGrid() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>xs=3</Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Paper className={classes.paper}>xs=3</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
         </Grid>
       </Grid>
+      </MainContainer>
+     
     </div>
   );
 }

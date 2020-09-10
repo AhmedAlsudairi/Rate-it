@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   accountButton: {
     marginLeft: theme.spacing(2),
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   title: {
     flexGrow: 1,
     display: 'none',
@@ -71,7 +74,7 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -82,7 +85,7 @@ export default function SearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            Rate It
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
