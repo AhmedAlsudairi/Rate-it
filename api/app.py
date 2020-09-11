@@ -3,6 +3,13 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, User, Course, Rating, FavouriteList
+from jose import jwt
+import datetime
+
+
+
+algo = 'HS256' #HMAC-SHA 256
+secret = 'learning'
 
 
     # create and configure the app
@@ -38,6 +45,36 @@ def create_user():
         'success': True,
         'username': username
     })
+@app.route('/login', methods=['POST'])
+def log_in():
+    body = request.get_json()
+
+    if 'username' not in body or 'password' not in body:
+        return abort(422)
+    
+    username = body.get('username')
+    password = body.get('password')
+
+    users = User.query.filter_by(username=username).first()
+    
+
+    if password != users.password:
+        return jsonify({
+        'success': False,
+        'message': 'incorrect password'
+    })
+
+    added_hour = datetime.timedelta(hours = 6)
+    payload = {'name': username, 'exp': datetime.datetime.now()+added_hour}
+    encoded_jwt = jwt.encode(payload, secret, algorithm=algo)
+
+    return jsonify({
+        'success': True,
+        'username': username,
+        'jwt': encoded_jwt
+        
+    })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
