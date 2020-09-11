@@ -1,12 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import SideDrawer from '../../components/SideDrawer/SideDrawer';
-import { Hidden } from '@material-ui/core';
-
-
+import HomePage from '../Pages/HomePage/HomePage';
+import SignInPage from '../Pages/SignInPage/SignInPage';
+import {Route} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -26,15 +24,9 @@ export default function MainContainer(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <NavigationBar/>
-      <Hidden xsDown>
-        <SideDrawer/>
-      </Hidden>
-     
-      <main className={classes.content}>
-        <Toolbar />
-        {props.children}
-      </main>
+      <NavigationBar />
+     <Route exact path='/' component={HomePage}/>
+     <Route exact path='/signin' component={SignInPage}/>
     </div>
   );
 }

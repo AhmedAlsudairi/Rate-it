@@ -19,7 +19,6 @@ import Filter5Icon from '@material-ui/icons/Filter5';
 import Filter6Icon from '@material-ui/icons/Filter6';
 import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: '20%',
   },
   drawerContainer: {
     overflow: 'auto',

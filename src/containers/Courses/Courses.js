@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import MainContainer from '../mainContainer/mainContainer';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -14,12 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Layout() {
+export default function Courses() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <MainContainer>
+      
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>xs=12</Paper>
@@ -43,7 +42,7 @@ export default function Layout() {
           <Paper className={classes.paper}>xs=6 sm=3</Paper>
         </Grid>
       </Grid>
-      </MainContainer>
+      
      
     </div>
   );

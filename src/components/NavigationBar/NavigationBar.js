@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Hidden } from '@material-ui/core';
+import {NavLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -104,7 +105,9 @@ export default function NavigationBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <IconButton
+          <NavLink to='/signin' >
+            <IconButton
+            
             edge="start"
             className={classes.accountButton}
             color="inherit"
@@ -112,6 +115,8 @@ export default function NavigationBar() {
           >
             <AccountCircleIcon />
           </IconButton>
+          </NavLink>
+          
         </Toolbar>
       </AppBar>
     </div>
