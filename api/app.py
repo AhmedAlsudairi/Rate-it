@@ -11,6 +11,15 @@ CORS(app)
 setup_db(app)
 
 
+@app.route('/usernames/<string:username>')
+def check_username(username):
+    users = User.query.filter_by(username=username).count()
+
+    if users != 0:
+        return jsonify({
+            'success': False,
+            'message': 'Username already exists'
+        })
 
 @app.route('/signup', methods=['POST'])
 def create_user():
@@ -19,13 +28,6 @@ def create_user():
     if 'username' not in body or 'password' not in body:
         return abort(422)
     
-    users = User.query.filter_by(username=body.get('username')).count()
-
-    if users != 0:
-        return jsonify({
-            'success': False,
-            'message': 'Username already exists'
-        })
     username = body.get('username')
     password = body.get('password')
 
