@@ -8,6 +8,8 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Hidden } from '@material-ui/core';
+import {NavLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -69,14 +71,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function NavigationBar() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
+          <Hidden smUp>
+            <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
@@ -84,6 +87,8 @@ export default function SearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
+          </Hidden>
+          
           <Typography className={classes.title} variant="h6" noWrap>
             Rate It
           </Typography>
@@ -100,7 +105,9 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <IconButton
+          <NavLink to='/signin' >
+            <IconButton
+            
             edge="start"
             className={classes.accountButton}
             color="inherit"
@@ -108,6 +115,8 @@ export default function SearchAppBar() {
           >
             <AccountCircleIcon />
           </IconButton>
+          </NavLink>
+          
         </Toolbar>
       </AppBar>
     </div>

@@ -1,8 +1,12 @@
 import React from 'react';
-import Layout from './containers/Layout/Layout';
+import Courses from './containers/Courses/Courses';
+import {BrowserRouter} from 'react-router-dom'
+import MainContainer from './containers/mainContainer/mainContainer';
 function App() {
   return (
-   <Layout/>
+    <BrowserRouter>
+    <MainContainer/>
+    </BrowserRouter>
   );
 }
 
