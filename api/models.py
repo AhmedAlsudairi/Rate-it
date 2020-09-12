@@ -19,14 +19,16 @@ def setup_db(app, database_path=database_path):
 class User(db.Model):
     __tablename__ = "users"
     username = db.Column(db.String(), primary_key=True, nullable=False)
+    email = db.Column(db.String(), primary_key=True, nullable=False)
     password = db.Column(db.String(), nullable=False)
     favourite_courses = db.relationship('FavouriteList', backref='user', lazy=True, cascade='all, delete')
     ratings = db.relationship('Rating', backref='user_ratings', lazy=True, cascade='all, delete')
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, email):
 
         self.username = username
         self.password = password
+        self.email = email
         
 
     def insert(self):
@@ -43,6 +45,7 @@ class User(db.Model):
     def format(self):
         return {
             'username': self.username,
+            'email': self.email,
             'favourite_courses': self.favourite_courses,
             'ratings': self.ratings
         }
