@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import SideDrawer from '../../../components/SideDrawer/SideDrawer';
 import { Hidden, Grid } from '@material-ui/core';
-import Course from '../../Courses/Courses'
+import Courses from '../../Courses/Courses'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ export default function MainContainer(props) {
           <main className={classes.content}>
             <Toolbar />
 
-            <Course/>
+            <Courses/>
           </main>
         </Grid>
       </Grid>
