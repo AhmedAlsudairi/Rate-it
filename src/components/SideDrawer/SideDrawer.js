@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -35,7 +35,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SideDrawer(props) {
   const classes = useStyles();
+  const [listItems,setlistItems] = useState([
+    {name: 'All',selected: true,},
+    {name: 'Level 1',selected: false},
+    {name: 'Level 2',selected: false},
+    {name: 'Level 3',selected: false},
+    {name: 'Level 4',selected: false},
+    {name: 'Level 5',selected: false},
+    {name: 'Level 6',selected: false},
+    {name: 'Level 7',selected: false},
+    {name: 'Level 8',selected: false}
+  ]);
+  const selectItemHandler = (selectedItem) => {
+    const newListIems = [
+      {name: 'All',selected: false,},
+      {name: 'Level 1',selected: false},
+      {name: 'Level 2',selected: false},
+      {name: 'Level 3',selected: false},
+      {name: 'Level 4',selected: false},
+      {name: 'Level 5',selected: false},
+      {name: 'Level 6',selected: false},
+      {name: 'Level 7',selected: false},
+      {name: 'Level 8',selected: false},
+    ];
 
+   const updatedList = newListIems.map((item)=>{
+      if(item.name === selectedItem.name){
+        item.selected = true;
+      }
+      return item;
+    })
+    console.log();
+    setlistItems(updatedList)
+  }
   return (
       <Drawer
         className={classes.drawer}
@@ -50,7 +82,7 @@ export default function SideDrawer(props) {
             <Divider/>
           <List>
               
-            {['All', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', 'Level 8'].map((text, index) => {
+            {listItems.map((item, index) => {
                 let x;
               switch(index){
                 case 0: x=<SelectAllIcon/>
@@ -76,16 +108,16 @@ export default function SideDrawer(props) {
               }  
               return (
                 
-              <ListItem button key={text}>
+              <ListItem onClick={()=>{selectItemHandler(item)}} selected={item.selected} button key={item.name}>
                 <ListItemIcon>{x}</ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={item.name} />
               </ListItem>
             )}
             )}
           </List>
           <Divider />
           <List>
-              <ListItem button key='Favorite'>
+              <ListItem button key='Favorite' >
                 <ListItemIcon><Favorite/></ListItemIcon>
                 <ListItemText primary='Favorite' />
               </ListItem>

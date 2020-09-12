@@ -4,11 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import HomePage from '../Pages/HomePage/HomePage';
 import SignInPage from '../Pages/SignInPage/SignInPage';
+import SignUpPage from '../Pages/SignUpPage/SignUpPage';
 import {Route} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
@@ -27,6 +25,7 @@ export default function MainContainer(props) {
       <NavigationBar />
      <Route exact path='/' component={HomePage}/>
      <Route exact path='/signin' component={SignInPage}/>
+     <Route exact path='/signup' component={SignUpPage}/>
     </div>
   );
 }
