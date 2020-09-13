@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,6 +39,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [username,setUsername] = useState('');
+  const [password,setPassword] = useState('');
+
+  const usernameInputHandler = (event) => {
+    console.log(event.target.value);
+    setUsername(event.target.value);
+  }
+
+  const passwordInputHandler = (event) => {
+    console.log(event.target.value);
+    setPassword(event.target.value);
+  }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
@@ -61,6 +73,8 @@ export default function SignIn() {
                 label="Username"
                 margin="normal"
                 autoFocus
+                onChange={(event)=>{usernameInputHandler(event)}}
+                value={username}
               />
           <TextField
             variant="outlined"
@@ -72,6 +86,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(event)=>{passwordInputHandler(event)}}
+            value={password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
