@@ -153,7 +153,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (username, password) =>
-      dispatch(actions.auth(username, password))
+      dispatch(actions.authSignIn(username,password))
   };
 };
 

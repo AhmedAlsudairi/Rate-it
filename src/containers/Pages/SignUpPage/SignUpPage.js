@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import Copyright from '../../../components/Copyright/Copyright';
-
+import * as actions from '../../../store/actions/auth';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SignUp() {
+function SignUp(props) {
   const classes = useStyles();
 
   const [username, setUsername] = useState('');
@@ -58,81 +60,112 @@ export default function SignUp() {
     setEmail(event.target.value);
   }
 
+  const submitHandler = event => {
+    event.preventDefault();
+    props.onAuth(username, password, email);
+  };
+
+  let form = (<div className={classes.paper}>
+    <Avatar className={classes.avatar}>
+      <LockOutlinedIcon />
+    </Avatar>
+    <Typography component="h1" variant="h5">
+      Sign up
+    </Typography>
+    <form className={classes.form} noValidate>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            autoComplete="username"
+            name="username"
+            variant="outlined"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            autoFocus
+            onChange={(event) => { usernameInputHandler(event) }}
+            value={username}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            onChange={(event) => { emailInputHandler(event) }}
+            value={email}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(event) => { passwordInputHandler(event) }}
+            value={password}
+          />
+        </Grid>
+      </Grid>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+        onClick={submitHandler}
+      >
+        Sign Up
+      </Button>
+      <Grid container justify="flex-end">
+        <Grid item>
+          <Link to='/signin'>
+            Already have an account? Sign in
+          </Link>
+        </Grid>
+      </Grid>
+    </form>
+  </div>);
+
+  if (props.loading) {
+    form = (<div className={classes.paper}><CircularProgress /></div>);
+  }
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="username"
-                name="username"
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                autoFocus
-                onChange={(event) => { usernameInputHandler(event) }}
-                value={username}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={(event) => { emailInputHandler(event) }}
-                value={email}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(event) => { passwordInputHandler(event) }}
-                value={password}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link to='/signin'>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
+    {form}
       <Box mt={5}>
         <Copyright />
       </Box>
     </Container>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (username, password, email) =>
+      dispatch(actions.authSignUp(username, password, email))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
