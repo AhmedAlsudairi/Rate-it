@@ -34,3 +34,82 @@ export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```
+
+## Api Documentation
+Endpoints
+GET '/'
+POST '/signup'
+POST '/login'
+GET '/usernames/<string:username>'
+GET '/emails/<string:emails>'
+
+GET '/'
+- main page for the website
+- Request Arguments: 'jwt' for authentication
+- Returns: If the 'jwt' is valid:
+{
+    'success': True,
+    'loged_in': True,
+    'name': test
+}
+- If Not it will return error 401:
+{
+    'code': 'token_expired',
+    'description': 'Token expired.'
+}
+- If there is no jwt in request (user loged out):
+{
+    'success': True,
+    'log_in': False
+}
+POST '/signup'
+- Creates a new user
+- Request Arguments: username, password, email
+- Returns: the created username
+    {
+        'success': True,
+        'username': test
+    }
+
+POST '/login'
+- log in the user if it already exist
+- Request Arguments: username, password
+    {
+        'success': True,
+        'username': username,
+        'jwt': encoded_jwt
+    }
+- if the password is incorrect:
+{
+    'success': False,
+    'message': 'incorrect password'
+}
+
+GET '/usernames/<string:username>'
+- checks if username exists or not
+- Request Arguments: username
+- if username already exist:
+    {
+        'success': False,
+        'message': 'Username already exists'
+
+    }
+- if username doesn't exist:
+{
+    'success': True
+}
+
+
+GET '/emails/<string:email>'
+- checks if email exists or not
+- Request Arguments: email
+- if email already exist:
+    {
+        'success': False,
+        'message': 'email already exists'
+
+    }
+- if email doesn't exist:
+{
+    'success': True
+}
