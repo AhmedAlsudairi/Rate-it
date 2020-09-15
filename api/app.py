@@ -32,7 +32,7 @@ def get_root():
             return jsonify({
                 'success': True,
                 'loged_in': True,
-                'name': name
+                'username': name
             })
         except jwt.ExpiredSignatureError:
             raise AuthError({
