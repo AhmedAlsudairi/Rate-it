@@ -19,21 +19,33 @@ import Filter5Icon from '@material-ui/icons/Filter5';
 import Filter6Icon from '@material-ui/icons/Filter6';
 import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const useStyles = makeStyles((theme) => ({
+
+
+
+export default function SideDrawer(props) {
+  const matches = useMediaQuery('(max-width:600px)');
+  let w='20%';
+
+  if(matches){
+    w='50%';
+  }
+
+  console.log(w);
+
+  const useStyles = makeStyles((theme) => ({
   drawer: {
     width: 0,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: '20%',
+    width: w
   },
   drawerContainer: {
     overflow: 'auto',
   }
 }));
-
-export default function SideDrawer(props) {
   const classes = useStyles();
   const [listItems,setlistItems] = useState([
     {name: 'All',selected: true,},
@@ -122,6 +134,7 @@ export default function SideDrawer(props) {
                 <ListItemText primary='Favorite' />
               </ListItem>
           </List>
+          
         </div>
       </Drawer>
   );

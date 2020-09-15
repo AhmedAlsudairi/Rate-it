@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -10,6 +11,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Hidden } from '@material-ui/core';
 import {NavLink } from 'react-router-dom';
+import SideDrawer from '../SideDrawer/SideDrawer';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -71,22 +73,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function NavigationBar() {
   const classes = useStyles();
 
+  const [state, setState] = React.useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState(open);
+  };
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Hidden smUp>
-            <IconButton
+          <React.Fragment>
+          <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+             onClick={toggleDrawer(true)}><MenuIcon /></IconButton>
+          <Drawer open={state} onClose={toggleDrawer(false)}>
+            <SideDrawer/>
+          </Drawer>
+        </React.Fragment>
           </Hidden>
           
           <Typography className={classes.title} variant="h6" noWrap>
