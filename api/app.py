@@ -55,6 +55,10 @@ def check_username(username):
             'success': False,
             'message': 'Username already exists'
         })
+    else:
+        return jsonify({
+            'success': True
+        })
 
 
 @app.route('/emails/<string:email>')
@@ -65,6 +69,10 @@ def check_email(email):
         return jsonify({
             'success': False,
             'message': 'email already exists'
+        })
+    else:
+        return jsonify({
+            'success': True
         })
 
 
