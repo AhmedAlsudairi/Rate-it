@@ -23,7 +23,7 @@ setup_db(app)
 @app.route('/', methods=['GET'])
 def get_root():
     body = request.get_json()
-    if 'jwt' in body:
+    if body is not None and 'jwt' in body:
         try:
             token = body.get('jwt')
             print(token)
@@ -107,7 +107,8 @@ def log_in():
     password = body.get('password')
 
     users = User.query.filter_by(username=username).first()
-
+    if users is None:
+        abort(404)
     if password != users.password:
         return jsonify({
             'success': False,
