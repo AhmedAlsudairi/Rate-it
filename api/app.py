@@ -11,15 +11,26 @@ class AuthError(Exception):
         self.error = error
         self.status_code = status_code
 
+
 algo = 'HS256'  # HMAC-SHA 256
 secret = 'learning'
 
 # create and configure the app
 app = Flask(__name__)
-CORS(app)
 setup_db(app)
 
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Headers',
+                            'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Methods',
+                            'GET, POST, DELETE, OPTIONS')
+    response.headers.add('Access-Control-Allow-Origin',
+                            '*')
+    return response
+    
 @app.route('/', methods=['GET'])
 def get_root():
     body = request.get_json()
@@ -78,6 +89,8 @@ def check_email(email):
 
 @app.route('/signup', methods=['POST'])
 def create_user():
+    if request.get_json() is None:
+        abort(422)
     body = request.get_json()
 
     if 'username' not in body or 'password' not in body or 'email' not in body:
@@ -98,9 +111,14 @@ def create_user():
 
 @app.route('/login', methods=['POST'])
 def log_in():
-    body = request.get_json()
+    if request.get_json() is None:
+        print('no body')
+        abort(422)
 
+    body = request.get_json()
+    print(body)
     if 'username' not in body or 'password' not in body:
+        print('no u p')
         return abort(422)
 
     username = body.get('username')
