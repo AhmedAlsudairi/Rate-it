@@ -44,7 +44,9 @@ function SignUp(props) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [valid, setValid] = useState(true);
   const usernameInputHandler = (event) => {
     console.log(event.target.value);
     setUsername(event.target.value);
@@ -55,6 +57,11 @@ function SignUp(props) {
     setPassword(event.target.value);
   }
 
+  const confirmPasswordInputHandler = (event) => {
+    console.log(event.target.value);
+    setConfirmPassword(event.target.value);
+  }
+
   const emailInputHandler = (event) => {
     console.log(event.target.value);
     setEmail(event.target.value);
@@ -62,9 +69,14 @@ function SignUp(props) {
 
   const submitHandler = event => {
     event.preventDefault();
+
+    if(password !== confirmPassword){
+      return;
+    }
     props.onAuth(username, password, email);
   };
 
+  
   let form = (<div className={classes.paper}>
     <Avatar className={classes.avatar}>
       <LockOutlinedIcon />
@@ -115,6 +127,20 @@ function SignUp(props) {
             value={password}
           />
         </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="ConfirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirmPassword"
+            autoComplete="current-password"
+            onChange={(event) => { confirmPasswordInputHandler(event) }}
+            value={confirmPassword}
+          />
+        </Grid>
       </Grid>
       <Button
         type="submit"
@@ -123,6 +149,7 @@ function SignUp(props) {
         color="primary"
         className={classes.submit}
         onClick={submitHandler}
+        disabled={valid}
       >
         Sign Up
       </Button>

@@ -6,11 +6,12 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (tokenId, userId) => {
+export const authSuccess = (username, success, token = null) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        tokenId: tokenId,
-        userId: userId
+        username: username,
+        success: success,
+        token: token
     }
 }
 
@@ -21,27 +22,41 @@ export const authFail = (error) => {
     }
 }
 
+export const authLogout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(()=>{
+            dispatch(authLogout());
+        }
+            ,expirationTime);
+    }
+}
+
 export const authSignIn = (username, password) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
             username: username,
-            password: password,
-            returnSecureToken: true
+            password: password
         }
 
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBU3mjOGnJu8ImOmlcQ9FPpdvCFjxJwggo';
+        let url = '/login';
 
         axios.post(url,authData)
         .then(response=>{
             console.log(response);
 
-            dispatch(authSuccess(response.data.idToken,response.data.localId));
+            dispatch(authSuccess(response.username,response.success,response.jwt));
         })
         .catch(error=> {
             
             
-            dispatch(authFail(error.response.data.error.message));
+            dispatch(authFail(error));
         })
     }
 }
@@ -52,22 +67,19 @@ export const authSignUp = (username, password,email) => {
         const authData = {
             username: username,
             password: password,
-            email: email,
-            returnSecureToken: true
+            email: email
         }
 
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBU3mjOGnJu8ImOmlcQ9FPpdvCFjxJwggo';
+        let url = '/signup';
 
         axios.post(url,authData)
         .then(response=>{
             console.log(response);
 
-            dispatch(authSuccess(response.data.idToken,response.data.localId));
+            dispatch(authSuccess(response.username,response.success));
         })
         .catch(error=> {
-            
-            
-            dispatch(authFail(error.response.data.error.message));
+            dispatch(authFail(error));
         })
     }
 }
