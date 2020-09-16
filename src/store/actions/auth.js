@@ -45,7 +45,7 @@ export const authSignIn = (username, password) => {
             password: password
         }
 
-        let url = '/login';
+        let url = 'http://127.0.0.1:5000/login';
 
         axios.post(url,authData)
         .then(response=>{
