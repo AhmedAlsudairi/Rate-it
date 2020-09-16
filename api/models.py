@@ -4,8 +4,7 @@ from flask_migrate import Migrate
 import json
 import os
 
-database_path = os.environ['DATABASE_URL']
-
+database_path = "postgres://postgres:admin@localhost:5432/rateit"
 db = SQLAlchemy()
 
 def setup_db(app, database_path=database_path):
