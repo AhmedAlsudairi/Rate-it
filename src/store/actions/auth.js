@@ -70,7 +70,7 @@ export const authSignUp = (username, password,email) => {
             email: email
         }
 
-        let url = '/signup';
+        let url = 'http://127.0.0.1:5000/signup';
 
         axios.post(url,authData)
         .then(response=>{
