@@ -38,7 +38,7 @@ def get_root():
         try:
             token = body.get('jwt')
             print(token)
-            decoded_jwt = jwt.decode(token, secret, algorithms = algo)
+            decoded_jwt = jwt.decode(token, secret,options={'require': ['exp']}, algorithms = algo)
             name = decoded_jwt.get('name')
             return jsonify({
                 'success': True,
@@ -63,8 +63,7 @@ def check_username(username):
 
     if users != 0:
         return jsonify({
-            'success': False,
-            'message': 'Username already exists'
+            'success': False
         })
     else:
         return jsonify({
@@ -78,9 +77,9 @@ def check_email(email):
 
     if users != 0:
         return jsonify({
-            'success': False,
-            'message': 'email already exists'
+            'success': False
         })
+
     else:
         return jsonify({
             'success': True
@@ -100,8 +99,14 @@ def create_user():
     password = body.get('password')
     email = body.get('email')
 
-    new_user = User(username=username, password=password, email=email)
-    new_user.insert()
+    response_username = check_username(username).get_json()
+    response_email = check_username(email).get_json()
+    if response_username['success'] and response_email['success'] :
+        new_user = User(username=username, password=password, email=email)
+        new_user.insert()
+    else:
+        abort(422)
+    
 
     return jsonify({
         'success': True,
@@ -128,10 +133,8 @@ def log_in():
     if users is None:
         abort(404)
     if password != users.password:
-        return jsonify({
-            'success': False,
-            'message': 'incorrect password'
-        })
+        abort(401)
+        
 
     added_hour = datetime.timedelta(hours=6)
     payload = {'name': username, 'exp': datetime.datetime.now()+added_hour}
@@ -143,6 +146,32 @@ def log_in():
         'jwt': encoded_jwt
 
     })
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            'success': False,
+            'error': 404,
+            'message': 'RESOURCE NOT FOUND!'
+
+        }), 404
+
+    @app.errorhandler(422)
+    def unproccesable(error):
+        return jsonify({
+            'success': False,
+            'error': 422,
+            'message': 'UNPROCESSABLE ENTITY!'
+
+        }), 422
+
+    @app.errorhandler(405)
+    def not_allowed(error):
+        return jsonify({
+            'success': False,
+            'error': 405,
+            'message': 'METHOD NOT ALLOWED!'
+
+        }), 405
 
 @app.errorhandler(AuthError)
 def auth_error(e):
