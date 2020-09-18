@@ -46,7 +46,7 @@ function SignUp(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
   const usernameInputHandler = (event) => {
     console.log(event.target.value);
     setUsername(event.target.value);
