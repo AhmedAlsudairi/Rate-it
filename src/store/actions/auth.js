@@ -28,14 +28,6 @@ export const authLogout = () => {
     }
 }
 
-export const checkAuthTimeout = (expirationTime) => {
-    return dispatch => {
-        setTimeout(()=>{
-            dispatch(authLogout());
-        }
-            ,expirationTime);
-    }
-}
 
 export const authSignIn = (username, password) => {
     return dispatch => {
@@ -51,7 +43,7 @@ export const authSignIn = (username, password) => {
         .then(response=>{
             console.log(response);
 
-            dispatch(authSuccess(response.username,response.success,response.jwt));
+            dispatch(authSuccess(response.data.username,response.data.success,response.data.jwt));
         })
         .catch(error=> {
             
@@ -76,7 +68,7 @@ export const authSignUp = (username, password,email) => {
         .then(response=>{
             console.log(response);
 
-            dispatch(authSuccess(response.username,response.success));
+            dispatch(authSuccess(response.data.username,response.data.success));
         })
         .catch(error=> {
             dispatch(authFail(error));

@@ -1,22 +1,23 @@
 import * as actionTypes from '../actions/actionsTypes';
 
 const initalState = {
-    tokenId: null,
-    userId: null,
+    token: null,
+    username: null,
+    success: false,
     error: null,
     loading: false
 }
 
 const authStart = (state,action) => {
-    return {...state,...{loading: true, error: null}};
+    return {...state,...{loading: true, error: null, success: false}};
 }
 
 const authSuccess = (state,action) => {
-    return {...state,...{tokenId: action.tokenId, userId: action.userId, error: null, loading: false}};
+    return {...state,...{token: action.token, username: action.username, error: null, loading: false, success: action.success}};
 }
 
 const authFail = (state,action) => {
-    return {...state,...{error: action.error, loading: false}};
+    return {...state,...{error: action.error, loading: false, success: action.success}};
 }
 
 
