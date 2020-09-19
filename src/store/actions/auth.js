@@ -6,6 +6,12 @@ export const authStart = () => {
     }
 }
 
+export const authInit = () => {
+    return {
+        type: actionTypes.AUTH_INIT
+    }
+}
+
 export const authSuccess = (username, success, token = null) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
@@ -28,6 +34,11 @@ export const authLogout = () => {
     }
 }
 
+export const authInitite = () => {
+    return dispatch => {
+        dispatch(authInit());
+    }
+}
 
 export const authSignIn = (username, password) => {
     return dispatch => {
@@ -75,3 +86,4 @@ export const authSignUp = (username, password,email) => {
         })
     }
 }
+

@@ -161,7 +161,7 @@ function SignUp(props) {
       </Button>
       <Grid container justify="flex-end">
         <Grid item>
-          <Link to='/signin'>
+          <Link to='/signin' onClick={props.onInit}>
             Already have an account? Sign in
           </Link>
         </Grid>
@@ -194,7 +194,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (username, password, email) =>
-      dispatch(actions.authSignUp(username, password, email))
+      dispatch(actions.authSignUp(username, password, email)),
+    onInit: ()=>
+        dispatch(actions.authInitite())  
   };
 };
 

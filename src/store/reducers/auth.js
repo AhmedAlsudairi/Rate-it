@@ -8,6 +8,10 @@ const initalState = {
     loading: false
 }
 
+const authInit = (state,action) => {
+    return {...state,...{loading: false, error: null, success: false}};
+}
+
 const authStart = (state,action) => {
     return {...state,...{loading: true, error: null, success: false}};
 }
@@ -24,6 +28,7 @@ const authFail = (state,action) => {
 const authReducer = (state = initalState, action) => {
    switch(action.type){
        case actionTypes.AUTH_START: return authStart(state,action);
+       case actionTypes.AUTH_INIT: return authInit(state,action);
        case actionTypes.AUTH_SUCCESS: return authSuccess(state,action);
        case actionTypes.AUTH_FAIL: return authFail(state,action);
        default: return state;
