@@ -32,8 +32,6 @@ export default function SideDrawer(props) {
     w='50%';
   }
 
-  console.log(w);
-
   const useStyles = makeStyles((theme) => ({
   drawer: {
     width: 0,

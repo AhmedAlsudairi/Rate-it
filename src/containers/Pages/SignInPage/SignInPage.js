@@ -16,7 +16,7 @@ import {Link } from 'react-router-dom';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as actions from '../../../store/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -43,7 +43,13 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
-  }
+  },
+  alert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 
@@ -73,6 +79,7 @@ function SignIn(props) {
     <Typography component="h1" variant="h5">
       Sign in
     </Typography>
+    {props.error == null ? null: <div className={classes.alert}> <Alert severity="error" >User Not found!</Alert> </div>}
     <form className={classes.form} noValidate>
       <TextField
             autoComplete="username"

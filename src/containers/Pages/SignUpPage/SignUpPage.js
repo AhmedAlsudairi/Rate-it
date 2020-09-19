@@ -4,8 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -16,6 +14,7 @@ import { Link } from 'react-router-dom';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as actions from '../../../store/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     marginTop: 100
-  }
+  },
+  alert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 function SignUp(props) {
@@ -84,6 +89,7 @@ function SignUp(props) {
     <Typography component="h1" variant="h5">
       Sign up
     </Typography>
+    {props.error == null ? null: <div className={classes.alert}> <Alert severity="error">User Already Exist!</Alert></div>}
     <form className={classes.form} noValidate>
       <Grid container spacing={2}>
         <Grid item xs={12}>
