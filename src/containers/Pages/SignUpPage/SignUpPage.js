@@ -47,41 +47,74 @@ const useStyles = makeStyles((theme) => ({
 function SignUp(props) {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [valid, setValid] = useState(false);
+  const [username, setUsername] = useState({value: '', valid: false});
+  const [email, setEmail] = useState({value: '', valid: false, error: false});
+  const [password, setPassword] = useState({value: '', valid: false, error: false});
+  const [confirmPassword, setConfirmPassword] = useState({value: '', valid: false, error: false});
+  
+
   const usernameInputHandler = (event) => {
-    console.log(event.target.value);
-    setUsername(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setUsername({value: textValue, valid: false});
+      return;
+      
+    }
+    setUsername({value: textValue, valid: true});
   }
 
   const passwordInputHandler = (event) => {
-    console.log(event.target.value);
-    setPassword(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setPassword({value: textValue, valid: false});
+      return;
+    }
+      setPassword({value: textValue, valid: true});
+    
   }
 
   const confirmPasswordInputHandler = (event) => {
-    console.log(event.target.value);
-    setConfirmPassword(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setConfirmPassword({value: textValue, valid: false});
+      return;
+      
+    }
+    setConfirmPassword({value: textValue, valid: true});
   }
 
   const emailInputHandler = (event) => {
-    console.log(event.target.value);
-    setEmail(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setEmail({value: textValue, valid: false, error: true});
+      return;
+      
+    }
+    setEmail({value: textValue, valid: true, error: false});
   }
 
   const submitHandler = event => {
     event.preventDefault();
 
-    if(password !== confirmPassword){
+    if(password.value !== confirmPassword.value){
+      console.log(password !== confirmPassword);
+      setPassword((prevPass)=> { return {...prevPass, error: true}})
+      setConfirmPassword((prevConfPass)=> {return {...prevConfPass, error: true}})
       return;
     }
-    props.onAuth(username, password, email);
+
+    if(!validateEmail(email.value)){
+      setEmail((prevEmail)=> { return {...prevEmail, error: true}})
+      return;
+    }
+    props.onAuth(username.value, password.value, email.value);
   };
 
-  
+  function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
   let form = (<div className={classes.paper}>
     <Avatar className={classes.avatar}>
       <LockOutlinedIcon />
@@ -102,8 +135,9 @@ function SignUp(props) {
             id="username"
             label="Username"
             autoFocus
-            onChange={(event) => { usernameInputHandler(event) }}
-            value={username}
+            onChange={(event) => { usernameInputHandler(event);}}
+            value={username.value}
+            error={props.error !== null}
           />
         </Grid>
         <Grid item xs={12}>
@@ -115,8 +149,10 @@ function SignUp(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
-            onChange={(event) => { emailInputHandler(event) }}
-            value={email}
+            onChange={(event) => { emailInputHandler(event);}}
+            value={email.value}
+            error={props.error !== null || email.error}
+            helperText={email.error? "Email is not correct!" : null}
           />
         </Grid>
         <Grid item xs={12}>
@@ -129,8 +165,10 @@ function SignUp(props) {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(event) => { passwordInputHandler(event) }}
-            value={password}
+            onChange={(event) => { passwordInputHandler(event);}}
+            value={password.value}
+            error={password.error}
+            helperText={password.error? "Password not match!" : null}
           />
         </Grid>
         <Grid item xs={12}>
@@ -143,8 +181,10 @@ function SignUp(props) {
             type="password"
             id="confirmPassword"
             autoComplete="current-password"
-            onChange={(event) => { confirmPasswordInputHandler(event) }}
-            value={confirmPassword}
+            onChange={(event) => { confirmPasswordInputHandler(event); }}
+            value={confirmPassword.value}
+            error={confirmPassword.error}
+            helperText={confirmPassword.error? "Password not match!" : null}
           />
         </Grid>
       </Grid>
@@ -155,7 +195,7 @@ function SignUp(props) {
         color="primary"
         className={classes.submit}
         onClick={submitHandler}
-        disabled={valid}
+        disabled={!(username.valid && email.valid && password.valid && confirmPassword.valid)}
       >
         Sign Up
       </Button>

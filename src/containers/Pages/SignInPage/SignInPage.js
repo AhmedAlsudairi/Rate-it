@@ -55,20 +55,31 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn(props) {
   const classes = useStyles();
-  const [username,setUsername] = useState('');
-  const [password,setPassword] = useState('');
+  const [username, setUsername] = useState({value: '', valid: false});
+  const [password, setPassword] = useState({value: '', valid: false});
 
   const usernameInputHandler = (event) => {
-    setUsername(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setUsername({value: textValue, valid: false});
+      
+    }else{
+      setUsername({value: textValue, valid: true});
+    }
   }
 
   const passwordInputHandler = (event) => {
-    setPassword(event.target.value);
+    const textValue = event.target.value;
+    if(textValue === ''){
+      setPassword({value: textValue, valid: false});
+    }else{
+      setPassword({value: textValue, valid: true});
+    }
   }
 
   const submitHandler = event => {
     event.preventDefault();
-    props.onAuth(username, password);
+    props.onAuth(username.value, password.value);
   };
 
 
@@ -79,7 +90,7 @@ function SignIn(props) {
     <Typography component="h1" variant="h5">
       Sign in
     </Typography>
-    {props.error == null ? null: <div className={classes.alert}> <Alert severity="error" >User Not found!</Alert> </div>}
+    {props.error == null ? null: <div className={classes.alert}> <Alert severity="error" >Username or passwor is wrong!</Alert> </div>}
     <form className={classes.form} noValidate>
       <TextField
             autoComplete="username"
@@ -92,7 +103,8 @@ function SignIn(props) {
             margin="normal"
             autoFocus
             onChange={(event)=>{usernameInputHandler(event)}}
-            value={username}
+            value={username.value}
+            error={props.error !== null}
           />
       <TextField
         variant="outlined"
@@ -105,7 +117,8 @@ function SignIn(props) {
         id="password"
         autoComplete="current-password"
         onChange={(event)=>{passwordInputHandler(event)}}
-        value={password}
+        value={password.value}
+        error={props.error !== null}
       />
       <FormControlLabel
         control={<Checkbox value="remember" color="primary" />}
@@ -118,6 +131,7 @@ function SignIn(props) {
         color="primary"
         className={classes.submit}
         onClick={submitHandler}
+        disabled={!(username.valid && password.valid)}
       >
         Sign In
       </Button>
