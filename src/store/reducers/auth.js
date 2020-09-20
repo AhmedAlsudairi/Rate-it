@@ -24,6 +24,9 @@ const authFail = (state,action) => {
     return {...state,...{error: action.error, loading: false, success: action.success}};
 }
 
+const authLogout = (state,action) => {
+    return {...state,...{token: null, username: null, error: null, loading: false, success: false}};
+}
 
 const authReducer = (state = initalState, action) => {
    switch(action.type){
@@ -31,6 +34,7 @@ const authReducer = (state = initalState, action) => {
        case actionTypes.AUTH_INIT: return authInit(state,action);
        case actionTypes.AUTH_SUCCESS: return authSuccess(state,action);
        case actionTypes.AUTH_FAIL: return authFail(state,action);
+       case actionTypes.AUTH_LOGOUT: return authLogout(state,action);
        default: return state;
    }
 }

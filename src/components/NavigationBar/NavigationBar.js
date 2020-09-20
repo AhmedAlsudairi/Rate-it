@@ -12,6 +12,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Hidden } from '@material-ui/core';
 import {NavLink } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/auth';
+import { propTypes } from 'react-bootstrap/esm/Image';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -73,8 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-export default function NavigationBar() {
+function NavigationBar(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState(false);
@@ -120,6 +123,19 @@ export default function NavigationBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
+          {props.isAuthenticated?
+          <NavLink to='/logout' >
+          <IconButton
+          
+          edge="start"
+          className={classes.accountButton}
+          color="inherit"
+          aria-label="open drawer"
+          onClick={props.onLogout}
+        >
+          <ExitToAppIcon/>
+        </IconButton>
+        </NavLink>:
           <NavLink to='/signin' >
             <IconButton
             
@@ -130,10 +146,32 @@ export default function NavigationBar() {
           >
             <AccountCircleIcon />
           </IconButton>
-          </NavLink>
+          </NavLink>}
+          
           
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout: () =>
+      dispatch(actions.authLogout()),
+    onInit: ()=>
+        dispatch(actions.authInitite())  
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavigationBar);
