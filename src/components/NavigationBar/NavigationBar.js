@@ -131,7 +131,6 @@ function NavigationBar(props) {
           className={classes.accountButton}
           color="inherit"
           aria-label="open drawer"
-          onClick={props.onLogout}
         >
           <ExitToAppIcon style={{ color: 'white' }}/>
         </IconButton>
