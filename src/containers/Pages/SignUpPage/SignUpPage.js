@@ -100,6 +100,11 @@ function SignUp(props) {
       console.log(password !== confirmPassword);
       setPassword((prevPass)=> { return {...prevPass, error: true}})
       setConfirmPassword((prevConfPass)=> {return {...prevConfPass, error: true}})
+
+      if(!validateEmail(email.value)){
+        setEmail((prevEmail)=> { return {...prevEmail, error: true}})
+      }
+
       return;
     }
 
@@ -111,7 +116,7 @@ function SignUp(props) {
   };
 
   function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 

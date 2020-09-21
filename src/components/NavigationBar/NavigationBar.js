@@ -14,7 +14,6 @@ import {NavLink } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accountButton: {
     marginLeft: theme.spacing(2),
+    
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -133,20 +133,20 @@ function NavigationBar(props) {
           aria-label="open drawer"
           onClick={props.onLogout}
         >
-          <ExitToAppIcon/>
+          <ExitToAppIcon style={{ color: 'white' }}/>
         </IconButton>
         </NavLink>:
-          <NavLink to='/signin' >
+        
+          <NavLink to='/signin' activeStyle={{color: 'white'}}>
             <IconButton
             
             edge="start"
             className={classes.accountButton}
-            color="inherit"
             aria-label="open drawer"
           >
-            <AccountCircleIcon />
+            <AccountCircleIcon style={{ color: 'white' }}/>
           </IconButton>
-          </NavLink>}
+          </NavLink> }
           
           
         </Toolbar>
