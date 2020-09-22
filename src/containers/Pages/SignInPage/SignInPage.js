@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link } from 'react-router-dom';
+import {Link, Redirect } from 'react-router-dom';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as actions from '../../../store/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -147,12 +147,18 @@ function SignIn(props) {
     </form>
   </div>);
 
+   let homePageRedirect = null;
+
+   if(props.isAuthenticated){
+     homePageRedirect = <Redirect to='/'/>
+   }
   if(props.loading){
     form = (<div className={classes.paper}><CircularProgress/></div>);
   }
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
+        {homePageRedirect}
         {form}
       <Box mt={8}>
         <Copyright />

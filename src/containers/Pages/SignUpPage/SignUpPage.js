@@ -15,6 +15,7 @@ import Copyright from '../../../components/Copyright/Copyright';
 import * as actions from '../../../store/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import {Redirect} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -217,9 +218,17 @@ function SignUp(props) {
   if (props.loading) {
     form = (<div className={classes.paper}><CircularProgress /></div>);
   }
+
+  let signinPageRedirect = null;
+
+  if(props.isSignupSuccess){
+    signinPageRedirect = <Redirect to='/signin'/>
+  }
+
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
+     {signinPageRedirect} 
     {form}
       <Box mt={5}>
         <Copyright />
@@ -232,7 +241,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    isSignupSuccess: state.auth.success
   };
 };
 
