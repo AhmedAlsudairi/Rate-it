@@ -6,7 +6,8 @@ import HomePage from '../Pages/HomePage/HomePage';
 import SignInPage from '../Pages/SignInPage/SignInPage';
 import SignUpPage from '../Pages/SignUpPage/SignUpPage';
 import {Route} from 'react-router-dom';
-import Logout from '../Pages/Logout/Logout';
+import LogoutPage from '../Pages/LogoutPage/LogoutPage';
+import FavoritePage from '../Pages/FavoritePage/FavoritePage';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -27,7 +28,8 @@ export default function MainContainer(props) {
      <Route exact path='/' component={HomePage}/>
      <Route exact path='/signin' component={SignInPage}/>
      <Route exact path='/signup' component={SignUpPage}/>
-     <Route exact path='/logout' component={Logout}/>
+     <Route exact path='/logout' component={LogoutPage}/>
+     <Route exact path='/favorite' component={FavoritePage}/>
     </div>
   );
 }

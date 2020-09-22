@@ -20,6 +20,7 @@ import Filter6Icon from '@material-ui/icons/Filter6';
 import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Link } from 'react-router-dom';
 
 
 
@@ -127,10 +128,12 @@ export default function SideDrawer(props) {
           </List>
           <Divider />
           <List>
-              <ListItem button key='Favorite' >
+            <Link to='/favorite'>
+               <ListItem button key='Favorite' >
                 <ListItemIcon><Favorite/></ListItemIcon>
                 <ListItemText primary='Favorite' />
               </ListItem>
+            </Link>
           </List>
           
         </div>
