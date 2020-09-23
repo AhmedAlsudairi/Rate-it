@@ -29,6 +29,9 @@ export const authFail = (error) => {
 }
 
 export const authLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('success');
+    localStorage.removeItem('username');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -53,7 +56,9 @@ export const authSignIn = (username, password) => {
         axios.post(url,authData)
         .then(response=>{
             console.log(response);
-
+            localStorage.setItem('token',response.data.jwt);
+            localStorage.setItem('success',response.data.success);
+            localStorage.setItem('username',response.data.username);
             dispatch(authSuccess(response.data.username,response.data.success,response.data.jwt));
         })
         .catch(error=> {
@@ -87,3 +92,15 @@ export const authSignUp = (username, password,email) => {
     }
 }
 
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        if(!token){
+            dispatch(authLogout());
+        }else{
+            const success = localStorage.getItem('success');
+            const username = localStorage.getItem('username');
+            dispatch(authSuccess(username,success,token));
+        }
+    }
+} 

@@ -5,7 +5,7 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import HomePage from '../Pages/HomePage/HomePage';
 import SignInPage from '../Pages/SignInPage/SignInPage';
 import SignUpPage from '../Pages/SignUpPage/SignUpPage';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import LogoutPage from '../Pages/LogoutPage/LogoutPage';
 import FavoritePage from '../Pages/FavoritePage/FavoritePage';
 const useStyles = makeStyles((theme) => ({
@@ -25,11 +25,15 @@ export default function MainContainer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <NavigationBar />
-     <Route exact path='/' component={HomePage}/>
-     <Route exact path='/signin' component={SignInPage}/>
+     <Switch>
+       <Route exact path='/favorite' component={FavoritePage}/>
+      <Route exact path='/signin' component={SignInPage}/>
      <Route exact path='/signup' component={SignUpPage}/>
      <Route exact path='/logout' component={LogoutPage}/>
-     <Route exact path='/favorite' component={FavoritePage}/>
+     
+     <Route exact path='/' component={HomePage}/>
+     </Switch>
+     
     </div>
   );
 }
