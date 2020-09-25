@@ -9,12 +9,15 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Hidden } from '@material-ui/core';
+import { Button, Hidden, List } from '@material-ui/core';
 import {NavLink } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     display: 'none',
+    color: 'white',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -81,6 +85,15 @@ function NavigationBar(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -106,10 +119,17 @@ function NavigationBar(props) {
           </Drawer>
         </React.Fragment>
           </Hidden>
-          
-          <Typography className={classes.title} variant="h6" noWrap>
+        
+        <NavLink to='/' style={{textDecoration: 'none'}} className={classes.title}>
+          <Button>
+            <Typography className={classes.title} variant="h6" noWrap>
             Rate It
           </Typography>
+          </Button>
+           
+        </NavLink>
+         
+          
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -124,7 +144,18 @@ function NavigationBar(props) {
             />
           </div>
           {props.isAuthenticated?
-          <NavLink to='/logout' >
+          <List>
+             <NavLink to='/signin' activeStyle={{color: 'white'}}>
+            <IconButton
+            
+            edge="start"
+            className={classes.accountButton}
+            aria-label="open drawer"
+          >
+            <NotificationsIcon style={{ color: 'white' }}/>
+          </IconButton>
+          </NavLink>
+            <NavLink to='/logout' >
           <IconButton
           
           edge="start"
@@ -134,7 +165,35 @@ function NavigationBar(props) {
         >
           <ExitToAppIcon style={{ color: 'white' }}/>
         </IconButton>
-        </NavLink>:
+        </NavLink>
+        <NavLink to='/signin' activeStyle={{color: 'white'}}>
+            <IconButton
+            
+            edge="start"
+            className={classes.accountButton}
+            aria-label="open drawer"
+            onClick={handleClick}
+            aria-controls="simple-menu" 
+            aria-haspopup="true"
+          >
+            <AccountCircleIcon style={{ color: 'white' }}/>
+          </IconButton>
+          </NavLink>
+
+          <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My ratings</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+          </List>
+          
+        :
         
           <NavLink to='/signin' activeStyle={{color: 'white'}}>
             <IconButton

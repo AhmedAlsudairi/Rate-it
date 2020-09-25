@@ -43,6 +43,10 @@ export default function SideDrawer(props) {
   },
   drawerContainer: {
     overflow: 'auto',
+  },
+  listItem: {
+    color: 'black',
+    textDecoration: 'none'
   }
 }));
   const classes = useStyles();
@@ -128,8 +132,8 @@ export default function SideDrawer(props) {
           </List>
           <Divider />
           <List>
-            <Link to='/favorite'>
-               <ListItem button key='Favorite' >
+            <Link to='/favorite' style={{textDecoration: 'none'}}>
+               <ListItem button key='Favorite' className={classes.listItem}>
                 <ListItemIcon><Favorite/></ListItemIcon>
                 <ListItemText primary='Favorite' />
               </ListItem>

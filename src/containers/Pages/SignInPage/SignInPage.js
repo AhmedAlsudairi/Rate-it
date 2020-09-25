@@ -120,10 +120,7 @@ function SignIn(props) {
         value={password.value}
         error={props.error !== null}
       />
-      <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      />
+     
       <Button
         type="submit"
         fullWidth
