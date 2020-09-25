@@ -145,7 +145,8 @@ function NavigationBar(props) {
           </div>
           {props.isAuthenticated?
           <List>
-             <NavLink to='/signin' activeStyle={{color: 'white'}}>
+            <Hidden xsDown>
+            <NavLink to='/signin' activeStyle={{color: 'white'}}>
             <IconButton
             
             edge="start"
@@ -166,6 +167,8 @@ function NavigationBar(props) {
           <ExitToAppIcon style={{ color: 'white' }}/>
         </IconButton>
         </NavLink>
+            </Hidden>
+        
         <NavLink to='/signin' activeStyle={{color: 'white'}}>
             <IconButton
             
@@ -189,7 +192,10 @@ function NavigationBar(props) {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My ratings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <Hidden smUp>
+        <MenuItem onClick={handleClose}>Notifications</MenuItem>
+        <MenuItem onClick={()=>{props.onLogout(); handleClose();}}>Logout</MenuItem>
+        </Hidden>
       </Menu>
           </List>
           

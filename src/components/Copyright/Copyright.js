@@ -6,7 +6,7 @@ export default function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link to='/'>
+      <Link to='/' style={{textDecoration: 'none'}}>
         Rate It
       </Link>{' '}
       {new Date().getFullYear()}

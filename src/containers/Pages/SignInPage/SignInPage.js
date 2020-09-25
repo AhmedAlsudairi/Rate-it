@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  button: {
+    color: 'black',
+
+  }
 }));
 
 
@@ -133,12 +137,15 @@ function SignIn(props) {
         Sign In
       </Button>
       <Grid container>
-        <Grid item xs>
+        <Grid item xs> 
+        <Link to='/signup' onClick={props.onInit} style={{textDecoration: 'none'}} >
+            <Button className={classes.button}>
+              {"Don't have an account? Sign Up"}
+            </Button>
+          </Link>
         </Grid>
         <Grid item>
-          <Link to='/signup' onClick={props.onInit}>
-            {"Don't have an account? Sign Up"}
-          </Link>
+
         </Grid>
       </Grid>
     </form>

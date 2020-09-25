@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  button: {
+    color: 'black'
+  }
 }));
 
 function SignUp(props) {
@@ -205,10 +208,11 @@ function SignUp(props) {
       >
         Sign Up
       </Button>
-      <Grid container justify="flex-end">
+      <Grid container justify="flex-start">
         <Grid item>
-          <Link to='/signin' onClick={props.onInit}>
-            Already have an account? Sign in
+          <Link to='/signin' onClick={props.onInit} style={{textDecoration: 'none'}}>
+          <Button className={classes.button}>{"Already have an account? Sign in"}</Button>
+            
           </Link>
         </Grid>
       </Grid>
