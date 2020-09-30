@@ -190,6 +190,7 @@ function NavigationBar(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <MenuItem disabled>{props.username}</MenuItem>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My ratings</MenuItem>
         <Hidden smUp>
@@ -223,7 +224,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    username: state.auth.username
   };
 };
 const mapDispatchToProps = dispatch => {
