@@ -20,9 +20,7 @@ function FavoritePage(props) {
   return (
       <Grid container spacing={1}>
         <Grid item lg={3} md={4} sm={3}>
-          <Hidden xsDown>
             <SideDrawer isFavorite={true}/>
-          </Hidden>
         </Grid>
         <Grid item lg={9} md={8} sm={9}>
           <main className={classes.content}>

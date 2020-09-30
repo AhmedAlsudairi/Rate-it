@@ -22,7 +22,7 @@ import Filter8Icon from '@material-ui/icons/Filter8';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link, Redirect } from 'react-router-dom';
-
+import { Hidden } from '@material-ui/core';
 
 
 
@@ -103,6 +103,8 @@ export default function SideDrawer(props) {
   }
 
   return (
+    <Hidden xsDown>
+
     <Drawer
       className={classes.drawer}
       variant="permanent"
@@ -166,7 +168,7 @@ export default function SideDrawer(props) {
         </List>
 
       </div>
-      {favoritSelected? null: <Redirect to='/' />}
     </Drawer>
+    </Hidden>
   );
 }

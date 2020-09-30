@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -24,6 +26,7 @@ export default function MediaCard() {
 
   return (
     <Card className={classes.root}>
+        <Link to='/coursepage'>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -40,6 +43,7 @@ export default function MediaCard() {
           </Typography>
         </CardContent>
       </CardActionArea>
+      </Link>
       <CardActions>
       <IconButton aria-label="add to favorites">
           <FavoriteIcon />

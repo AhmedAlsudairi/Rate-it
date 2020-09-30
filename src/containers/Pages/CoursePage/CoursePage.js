@@ -13,21 +13,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HomePage(props) {
+export default function CoursePage(props) {
   const classes = useStyles();
 
   return (
-      <Grid container spacing={1}>
-        <Grid item lg={3} md={4} sm={3}>
-            <SideDrawer />
-        </Grid>
-        <Grid item lg={9} md={8} sm={9}>
+      
           <main className={classes.content}>
-            <Toolbar />
-
-            <Courses/>
-          </main>
+              <Toolbar />
+              <Grid container spacing={1}>
+        <Grid item lg={2}>
+           <p></p> J
         </Grid>
-      </Grid>
+        <Grid item lg={8}>
+          
+            
+            Corse page
+          
+        </Grid>
+        <Grid item lg={2}>
+           <p></p> J
+        </Grid>
+        </Grid >
+        </main>
+      
   );
 }
+
+
