@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import SideDrawer from '../../../components/SideDrawer/SideDrawer';
 import { Hidden, Grid } from '@material-ui/core';
-import Courses from '../../Courses/Courses'
+import Courses from '../../../components/Courses/Courses';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/auth';
 import {connect} from 'react-redux';
