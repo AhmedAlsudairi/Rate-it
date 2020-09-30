@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import { Link } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
