@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, create_engine
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask import Blueprint
 import json
 import os
 
@@ -13,6 +14,47 @@ def setup_db(app, database_path=database_path):
     db.app = app
     db.init_app(app)
     Migrate(app, db)
+
+usersbp = Blueprint('seed', __name__)
+
+
+@usersbp.cli.command('courses')
+def seed():
+    """Seed the database."""
+    course1 = Course(course_id = '211 هاب', name = 'مدخل الى هندسة البرمجيات', level = 4)
+    course2 = Course(course_id = '312 هاب', name = 'هندسة متطلبات البرمجيات', level = 5)
+    course3 = Course(course_id = '314 هاب', name = 'هندسة أمن البرمجيات', level = 5)
+    course4 = Course(course_id = '321 هاب', name = 'تصميم وعمارة البرمجيات', level = 6)
+    course5 = Course(course_id = '333 هاب', name = 'ضمان جودة البرمجيات', level = 6)
+    course6 = Course(course_id = '381 هاب', name = 'تطوير تطبيقات الشبكة العنكبوتية', level = 6)
+    course7 = Course(course_id = '434 هاب', name = 'الاختبار والتحقق من البرمجيات', level = 7)
+    course8 = Course(course_id = '444 هاب', name = 'معمل بناء البرمجيات', level = 7)
+    course9 = Course(course_id = '477 هاب', name = 'الاخلاقيات والممارسة المهنية في هندسة البرمجيات', level = 7)
+    course10 = Course(course_id = '479 هاب', name = 'التدريب الميداني', level = 7)
+    course11 = Course(course_id = '482 هاب', name = 'تفاعلية بين الانسان والحاسب', level = 7)
+    course12 = Course(course_id = '496 هاب', name = 'مشروع تخرج -1', level = 7)
+    course13 = Course(course_id = '455 هاب', name = 'صيانة وتطور البرمجيات', level = 8)
+    course14 = Course(course_id = '466 هاب', name = 'ادارة مشاريع البرمجيات', level = 8)
+    course15 = Course(course_id = '497 هاب', name = 'مشروع تخرج -2', level = 8)
+    
+    course1.insert()
+    course2.insert()
+    course3.insert()
+    course4.insert()
+    course5.insert()
+    course6.insert()
+    course7.insert()
+    course8.insert()
+    course9.insert()
+    course10.insert()
+    course11.insert()
+    course12.insert()
+    course13.insert()
+    course14.insert()
+    course15.insert()
+
+
+
 
 
 class User(db.Model):
@@ -56,11 +98,11 @@ class Course(db.Model):
     course_id = db.Column(db.String(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
     level = db.Column(db.Integer, nullable=False)
-    difficulty_level = db.Column(db.Float(), nullable=False)
-    content_density = db.Column(db.Integer, nullable=False)
-    content_update = db.Column(db.Integer, nullable=False)
-    satisfaction = db.Column(db.Integer, nullable=False)
-    total_rate = db.Column(db.Integer, nullable=False)
+    difficulty_level = db.Column(db.Float(), nullable=True)
+    content_density = db.Column(db.Integer, nullable=True)
+    content_update = db.Column(db.Integer, nullable=True)
+    satisfaction = db.Column(db.Integer, nullable=True)
+    total_rate = db.Column(db.Integer, nullable=True)
     favourite_by = db.relationship('FavouriteList', backref='course', lazy=True, cascade='all, delete')
     ratings = db.relationship('Rating', backref='course_ratings', lazy=True, cascade='all, delete')
 
@@ -77,6 +119,9 @@ class Course(db.Model):
             'favourite_by': self.favourite_by,
             'ratings': self.ratings
         }
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 
