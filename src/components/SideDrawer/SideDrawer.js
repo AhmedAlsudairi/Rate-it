@@ -21,8 +21,8 @@ import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
+import { Hidden } from '@material-ui/core';
 
 
 
@@ -51,9 +51,9 @@ export default function SideDrawer(props) {
     }
   }));
   const classes = useStyles();
-  const [favoritSelected, setFavoritSelected] = useState(false);
+  const [favoritSelected, setFavoritSelected] = useState(props.isFavorite);
   const [listItems, setlistItems] = useState([
-    { name: 'All', selected: true, },
+    { name: 'All', selected: props.isFavorite? false : true, },
     { name: 'Level 1', selected: false },
     { name: 'Level 2', selected: false },
     { name: 'Level 3', selected: false },
@@ -103,6 +103,8 @@ export default function SideDrawer(props) {
   }
 
   return (
+    <Hidden xsDown>
+
     <Drawer
       className={classes.drawer}
       variant="permanent"
@@ -110,6 +112,7 @@ export default function SideDrawer(props) {
         paper: classes.drawerPaper,
       }}
     >
+      
       <Toolbar />
       <div className={classes.drawerContainer}>
         <ListItem >
@@ -157,14 +160,15 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           <Link to='/favorite' style={{ textDecoration: 'none' }}>
-            <ListItem onClick={() => { selectFavoriteItemHandler() }} selected={favoritSelected} button key='Favorite' className={classes.listItem}>
-              <ListItemIcon><Favorite /></ListItemIcon>
-              <ListItemText primary='Favorite' />
+            <ListItem onClick={() => { selectFavoriteItemHandler() }} selected={favoritSelected} button key='Favorite' className={classes.listItem} >
+              <ListItemIcon style={favoritSelected? {color: 'blue'}: null}><Favorite /></ListItemIcon>
+              <ListItemText primary='Favorite' style={favoritSelected? {color: 'blue'}: null}/>
             </ListItem>
           </Link>
         </List>
 
       </div>
     </Drawer>
+    </Hidden>
   );
 }
