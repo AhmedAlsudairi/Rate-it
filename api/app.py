@@ -2,24 +2,23 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db, User, Course, Rating, FavouriteList
-from jose import jwt
+from models import setup_db, User, Course, Rating, FavouriteList, usersbp
+from auth import AuthError, requires_auth_decorator
 import datetime
 
-class AuthError(Exception):
-    def __init__(self, error, status_code):
-        self.error = error
-        self.status_code = status_code
 
 
-algo = 'HS256'  # HMAC-SHA 256
+
 secret = 'learning'
-
+algo = 'HS256'  # HMAC-SHA 256
 # create and configure the app
 app = Flask(__name__)
 setup_db(app)
+app.register_blueprint(usersbp)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+
 
 @app.after_request
 def after_request(response):
@@ -31,30 +30,21 @@ def after_request(response):
                             '*')
     return response
     
+
 @app.route('/', methods=['GET'])
-def get_root():
-    body = request.get_json()
-    if body is not None and 'jwt' in body:
-        try:
-            token = body.get('jwt')
-            print(token)
-            decoded_jwt = jwt.decode(token, secret,options={'require': ['exp']}, algorithms = algo)
-            name = decoded_jwt.get('name')
-            return jsonify({
-                'success': True,
-                'loged_in': True,
-                'username': name
-            })
-        except jwt.ExpiredSignatureError:
-            raise AuthError({
-                'code': 'token_expired',
-                'description': 'Token expired.'
-            }, 401)
-            
-    return jsonify({
-        'success': True,
-        'log_in': False
-    })
+@requires_auth_decorator
+def get_root(name):
+    if name != '':
+        return jsonify({
+            'success': True,
+            'loged_in': True,
+            'username': name
+        })
+    else:
+        return jsonify({
+            'success': True,
+            'log_in': False
+        })
 
 
 @app.route('/usernames/<string:username>')
