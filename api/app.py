@@ -34,8 +34,17 @@ def after_request(response):
 @app.route('/courses', methods=['GET'])
 @check_log_in
 def get_root(name):
-    level = request.args.get('level', 1, type = int)
-    courses = Course.query.filter_by(level = level).all()
+    courseName = request.args.get('courseName', type = str)
+    courseId = request.args.get('courseId', type = str)
+    if courseName is not None:
+        courses = Course.query.filter(Course.name.like(f'%{courseName}%')).all()
+    elif courseId is not None:
+        print(courseId)
+        courses = Course.query.filter(Course.course_id.like(f'%{courseId}%')).all()
+    else:
+        level = request.args.get('level', 1, type = int)
+        courses = Course.query.filter_by(level = level).all()
+        
     courses_format = [course.format() for course in courses]
     result_count = len(courses_format)
     if name != '':
