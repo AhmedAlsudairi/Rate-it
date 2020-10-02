@@ -12,6 +12,8 @@ class AuthError(Exception):
         self.status_code = status_code
 
 def get_auth_token():
+    if request.get_json() is None:
+        return None
     body = request.get_json()
     if jwt not in body:
         return None
