@@ -3,7 +3,7 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, User, Course, Rating, FavouriteList, usersbp
-from auth import AuthError, requires_auth_decorator
+from auth import AuthError, requires_auth_decorator, check_log_in
 import datetime
 
 
@@ -31,19 +31,27 @@ def after_request(response):
     return response
     
 
-@app.route('/', methods=['GET'])
-@requires_auth_decorator
+@app.route('/courses', methods=['GET'])
+@check_log_in
 def get_root(name):
+    level = request.args.get('level', 1, type = int)
+    courses = Course.query.filter_by(level = level).all()
+    courses_format = [course.format() for course in courses]
+    result_count = len(courses_format)
     if name != '':
         return jsonify({
             'success': True,
             'loged_in': True,
-            'username': name
+            'username': name,
+            'courses': courses_format,
+            'result_count': result_count
         })
     else:
         return jsonify({
             'success': True,
-            'log_in': False
+            'log_in': False,
+            'courses': courses_format,
+            'result_count': result_count
         })
 
 
