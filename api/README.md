@@ -46,10 +46,27 @@ GET '/emails/<string:emails>'
 GET '/'
 - main page for the website
 - Request Arguments: 'jwt' for authentication
+- Request variables: level if none 1 is default OR courseName OR courseId
 - Returns: If the 'jwt' is valid:
+http://127.0.0.1:5000/courses?courseName=معمل
 {
+    "courses": [
+        {
+            "content_density": null,
+            "content_update": null,
+            "course_id": "444 هاب",
+            "difficulty_level": null,
+            "favourite_by": [],
+            "level": 7,
+            "name": "معمل بناء البرمجيات",
+            "ratings": [],
+            "satisfaction": null,
+            "total_rate": null
+        }
+    ],
     'success': True,
     'loged_in': True,
+    "result_count": 1,
     'name': test
 }
 - If Not it will return error 401:
@@ -59,6 +76,21 @@ GET '/'
 }
 - If there is no jwt in request (user loged out):
 {
+    "courses": [
+        {
+            "content_density": null,
+            "content_update": null,
+            "course_id": "444 هاب",
+            "difficulty_level": null,
+            "favourite_by": [],
+            "level": 7,
+            "name": "معمل بناء البرمجيات",
+            "ratings": [],
+            "satisfaction": null,
+            "total_rate": null
+        }
+    ],
+    "result_count": 1,
     'success': True,
     'log_in': False
 }
