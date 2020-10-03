@@ -4,8 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import SideDrawer from '../../../components/SideDrawer/SideDrawer';
 import { Hidden, Grid } from '@material-ui/core';
 import Courses from '../../../components/Courses/Courses';
-
-
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -31,3 +29,4 @@ export default function HomePage(props) {
       </Grid>
   );
 }
+

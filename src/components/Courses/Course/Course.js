@@ -26,9 +26,9 @@ export default function MediaCard() {
 
   return (
     <Card className={classes.root}>
-        <Link to='/coursepage'>
-      <CardActionArea>
-        <CardMedia
+        
+      <CardActionArea component={Link} to={'/coursepage'}>
+        <CardMedia 
           className={classes.media}
           image="./swe_img.jpg"
           title="Contemplative Reptile"
@@ -43,7 +43,6 @@ export default function MediaCard() {
           </Typography>
         </CardContent>
       </CardActionArea>
-      </Link>
       <CardActions>
       <IconButton aria-label="add to favorites">
           <FavoriteIcon />

@@ -53,8 +53,7 @@ export default function SideDrawer(props) {
   const classes = useStyles();
   const [favoritSelected, setFavoritSelected] = useState(props.isFavorite);
   const [listItems, setlistItems] = useState([
-    { name: 'All', selected: props.isFavorite? false : true, },
-    { name: 'Level 1', selected: false },
+    { name: 'Level 1', selected: props.isFavorite? false : true,},
     { name: 'Level 2', selected: false },
     { name: 'Level 3', selected: false },
     { name: 'Level 4', selected: false },
@@ -65,7 +64,6 @@ export default function SideDrawer(props) {
   ]);
   const selectItemHandler = (selectedItem) => {
     const newListIems = [
-      { name: 'All', selected: false, },
       { name: 'Level 1', selected: false },
       { name: 'Level 2', selected: false },
       { name: 'Level 3', selected: false },
@@ -88,7 +86,6 @@ export default function SideDrawer(props) {
 
   const selectFavoriteItemHandler = () => {
     const newListIems = [
-      { name: 'All', selected: false, },
       { name: 'Level 1', selected: false },
       { name: 'Level 2', selected: false },
       { name: 'Level 3', selected: false },
@@ -124,9 +121,7 @@ export default function SideDrawer(props) {
 
           {listItems.map((item, index) => {
             let x;
-            switch (index) {
-              case 0: x = <SelectAllIcon />
-                break;
+            switch (index+1) {
               case 1: x = <Filter1Icon />
                 break;
               case 2: x = <Filter2Icon />

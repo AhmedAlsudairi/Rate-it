@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Course from './Course/Course';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/courses';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -14,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Courses() {
+function Courses() {
   const classes = useStyles();
 
   return (
@@ -37,4 +39,25 @@ export default function Courses() {
   );
 }
 
+
+const mapStateToProps = state => {
+  return {
+    loading: state.courses.loading,
+    error: state.courses.error,
+    courses: state.courses.courses,
+    selectedLevel: state.courses.selectedLevel
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchCourses: () =>
+      dispatch(actions.fetchCourses()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Courses);
 

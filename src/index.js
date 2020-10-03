@@ -7,9 +7,11 @@ import {createStore,applyMiddleware,compose, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
+import coursesReducer from './store/reducers/courses';
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  courses: coursesReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
