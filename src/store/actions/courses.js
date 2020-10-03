@@ -27,22 +27,16 @@ export const fetchCourses = () => {
     return dispatch => {
         dispatch(fetchCoursesStart());
 
-        axios.get('http://127.0.0.1:5000/courses')
+        axios.get('http://127.0.0.1:5000/courses?level=7')
         .then(res => {
-            const fechedCourses = [];
-            console.log(res);
-            // for(let key in res.data){
-            //     fechedOrders.push(
-            //         {...res.data[key],
-            //             id: key} );
-                        
-            // }
-            
-            // dispatch(fetchOrdersSuccess(fechedOrders));
+            let fechedCourses = [];
+            fechedCourses={...res.data.courses};
+            console.log(fechedCourses);
+            dispatch(fetchCoursesSuccess(fechedCourses));
             
         })
         .catch(err=>{
-            dispatch(fetchCoursesFail(err));
+            // dispatch(fetchCoursesFail(err));
         });
     }
 }
