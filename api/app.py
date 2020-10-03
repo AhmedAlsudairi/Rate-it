@@ -5,6 +5,8 @@ from flask_cors import CORS
 from models import setup_db, User, Course, Rating, FavouriteList, usersbp
 from auth import AuthError, requires_auth_decorator, check_log_in
 import datetime
+from jose import jwt
+
 
 
 
