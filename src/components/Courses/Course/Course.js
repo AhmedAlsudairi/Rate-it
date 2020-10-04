@@ -14,14 +14,13 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-
   },
   media: {
     height: 140,
   },
 });
 
-export default function MediaCard() {
+export default function Course(props) {
   const classes = useStyles();
 
   return (
@@ -35,11 +34,10 @@ export default function MediaCard() {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Course code
+            {props.id}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Course name
-            Course level
+            {props.name}
           </Typography>
         </CardContent>
       </CardActionArea>

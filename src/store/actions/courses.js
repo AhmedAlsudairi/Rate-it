@@ -30,7 +30,7 @@ export const fetchCourses = () => {
         axios.get('http://127.0.0.1:5000/courses?level=7')
         .then(res => {
             let fechedCourses = [];
-            fechedCourses={...res.data.courses};
+            fechedCourses=[...res.data.courses];
             dispatch(fetchCoursesSuccess(fechedCourses));
             
         })

@@ -1,4 +1,4 @@
-import React, { useEffect,useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Course from './Course/Course';
@@ -30,23 +30,28 @@ function Courses(props) {
   let fetchedCourses = <CircularProgress />;
   
   if (!props.loading) {
-    console.log(props.courses);
-    fetchedCourses = courses.length;
-    console.log(fetchedCourses);
+    fetchedCourses = courses.map(course=>{
+      console.log(course.course_id);
+      return(
+      <Grid item xs={4} key={course.course_id}>
+      <Course 
+      id={course.course_id}
+      name={course.name}
+      level={course.level}
+      content_density={course.content_density}
+      content_update={course.content_update}
+      difficulty_level={course.difficulty_level}
+      satisfaction={course.satisfaction}
+      total_rate={course.total_rate}
+      /></Grid>
+      
+    )});
   }
   return (
     <div className={classes.root}>
-      {/* {courses} */}
+      
       <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <Course />
-        </Grid>
-        <Grid item xs={4}>
-          <Course />
-        </Grid>
-        <Grid item xs={4}>
-          <Course />
-        </Grid>
+      {fetchedCourses}
       </Grid>
       
      
