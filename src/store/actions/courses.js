@@ -31,7 +31,6 @@ export const fetchCourses = () => {
         .then(res => {
             let fechedCourses = [];
             fechedCourses={...res.data.courses};
-            console.log(fechedCourses);
             dispatch(fetchCoursesSuccess(fechedCourses));
             
         })
