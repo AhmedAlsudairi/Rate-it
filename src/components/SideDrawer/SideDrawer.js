@@ -98,8 +98,10 @@ export default function SideDrawer(props) {
   }
 
   return (
-    <Hidden xsDown>
-
+    <React.Fragment>
+      
+    <Hidden xsDown={!props.open} >
+      
     <Drawer
       className={classes.drawer}
       variant="permanent"
@@ -163,5 +165,6 @@ export default function SideDrawer(props) {
       </div>
     </Drawer>
     </Hidden>
+    </React.Fragment>
   );
 }
