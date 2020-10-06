@@ -15,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  spinner: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 }));
 
 function Courses(props) {
@@ -27,7 +33,7 @@ function Courses(props) {
   }, [onFetchCourses]);
 
 
-  let fetchedCourses = <CircularProgress />;
+  let fetchedCourses = (<div className={classes.spinner}><CircularProgress/></div>);
   
   if (!props.loading) {
     fetchedCourses = courses.map(course=>{
