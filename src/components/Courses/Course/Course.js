@@ -14,36 +14,33 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-
   },
   media: {
     height: 140,
   },
 });
 
-export default function MediaCard() {
+export default function Course(props) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-        <Link to='/coursepage'>
-      <CardActionArea>
-        <CardMedia
+        
+      <CardActionArea component={Link} to={'/coursepage'}>
+        <CardMedia 
           className={classes.media}
           image="./swe_img.jpg"
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Course code
+            {props.id}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Course name
-            Course level
+            {props.name}
           </Typography>
         </CardContent>
       </CardActionArea>
-      </Link>
       <CardActions>
       <IconButton aria-label="add to favorites">
           <FavoriteIcon />

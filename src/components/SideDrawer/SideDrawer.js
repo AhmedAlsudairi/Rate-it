@@ -3,13 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import SelectAllIcon from '@material-ui/icons/SelectAll';
 import Favorite from '@material-ui/icons/Favorite';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
@@ -21,7 +19,7 @@ import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Hidden } from '@material-ui/core';
 
 
@@ -53,8 +51,7 @@ export default function SideDrawer(props) {
   const classes = useStyles();
   const [favoritSelected, setFavoritSelected] = useState(props.isFavorite);
   const [listItems, setlistItems] = useState([
-    { name: 'All', selected: props.isFavorite? false : true, },
-    { name: 'Level 1', selected: false },
+    { name: 'Level 1', selected: props.isFavorite? false : true,},
     { name: 'Level 2', selected: false },
     { name: 'Level 3', selected: false },
     { name: 'Level 4', selected: false },
@@ -65,7 +62,6 @@ export default function SideDrawer(props) {
   ]);
   const selectItemHandler = (selectedItem) => {
     const newListIems = [
-      { name: 'All', selected: false, },
       { name: 'Level 1', selected: false },
       { name: 'Level 2', selected: false },
       { name: 'Level 3', selected: false },
@@ -88,7 +84,6 @@ export default function SideDrawer(props) {
 
   const selectFavoriteItemHandler = () => {
     const newListIems = [
-      { name: 'All', selected: false, },
       { name: 'Level 1', selected: false },
       { name: 'Level 2', selected: false },
       { name: 'Level 3', selected: false },
@@ -103,8 +98,10 @@ export default function SideDrawer(props) {
   }
 
   return (
-    <Hidden xsDown>
-
+    <React.Fragment>
+      
+    <Hidden xsDown={!props.open} >
+      
     <Drawer
       className={classes.drawer}
       variant="permanent"
@@ -124,9 +121,7 @@ export default function SideDrawer(props) {
 
           {listItems.map((item, index) => {
             let x;
-            switch (index) {
-              case 0: x = <SelectAllIcon />
-                break;
+            switch (index+1) {
               case 1: x = <Filter1Icon />
                 break;
               case 2: x = <Filter2Icon />
@@ -170,5 +165,6 @@ export default function SideDrawer(props) {
       </div>
     </Drawer>
     </Hidden>
+    </React.Fragment>
   );
 }

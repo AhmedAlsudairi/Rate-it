@@ -115,7 +115,7 @@ function NavigationBar(props) {
             aria-label="open drawer"
              onClick={toggleDrawer(true)}><MenuIcon /></IconButton>
           <Drawer open={state} onClose={toggleDrawer(false)}>
-            <SideDrawer/>
+            <SideDrawer open={state}/>
           </Drawer>
         </React.Fragment>
           </Hidden>
