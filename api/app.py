@@ -2,7 +2,8 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db, User, Course, Rating, FavouriteList, usersbp
+from models import setup_db, User, Course, Rating, FavouriteList 
+from seed_data import usersbp
 from auth import AuthError, requires_auth_decorator, check_log_in
 import datetime
 from jose import jwt
