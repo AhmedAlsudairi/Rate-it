@@ -18,8 +18,10 @@ const useStyles = makeStyles((theme) => ({
   spinner: {
     marginTop: theme.spacing(8),
     display: 'flex',
-    flexDirection: 'column',
+    flexGrow: 1,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:'center'
   },
 }));
 
@@ -29,7 +31,7 @@ function Courses(props) {
   const { onFetchCourses } = props;
   const { courses } = props;
   useEffect(() => {
-    onFetchCourses();
+    onFetchCourses(1);
   }, [onFetchCourses]);
 
 
@@ -77,8 +79,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchCourses: () =>
-      dispatch(actions.fetchCourses()),
+    onFetchCourses: (level) =>
+      dispatch(actions.fetchCourses(level,null)),
   };
 };
 

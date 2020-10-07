@@ -177,7 +177,7 @@ function SideDrawer(props) {
 const mapDispatchToProps = dispatch => {
   return {
     onSelectHandler: (level) =>
-      dispatch(actions.fetchCourses(level)),
+      dispatch(actions.fetchCourses(level,null)),
   };
 };
 
