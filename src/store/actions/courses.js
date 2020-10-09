@@ -24,6 +24,7 @@ export const fetchCoursesFail = (error) => {
 }
 
 export const selectCourse = (course) => {
+    localStorage.setItem('course', JSON.stringify(course));
     return{
         type: actionTypes.SELECT_COURSE,
         course: course

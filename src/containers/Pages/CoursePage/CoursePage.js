@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {  Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import {connect} from 'react-redux';
-import * as actions from '../../../store/actions/courses';
+import Slider from '../../../components/Slider/Slider'
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -14,7 +14,12 @@ const useStyles = makeStyles((theme) => ({
 
 function CoursePage(props) {
   const classes = useStyles();
+  let course = props.selectedCourse;
+  if(course===null){
+    course = JSON.parse(localStorage.getItem('course'));
+  }
 
+  console.log(course);
   return (
       
           <main className={classes.content}>
@@ -25,17 +30,17 @@ function CoursePage(props) {
         </Grid>
         <Grid item lg={8}>
           <Typography align='left' color='primary' variant='h3'>
-              {props.selectedCourse.id}
+              {course.id}
           </Typography>
             
           <Typography align='left' color='secondary' variant='h4'>
-              {props.selectedCourse.name}
+              {course.name}
           </Typography>
 
            <Typography align='left' color='primary' variant='h4'>
-              Level: {props.selectedCourse.level}
+              Level: {course.level}
           </Typography> 
-          
+          <Slider/>
         </Grid>
         <Grid item lg={2}>
            <p></p> J
