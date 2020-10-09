@@ -23,6 +23,13 @@ export const fetchCoursesFail = (error) => {
     }
 }
 
+export const selectCourse = (course) => {
+    return{
+        type: actionTypes.SELECT_COURSE,
+        course: course
+    }
+}
+
 export const fetchCourses = (level,keyword) => {
     return dispatch => {
         dispatch(fetchCoursesStart());
@@ -37,7 +44,6 @@ export const fetchCourses = (level,keyword) => {
         axios.get('http://127.0.0.1:5000/courses?'+path)
         .then(res => {
             let fechedCourses = [];
-            console.log(res.data);
             fechedCourses=[...res.data.courses];
             dispatch(fetchCoursesSuccess(fechedCourses));
             

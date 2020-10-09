@@ -39,7 +39,6 @@ function Courses(props) {
   
   if (!props.loading) {
     fetchedCourses = courses.map(course=>{
-      console.log(course.course_id);
       return(
       <Grid item xs={4} key={course.course_id}>
       <Course 
@@ -81,6 +80,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchCourses: (level) =>
       dispatch(actions.fetchCourses(level,null)),
+    onSelectCourse: (course) => {
+      dispatch(actions.selectCourse(course))
+    }  
   };
 };
 

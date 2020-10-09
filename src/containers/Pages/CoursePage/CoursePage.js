@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import {  Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
-
+import {connect} from 'react-redux';
+import * as actions from '../../../store/actions/courses';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CoursePage(props) {
+function CoursePage(props) {
   const classes = useStyles();
 
   return (
@@ -24,15 +25,15 @@ export default function CoursePage(props) {
         </Grid>
         <Grid item lg={8}>
           <Typography align='left' color='primary' variant='h3'>
-              SWE381
+              {props.selectedCourse.id}
           </Typography>
             
           <Typography align='left' color='secondary' variant='h4'>
-              Web Application Developmant
+              {props.selectedCourse.name}
           </Typography>
 
            <Typography align='left' color='primary' variant='h4'>
-              Level: 6
+              Level: {props.selectedCourse.level}
           </Typography> 
           
         </Grid>
@@ -45,4 +46,19 @@ export default function CoursePage(props) {
   );
 }
 
+
+
+const mapStateToProps = state => {
+  return {
+    loading: state.courses.loading,
+    error: state.courses.error,
+    selectedCourse: state.courses.selectedCourse
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(CoursePage);
 
