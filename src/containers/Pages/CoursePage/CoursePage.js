@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     margin: '20px 0px',
     width: '100%'
-  }
+  },
+  title:{
+    fontWeight: 'bold'
+  },
 }));
 
 function CoursePage(props) {
@@ -86,10 +89,14 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-          <Typography>
+        <Paper className={classes.paper} elevation={10}>
+          <Typography align="center" variant="h5" className={classes.title} >
             Ratings
           </Typography>
-          <Rating>Hi</Rating>
+          <Rating/>
+          <Rating/>
+          <Rating/>
+          </Paper>
         </Grid>
       </Grid >
     </main>

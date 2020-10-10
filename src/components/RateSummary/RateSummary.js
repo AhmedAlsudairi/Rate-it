@@ -8,12 +8,15 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   paper:{
-    padding: 20,
+    padding: 30,
     margin: '20px 0px',
     width: '100%'
   },
+  title:{
+    fontWeight: 'bold'
+  },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: theme.typography.pxToRem(20),
     fontWeight: theme.typography.fontWeightRegular,
   },
   difficultyLevelPrimary:{
@@ -49,8 +52,8 @@ export default function SimpleAccordion(props) {
   return (
     <div className={classes.root}>
         <Paper className={classes.paper} elevation={10}>
-            <Typography align="center" variant="h5">Current Rate</Typography>
-        <Typography>Total Rate</Typography>
+            <Typography align="center" variant="h5" className={classes.title}>Current Rate</Typography>
+        <Typography className={classes.heading}>Total Rate</Typography>
           <ProgressBar value={83}/>
           <Typography className={classes.heading}>Difficulty Level</Typography>
         <ProgressBar value={80} classes={{colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary}}/>

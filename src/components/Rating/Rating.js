@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     
   },
   paper:{
-      padding: 20,
+      padding: 30,
       margin: '20px 0px',
       width: '100%'
     },
@@ -27,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
     span:{
       fontWeight: 'bold',
       marginLeft: 10
+    },
+    rateSection:{
+      
+    marginTop: 10,
+    marginBottom: 10
     }
 }));
 
@@ -38,7 +43,7 @@ export default function Rating(props) {
       <Paper variant="outlined" square className={classes.paper}>
       <Grid container spacing={1}>
         <Grid item lg={9}>
-          <Typography variant="h6">User</Typography>
+          <Typography  variant="h5">User</Typography>
         </Grid>
         <Grid item lg={3}>
         <IconButton
@@ -61,12 +66,14 @@ export default function Rating(props) {
           <ThumbDownIcon />
         </IconButton>
         </Grid>
-        <Grid item lg={12}>
+        <Grid item lg={12} className={classes.rateSection}>
           <Typography variant="h6">Total Rate</Typography>
           <ProgressBar/>
+        </Grid>
+        <Grid item lg={12} className={classes.rateSection}>
           <Accordion/>
         </Grid>
-        <Grid item lg={12}>
+        <Grid item lg={12} className={classes.rateSection}>
           <Typography variant="h6">Comment</Typography>
           <Typography>This is the most good course ever!</Typography>
         </Grid>
