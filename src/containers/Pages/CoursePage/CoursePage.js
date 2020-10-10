@@ -1,53 +1,75 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import {  Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
-import {connect} from 'react-redux';
-import Slider from '../../../components/Slider/Slider'
+import { connect } from 'react-redux';
+import ProgressBar from '../../../components/ProgressBar/ProgressBar'
+import Button from '@material-ui/core/Button';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  button: {
+    margin: theme.spacing(1),
   },
 }));
 
 function CoursePage(props) {
   const classes = useStyles();
   let course = props.selectedCourse;
-  if(course===null){
+  if (course === null) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
   console.log(course);
   return (
-      
-          <main className={classes.content}>
-              <Toolbar />
-              <Grid container spacing={1}>
+
+    <main className={classes.content}>
+      <Toolbar />
+      <Grid container spacing={1}>
         <Grid item lg={2}>
-           <p></p> J
+          <p></p> J
         </Grid>
-        <Grid item lg={8}>
+        <Grid item lg={6}>
           <Typography align='left' color='primary' variant='h3'>
-              {course.id}
-          </Typography>
-            
-          <Typography align='left' color='secondary' variant='h4'>
-              {course.name}
+            {course.id}
           </Typography>
 
-           <Typography align='left' color='primary' variant='h4'>
-              Level: {course.level}
-          </Typography> 
-          <Slider/>
+          <Typography align='left' color='secondary' variant='h4'>
+            {course.name}
+          </Typography>
+
+          <Typography align='left' color='primary' variant='h4'>
+            Level: {course.level}
+          </Typography>
+
         </Grid>
         <Grid item lg={2}>
-           <p></p> J
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            fullWidth
+            startIcon={<RateReviewIcon />}
+          >Rate It!</Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            className={classes.button}
+            startIcon={<FavoriteIcon />}
+          >Add To Favorite</Button>
+
         </Grid>
-        </Grid >
-        </main>
-      
+        <Grid item lg={2}>
+        </Grid>
+      </Grid >
+    </main>
+
   );
 }
 
