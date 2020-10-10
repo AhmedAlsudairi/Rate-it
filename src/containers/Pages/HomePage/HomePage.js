@@ -23,7 +23,7 @@ export default function HomePage(props) {
           <main className={classes.content}>
             <Toolbar />
 
-            <Courses/>
+            <Courses isFavorite={false}/>
           </main>
         </Grid>
       </Grid>

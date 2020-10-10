@@ -31,7 +31,8 @@ function Courses(props) {
   const { onFetchCourses } = props;
   const { courses } = props;
   useEffect(() => {
-    onFetchCourses(1);
+
+   props.isFavorite? console.log('hi') : onFetchCourses(1);
   }, [onFetchCourses]);
 
 

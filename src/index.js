@@ -8,10 +8,11 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
 import coursesReducer from './store/reducers/courses';
-
+import favoriteReducer from './store/reducers/favorite';
 const rootReducer = combineReducers({
   auth: authReducer,
-  courses: coursesReducer
+  courses: coursesReducer,
+  favorite: favoriteReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

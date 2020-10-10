@@ -50,7 +50,7 @@ export const fetchCourses = (level,keyword) => {
             
         })
         .catch(err=>{
-            // dispatch(fetchCoursesFail(err));
+            dispatch(fetchCoursesFail(err));
         });
     }
 }

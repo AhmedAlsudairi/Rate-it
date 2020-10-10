@@ -44,10 +44,6 @@ function SideDrawer(props) {
     },
     drawerContainer: {
       overflow: 'auto',
-    },
-    listItem: {
-      color: 'black',
-      textDecoration: 'none'
     }
   }));
   const classes = useStyles();
@@ -148,7 +144,7 @@ function SideDrawer(props) {
             }
             return (
 
-              <ListItem onClick={() => { selectItemHandler(item) }} selected={item.selected} button key={item.name}>
+              <ListItem component={Link} to={'/'} onClick={() => { selectItemHandler(item) }} selected={item.selected} button key={item.name}>
                 <ListItemIcon style={item.selected? {color: 'blue'}: null}>{x}</ListItemIcon>
                 <ListItemText primary={item.name} style={item.selected? {color: 'blue'}: null}/>
               </ListItem>
@@ -159,12 +155,10 @@ function SideDrawer(props) {
 
         <Divider />
         <List>
-          <Link to='/favorite' style={{ textDecoration: 'none' }}>
-            <ListItem onClick={() => { selectFavoriteItemHandler() }} selected={favoritSelected} button key='Favorite' className={classes.listItem} >
+            <ListItem component={Link} to={'/favorite'} onClick={() => { selectFavoriteItemHandler() }} selected={favoritSelected} button key='Favorite' >
               <ListItemIcon style={favoritSelected? {color: 'blue'}: null}><Favorite /></ListItemIcon>
               <ListItemText primary='Favorite' style={favoritSelected? {color: 'blue'}: null}/>
             </ListItem>
-          </Link>
         </List>
 
       </div>

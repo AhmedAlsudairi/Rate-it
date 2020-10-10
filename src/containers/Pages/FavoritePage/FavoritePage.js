@@ -26,7 +26,7 @@ function FavoritePage(props) {
           <main className={classes.content}>
             <Toolbar />
 
-  {localStorage.getItem('token')!==null? <div><Courses/> <p>{props.username}</p></div> : <Redirect to='/signin'/> }
+  {localStorage.getItem('token')!==null? <div><Courses isFavorite={true}/> <p>{props.username}</p></div> : <Redirect to='/signin'/> }
           </main>
         </Grid>
       </Grid>
