@@ -30,7 +30,7 @@ LinearProgressWithLabel.propTypes = {
 
 const useStyles = makeStyles({
   root: {
-    width: '80%',
+    width: '100%',
   },
 });
 
