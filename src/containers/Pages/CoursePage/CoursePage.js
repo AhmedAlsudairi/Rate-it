@@ -8,7 +8,10 @@ import ProgressBar from '../../../components/ProgressBar/ProgressBar'
 import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RateReviewIcon from '@material-ui/icons/RateReview';
-import Accordion from '../../../components/Accordion/Accordion'
+import Accordion from '../../../components/Accordion/Accordion';
+import Rating from '../../../components/Rating/Rating';
+import Paper from '@material-ui/core/Paper';
+
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -17,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  paper:{
+    padding: 10,
+    margin: '20px 0px',
+    
+    width: '100%'
+  }
 }));
 
 function CoursePage(props) {
@@ -71,9 +80,21 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-          <Typography>Total Rate:</Typography>
+        <Paper className={classes.paper} elevation={3}>
+          <Typography>Total Rate</Typography>
           <ProgressBar/>
+          </Paper>
           <Accordion/>
+        </Grid>
+        <Grid item lg={2}>
+        </Grid>
+        <Grid item lg={2}>
+        </Grid>
+        <Grid item lg={8}>
+          <Typography>
+            Ratings
+          </Typography>
+          <Rating>Hi</Rating>
         </Grid>
       </Grid >
     </main>
