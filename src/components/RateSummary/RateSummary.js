@@ -7,6 +7,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
+  paper:{
+    padding: 20,
+    margin: '20px 0px',
+    width: '100%'
+  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
@@ -18,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#dfb2b2'
   },
   contentDensityPrimary:{
-    backgroundColor: 'yellow'
+    backgroundColor: '#f6e300'
   },
   contentDensitySecondary:{
     backgroundColor: '#dedfb2'
@@ -43,7 +48,7 @@ export default function SimpleAccordion(props) {
 
   return (
     <div className={classes.root}>
-        <Paper {...props} elevation={10}>
+        <Paper className={classes.paper} elevation={10}>
             <Typography align="center" variant="h5">Current Rate</Typography>
         <Typography>Total Rate</Typography>
           <ProgressBar value={83}/>
