@@ -10,6 +10,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import Accordion from '../../../components/Accordion/Accordion';
 import Rating from '../../../components/Rating/Rating';
+import RatingSummary from '../../../components/RateSummary/RateSummary';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   paper:{
     padding: 10,
     margin: '20px 0px',
-    
     width: '100%'
   }
 }));
@@ -79,11 +79,7 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-        <Paper className={classes.paper} elevation={3}>
-          <Typography>Total Rate</Typography>
-          <ProgressBar/>
-          </Paper>
-          <Accordion/>
+          <RatingSummary className={classes.paper}/>
         </Grid>
         <Grid item lg={2}>
         </Grid>
