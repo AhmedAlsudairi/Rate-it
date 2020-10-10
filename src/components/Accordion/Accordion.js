@@ -14,6 +14,31 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  difficultyLevelPrimary:{
+    backgroundColor: 'red'
+  },
+  difficultyLevelSecondary:{
+    backgroundColor: '#dfb2b2'
+  },
+  contentDensityPrimary:{
+    backgroundColor: 'yellow'
+  },
+  contentDensitySecondary:{
+    backgroundColor: '#dedfb2'
+  },
+  contentUpdatePrimary:{
+    backgroundColor: 'purple'
+  },
+  contentUpdateSecondary:{
+    backgroundColor: '#cbb2df'
+  },
+  SatisfactionPrimary:{
+    backgroundColor: 'green'
+  },
+  SatisfactionSecondary:{
+    backgroundColor: '#b3dfb2'
+  },
+
 }));
 
 export default function SimpleAccordion() {
@@ -30,7 +55,7 @@ export default function SimpleAccordion() {
           <Typography className={classes.heading}>Difficulty Level</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <ProgressBar/>
+        <ProgressBar classes={{colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary}}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -42,7 +67,7 @@ export default function SimpleAccordion() {
           <Typography className={classes.heading}>Content Density</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <ProgressBar/>
+            <ProgressBar classes={{colorPrimary: classes.contentDensitySecondary, barColorPrimary: classes.contentDensityPrimary}}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -54,7 +79,7 @@ export default function SimpleAccordion() {
           <Typography className={classes.heading}>Content Update</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <ProgressBar/>
+        <ProgressBar classes={{colorPrimary: classes.contentUpdateSecondary, barColorPrimary: classes.contentUpdatePrimary}}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -66,7 +91,7 @@ export default function SimpleAccordion() {
           <Typography className={classes.heading}>Satisfaction</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <ProgressBar/>
+        <ProgressBar classes={{colorPrimary: classes.SatisfactionSecondary, barColorPrimary: classes.SatisfactionPrimary}}/>
         </AccordionDetails>
       </Accordion>
     </div>

@@ -42,19 +42,18 @@ function CoursePage(props) {
       <Toolbar />
       <Grid container spacing={1}>
         <Grid item lg={2}>
-          <p></p> J
         </Grid>
         <Grid item lg={6}>
-          <Typography align='left' color='primary' variant='h3'>
+          <Typography align='left' color='textPrimary' variant='h3'>
             {course.id}
           </Typography>
 
-          <Typography align='left' color='secondary' variant='h4'>
+          <Typography align='left' color='error' variant='h4'>
             {course.name}
           </Typography>
 
-          <Typography align='left' color='primary' variant='h4'>
-            Level: {course.level}
+          <Typography align='left' color='textSecondary' variant='h5'>
+            Level {course.level}
           </Typography>
 
         </Grid>
