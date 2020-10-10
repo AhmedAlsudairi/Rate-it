@@ -40,7 +40,7 @@ def get_root(name):
     courseName = request.args.get('courseName', type = str)
     courseId = request.args.get('courseId', type = str)
     if courseName is not None:
-        courses = Course.query.filter(Course.name.like(f'%{courseName}%')).all()
+        courses = Course.query.filter(Course.name.ilike(f'%{courseName}%')).all()
     elif courseId is not None:
         print(courseId)
         courses = Course.query.filter(Course.course_id.like(f'%{courseId}%')).all()
