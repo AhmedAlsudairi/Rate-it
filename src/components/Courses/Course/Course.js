@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import * as actions from '../../../store/actions/courses';
+
 
 const useStyles = makeStyles({
   root: {
@@ -20,13 +23,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Course(props) {
+function Course(props) {
   const classes = useStyles();
-
   return (
     <Card className={classes.root}>
         
-      <CardActionArea component={Link} to={'/coursepage'}>
+      <CardActionArea component={Link} to={'/coursepage'} onClick={()=>{props.onSelectCourse(props)}}>
         <CardMedia 
           className={classes.media}
           image="./swe_img.jpg"
@@ -52,3 +54,17 @@ export default function Course(props) {
     </Card>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSelectCourse: (course) => {
+      dispatch(actions.selectCourse(course))
+    }  
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Course);
+

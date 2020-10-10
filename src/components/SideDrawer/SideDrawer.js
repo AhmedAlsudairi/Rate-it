@@ -21,10 +21,12 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-router-dom';
 import { Hidden } from '@material-ui/core';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/courses';
 
 
 
-export default function SideDrawer(props) {
+function SideDrawer(props) {
   const matches = useMediaQuery('(max-width:600px)');
   let w = '20%';
 
@@ -51,25 +53,26 @@ export default function SideDrawer(props) {
   const classes = useStyles();
   const [favoritSelected, setFavoritSelected] = useState(props.isFavorite);
   const [listItems, setlistItems] = useState([
-    { name: 'Level 1', selected: props.isFavorite? false : true,},
-    { name: 'Level 2', selected: false },
-    { name: 'Level 3', selected: false },
-    { name: 'Level 4', selected: false },
-    { name: 'Level 5', selected: false },
-    { name: 'Level 6', selected: false },
-    { name: 'Level 7', selected: false },
-    { name: 'Level 8', selected: false }
+    { name: 'Level 1', level: 1, selected: props.isFavorite? false : true,},
+    { name: 'Level 2', level: 2, selected: false },
+    { name: 'Level 3', level: 3, selected: false },
+    { name: 'Level 4', level: 4, selected: false },
+    { name: 'Level 5', level: 5, selected: false },
+    { name: 'Level 6', level: 6, selected: false },
+    { name: 'Level 7', level: 7, selected: false },
+    { name: 'Level 8', level: 8, selected: false }
   ]);
+
   const selectItemHandler = (selectedItem) => {
     const newListIems = [
-      { name: 'Level 1', selected: false },
-      { name: 'Level 2', selected: false },
-      { name: 'Level 3', selected: false },
-      { name: 'Level 4', selected: false },
-      { name: 'Level 5', selected: false },
-      { name: 'Level 6', selected: false },
-      { name: 'Level 7', selected: false },
-      { name: 'Level 8', selected: false },
+      { name: 'Level 1', level: 1, selected: false },
+      { name: 'Level 2', level: 2, selected: false },
+      { name: 'Level 3', level: 3, selected: false },
+      { name: 'Level 4', level: 4, selected: false },
+      { name: 'Level 5', level: 5, selected: false },
+      { name: 'Level 6', level: 6, selected: false },
+      { name: 'Level 7', level: 7, selected: false },
+      { name: 'Level 8', level: 8, selected: false },
     ];
     setFavoritSelected(false);
     const updatedList = newListIems.map((item) => {
@@ -77,21 +80,23 @@ export default function SideDrawer(props) {
         item.selected = true;
       }
       return item;
-    })
-    console.log();
+    });
+
+    props.onSelectHandler(selectedItem.level);
+
     setlistItems(updatedList)
   }
 
   const selectFavoriteItemHandler = () => {
     const newListIems = [
-      { name: 'Level 1', selected: false },
-      { name: 'Level 2', selected: false },
-      { name: 'Level 3', selected: false },
-      { name: 'Level 4', selected: false },
-      { name: 'Level 5', selected: false },
-      { name: 'Level 6', selected: false },
-      { name: 'Level 7', selected: false },
-      { name: 'Level 8', selected: false },
+      { name: 'Level 1', level: 1, selected: false },
+      { name: 'Level 2', level: 2, selected: false },
+      { name: 'Level 3', level: 3, selected: false },
+      { name: 'Level 4', level: 4, selected: false },
+      { name: 'Level 5', level: 5, selected: false },
+      { name: 'Level 6', level: 6, selected: false },
+      { name: 'Level 7', level: 7, selected: false },
+      { name: 'Level 8', level: 8, selected: false },
     ];
     setlistItems(newListIems);
     setFavoritSelected(true);
@@ -168,3 +173,16 @@ export default function SideDrawer(props) {
     </React.Fragment>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSelectHandler: (level) =>
+      dispatch(actions.fetchCourses(level,null)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SideDrawer);
+

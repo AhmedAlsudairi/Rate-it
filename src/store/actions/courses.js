@@ -23,11 +23,26 @@ export const fetchCoursesFail = (error) => {
     }
 }
 
-export const fetchCourses = () => {
+export const selectCourse = (course) => {
+    localStorage.setItem('course', JSON.stringify(course));
+    return{
+        type: actionTypes.SELECT_COURSE,
+        course: course
+    }
+}
+
+export const fetchCourses = (level,keyword) => {
     return dispatch => {
         dispatch(fetchCoursesStart());
+        let path = '';
+        if(level!==null){
+            path = 'level='+level;
+        }
+        if(keyword!==null && keyword!==''){
+            path = 'courseName='+keyword+'&'+'courseId='+keyword;
+        }
 
-        axios.get('http://127.0.0.1:5000/courses?level=7')
+        axios.get('http://127.0.0.1:5000/courses?'+path)
         .then(res => {
             let fechedCourses = [];
             fechedCourses=[...res.data.courses];

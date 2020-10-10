@@ -13,11 +13,12 @@ import { Button, Hidden, List } from '@material-ui/core';
 import {NavLink } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/auth';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import * as authActions from '../../store/actions/auth';
+import * as coursesActions from '../../store/actions/courses';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -102,6 +103,10 @@ function NavigationBar(props) {
 
     setState(open);
   };
+
+  const searchHandler = (event) => {
+    props.onSearchHandler(event.target.value);
+  }
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -141,7 +146,7 @@ function NavigationBar(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-            />
+            onChange={(event)=>searchHandler(event)}/>
           </div>
           {props.isAuthenticated?
           <List>
@@ -231,9 +236,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogout: () =>
-      dispatch(actions.authLogout()),
+      dispatch(authActions.authLogout()),
     onInit: ()=>
-        dispatch(actions.authInitite())  
+        dispatch(authActions.authInitite()),
+    onSearchHandler: (keyword)=>
+        dispatch(coursesActions.fetchCourses(null,keyword))      
   };
 };
 

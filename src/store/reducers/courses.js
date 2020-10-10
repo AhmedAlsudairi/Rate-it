@@ -2,9 +2,9 @@ import * as actionTypes from '../actions/actionsTypes';
 
 const initalState = {
     courses: [],
-    selectedLevel: 1,
     loading: false,
-    error: null
+    error: null,
+    selectedCourse: null
 }
 
 const coursesStart = (state,action) => {
@@ -19,8 +19,9 @@ const coursesFail = (state,action) => {
     return {...state,...{error: action.error, loading: false}};
 }
 
-const selectLevel = (state,action) => {
-    return {...state,...{loading: false, error: null, success: false}};
+const selectCourse = (state,action) => {
+    console.log(action.course);
+    return {...state,...{selectedCourse: action.course}};
 }
 
 const coursesReducer = (state = initalState, action) => {
@@ -28,7 +29,7 @@ const coursesReducer = (state = initalState, action) => {
        case actionTypes.FETCH_COURSES_START: return coursesStart(state,action);
        case actionTypes.FETCH_COURSES_SUCCESS: return coursesSuccess(state,action);
        case actionTypes.FETCH_COURSES_FAIL: return coursesFail(state,action);
-       case actionTypes.SELECT_LEVEL: return selectLevel(state,action);
+       case actionTypes.SELECT_COURSE: return selectCourse(state,action);
        default: return state;
    }
 }

@@ -15,6 +15,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  spinner: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'center'
+  },
 }));
 
 function Courses(props) {
@@ -23,15 +31,14 @@ function Courses(props) {
   const { onFetchCourses } = props;
   const { courses } = props;
   useEffect(() => {
-    onFetchCourses();
+    onFetchCourses(1);
   }, [onFetchCourses]);
 
 
-  let fetchedCourses = <CircularProgress />;
+  let fetchedCourses = (<div className={classes.spinner}><CircularProgress/></div>);
   
   if (!props.loading) {
     fetchedCourses = courses.map(course=>{
-      console.log(course.course_id);
       return(
       <Grid item xs={4} key={course.course_id}>
       <Course 
@@ -71,8 +78,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchCourses: () =>
-      dispatch(actions.fetchCourses()),
+    onFetchCourses: (level) =>
+      dispatch(actions.fetchCourses(level,null)),
+    onSelectCourse: (course) => {
+      dispatch(actions.selectCourse(course))
+    }  
   };
 };
 
