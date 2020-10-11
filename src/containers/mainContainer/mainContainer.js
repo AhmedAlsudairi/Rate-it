@@ -5,10 +5,11 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import HomePage from '../Pages/HomePage/HomePage';
 import SignInPage from '../Pages/SignInPage/SignInPage';
 import SignUpPage from '../Pages/SignUpPage/SignUpPage';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import LogoutPage from '../Pages/LogoutPage/LogoutPage';
 import FavoritePage from '../Pages/FavoritePage/FavoritePage';
 import CoursePage from '../Pages/CoursePage/CoursePage';
+import RatingPage from '../Pages/RatingPage/RatingPage';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -26,19 +27,20 @@ export default function MainContainer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <NavigationBar />
-      
-     <Switch>
-       
-       <Route exact path='/favorite' component={FavoritePage}/>
-       
-      <Route exact path='/signin' component={SignInPage}/>
-     <Route exact path='/signup' component={SignUpPage}/>
-     <Route exact path='/logout' component={LogoutPage}/>
-     
-     <Route exact path='/' component={HomePage}/>
-     <Route exact path='/coursepage' component={CoursePage}/>
-     </Switch>
-     
+
+      <Switch>
+
+        <Route exact path='/favorite' component={FavoritePage} />
+
+        <Route exact path='/signin' component={SignInPage} />
+        <Route exact path='/signup' component={SignUpPage} />
+        <Route exact path='/logout' component={LogoutPage} />
+
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/coursepage' component={CoursePage} />
+        <Route exact path='/rate_form' component={RatingPage} />
+      </Switch>
+
     </div>
   );
 }

@@ -39,7 +39,7 @@ function Courses(props) {
 
   let fetchedCourses = (<div className={classes.spinner}><CircularProgress/></div>);
   
-  if (!props.loading) {
+  if (!props.loading && !props.favLoading) {
     fetchedCourses = courses.map(course=>{
       return(
       <Grid item xs={4} key={course.course_id}>
@@ -65,6 +65,7 @@ function Courses(props) {
 const mapStateToProps = state => {
   return {
     loading: state.courses.loading,
+    favLoading: state.favorite.loading,
     error: state.courses.error,
     courses: state.courses.courses,
     selectedLevel: state.courses.selectedLevel

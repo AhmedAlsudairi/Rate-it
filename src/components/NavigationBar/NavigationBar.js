@@ -126,13 +126,15 @@ function NavigationBar(props) {
           </Hidden>
 
           <div className={classes.title}>
-            <Button >
-              <Link to='/' style={{ textDecoration: 'none' }} >
+            <Link to='/' style={{ textDecoration: 'none' }} >
+              <Button >
+
                 <Typography className={classes.title} variant="h6" noWrap>
                   Rate It
                 </Typography>
-              </Link>
-            </Button></div>
+
+              </Button>
+            </Link></div>
 
 
 

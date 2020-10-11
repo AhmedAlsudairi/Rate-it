@@ -21,70 +21,59 @@ export default function DiscreteSlider(props) {
     return (
         <div className={classes.root} >
             <Typography id="discrete-slider" gutterBottom>
-                Temperature
+            Difficulty Level
       </Typography>
             <Slider
+                classes={{colorPrimary: 'red'}}
                 defaultValue={30}
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={10}
+                step={1}
                 marks
-                min={10}
-                max={110}
+                min={0}
+                max={100}
             />
             <Typography id="discrete-slider" gutterBottom>
-                Temperature
+            Content Density
       </Typography>
             <Slider
                 defaultValue={30}
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={10}
+                step={1}
                 marks
-                min={10}
-                max={110}
+                min={0}
+                max={100}
             />
             <Typography id="discrete-slider" gutterBottom>
-                Temperature
+            Content Update
       </Typography>
             <Slider
                 defaultValue={30}
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={10}
+                step={1}
                 marks
-                min={10}
-                max={110}
+                min={0}
+                max={100}
             />
             <Typography id="discrete-slider" gutterBottom>
-                Temperature
+            Satisfaction
       </Typography>
             <Slider
                 defaultValue={30}
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={10}
+                step={1}
                 marks
-                min={10}
-                max={110}
+                min={0}
+                max={100}
             />
-            <Typography id="discrete-slider" gutterBottom>
-                Temperature
-      </Typography>
-            <Slider
-                defaultValue={30}
-                getAriaValueText={valuetext}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                step={10}
-                marks
-                min={10}
-                max={110}
-            />
+            
         </div>
     );
 }
