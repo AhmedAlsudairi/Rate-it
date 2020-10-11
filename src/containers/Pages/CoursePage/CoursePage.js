@@ -4,17 +4,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { Grid, Box } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import ProgressBar from '../../../components/ProgressBar/ProgressBar'
 import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RateReviewIcon from '@material-ui/icons/RateReview';
-import Accordion from '../../../components/Accordion/Accordion';
 import Rating from '../../../components/Rating/Rating';
 import RatingSummary from '../../../components/RateSummary/RateSummary';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
-
+import * as favoriteActions from '../../../store/actions/favorite';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -35,20 +33,17 @@ const useStyles = makeStyles((theme) => ({
 
 function CoursePage(props) {
   const classes = useStyles();
-  const [isFavorite,setIsFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   let course = props.selectedCourse;
   if (course === null) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
-  let {favorite}= props
-  useEffect(()=>{
-    console.log(favorite);
-    console.log(course.course_id);
-    console.log(favorite.includes(course.course_id));
+  let { favorite } = props
+  useEffect(() => {
     setIsFavorite(favorite.includes(course.course_id))
-  },[favorite,course])
+  }, [favorite, course])
   return (
 
     <main className={classes.content}>
@@ -60,7 +55,7 @@ function CoursePage(props) {
           <Typography align='left' color='textPrimary' variant='h3'>
             {course.id}
           </Typography>
-    
+
           <Typography align='left' color='error' variant='h4'>
             {course.name}
           </Typography>
@@ -78,22 +73,24 @@ function CoursePage(props) {
             fullWidth
             startIcon={<RateReviewIcon />}
           >Rate It!</Button>
-          {isFavorite?
-          <Button
-            variant="contained"
-            color="secondary"
-            fullWidth
-            className={classes.button}
-            startIcon={<DeleteIcon />}
-          >Remove Favorite</Button>:
-         <Button
-            variant="contained"
-            color="secondary"
-            fullWidth
-            className={classes.button}
-            startIcon={<FavoriteIcon />}
-          >Add To Favorite</Button> }
-          
+          {isFavorite ?
+            <Button
+              onClick={() => { props.onRemoveFavorite(course) }}
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+            >Remove Favorite</Button> :
+            <Button
+              onClick={() => { props.onAddFavorite(course) }}
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.button}
+              startIcon={<FavoriteIcon />}
+            >Add To Favorite</Button>}
+
 
         </Grid>
         <Grid item lg={2}>
@@ -117,9 +114,9 @@ function CoursePage(props) {
             <Rating />
           </Paper>
 
-        <Box mt={8}>
-          <Copyright />
-        </Box>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
         </Grid>
       </Grid >
     </main>
@@ -138,9 +135,18 @@ const mapStateToProps = state => {
   };
 };
 
-
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddFavorite: (course) => {
+      dispatch(favoriteActions.addFavorite(course))
+    },
+    onRemoveFavorite: (course) => {
+      dispatch(favoriteActions.removeFavorite(course))
+    },
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CoursePage);
 

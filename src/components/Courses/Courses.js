@@ -34,7 +34,7 @@ function Courses(props) {
   useEffect(() => {
 
    props.isFavorite? onFetchFavorite() : onFetchCourses(1);
-  }, [onFetchCourses]);
+  }, [onFetchCourses,onFetchFavorite,props.isFavorite]);
 
 
   let fetchedCourses = (<div className={classes.spinner}><CircularProgress/></div>);

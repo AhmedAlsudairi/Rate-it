@@ -39,7 +39,7 @@ export const fetchCourses = (level,keyword) => {
             path = 'level='+level;
         }
         if(keyword!==null && keyword!==''){
-            path = 'courseName='+keyword+'&'+'courseId='+keyword;
+            path = 'courseName='+keyword+'&courseId='+keyword;
         }
 
         axios.get('http://127.0.0.1:5000/courses?'+path)
