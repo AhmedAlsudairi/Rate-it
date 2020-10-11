@@ -11,7 +11,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import * as actions from '../../../store/actions/courses';
+import * as courseActions from '../../../store/actions/courses';
+import * as favoriteActions from '../../../store/actions/favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles({
@@ -28,9 +29,6 @@ function Course(props) {
   const [isFavorite,setIsFavorite] = useState(false)
   let {favorite}= props
   useEffect(()=>{
-    console.log(favorite);
-    console.log(props.course.course_id);
-    console.log(favorite.includes(props.course.course_id));
     setIsFavorite(favorite.includes(props.course.course_id))
   },[favorite])
   return (
@@ -52,10 +50,10 @@ function Course(props) {
       </CardActionArea>
       <CardActions>
       {isFavorite? 
-      <IconButton aria-label="add to favorites">
+      <IconButton onClick={()=>{props.onRemoveFavorite(props.course)}} aria-label="add to favorites">
       <FavoriteIcon />
     </IconButton> : 
-      <IconButton aria-label="add to favorites">
+      <IconButton onClick={()=>{props.onAddFavorite(props.course)}} aria-label="add to favorites">
           <FavoriteBorderIcon />
         </IconButton>}
         <IconButton aria-label="share">
@@ -79,8 +77,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSelectCourse: (course) => {
-      dispatch(actions.selectCourse(course))
-    }  
+      dispatch(courseActions.selectCourse(course))
+    },
+    onAddFavorite: (course) => {
+      dispatch(favoriteActions.addFavorite(course))
+    },
+    onRemoveFavorite: (course) => {
+      dispatch(favoriteActions.removeFavorite(course))
+    },
   };
 };
 

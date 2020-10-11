@@ -39,3 +39,37 @@ export const fetchFavorite = () => {
         });
     }
 }
+
+export const addFavorite = (course) => {
+    return dispatch => {
+        dispatch(fetchFavoriteStart());
+
+        axios.get('http://127.0.0.1:5000/favorite?/add')
+        .then(res => {
+            let fechedFavorite = [];
+            fechedFavorite=[...res.data.favorite];
+            dispatch(fetchFavoriteSuccess(fechedFavorite));
+            
+        })
+        .catch(err=>{
+            dispatch(fetchFavoriteFail(err));
+        });
+    }
+}
+
+export const removeFavorite = (course) => {
+    return dispatch => {
+        dispatch(fetchFavoriteStart());
+
+        axios.get('http://127.0.0.1:5000/favorite?/remove')
+        .then(res => {
+            let fechedFavorite = [];
+            fechedFavorite=[...res.data.favorite];
+            dispatch(fetchFavoriteSuccess(fechedFavorite));
+            
+        })
+        .catch(err=>{
+            dispatch(fetchFavoriteFail(err));
+        });
+    }
+}
