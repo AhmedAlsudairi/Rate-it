@@ -43,6 +43,10 @@ POST '/signup'
 POST '/login'
 GET '/usernames/<string:username>'
 GET '/emails/<string:emails>'
+GET '/favourite'
+POST '/favourite'
+DELETE '/favourite'
+
 
 GET '/'
 - main page for the website
@@ -145,4 +149,80 @@ GET '/emails/<string:email>'
 - if email doesn't exist:
 {
     'success': True
+}
+
+
+GET '/favourite'
+- Get all favourite courses for a user
+- Request Arguments: course, jwt
+
+Request:
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdDEyMzQiLCJleHAiOjE2MDI0NzE0MDF9.JMTte6WA12YwFJha1NEBuFbMazczOZZwucsjveCAZrg"
+}
+Response:
+{
+    "favourite_courses": [
+        {
+            "course": {
+                "content_density": null,
+                "content_update": null,
+                "course_id": "SWE 333",
+                "difficulty_level": null,
+                "level": 6,
+                "name": "Software quality assurance",
+                "ratings": [],
+                "satisfaction": null,
+                "total_rate": null
+            },
+            "user_id": "test1234"
+        }
+    ],
+    "result_count": 1,
+    "username": "test1234"
+}
+
+
+POST '/favourite'
+- create a new favourite course for a user
+- Request Arguments: course, jwt
+Request:
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdDEyMzQiLCJleHAiOjE2MDI0NzE0MDF9.JMTte6WA12YwFJha1NEBuFbMazczOZZwucsjveCAZrg",
+    "course": "SWE 333"
+}
+Response:
+{
+    "favourite_courses": [
+        {
+            "course": {
+                "content_density": null,
+                "content_update": null,
+                "course_id": "SWE 333",
+                "difficulty_level": null,
+                "level": 6,
+                "name": "Software quality assurance",
+                "ratings": [],
+                "satisfaction": null,
+                "total_rate": null
+            },
+            "user_id": "test1234"
+        }
+    ],
+    "result_count": 1,
+    "username": "test1234"
+}
+DELETE '/favourite'
+- Delete favourite course from a user
+- Request Arguments: course, jwt
+Request:
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdDEyMzQiLCJleHAiOjE2MDI0NzE0MDF9.JMTte6WA12YwFJha1NEBuFbMazczOZZwucsjveCAZrg",
+    "course": "SWE 333"
+}
+Response:
+{
+    "favourite_courses": [],
+    "result_count": 0,
+    "username": "test1234"
 }
