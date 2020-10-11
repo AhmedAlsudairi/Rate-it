@@ -31,16 +31,15 @@ LinearProgressWithLabel.propTypes = {
 const useStyles = makeStyles({
   root: {
     width: '100%',
-  },
+  }
 });
 
-export default function LinearWithValueLabel() {
+export default function LinearWithValueLabel(props) {
   const classes = useStyles();
-  const [progress, setProgress] = React.useState(37);
 
   return (
     <div className={classes.root}>
-      <LinearProgressWithLabel value={progress} />
+      <LinearProgressWithLabel  {...props}/>
     </div>
   );
 }

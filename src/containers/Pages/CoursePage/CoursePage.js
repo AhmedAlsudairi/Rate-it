@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import ProgressBar from '../../../components/ProgressBar/ProgressBar'
 import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import RateReviewIcon from '@material-ui/icons/RateReview';
-import Accordion from '../../../components/Accordion/Accordion';
 import Rating from '../../../components/Rating/Rating';
+import RatingSummary from '../../../components/RateSummary/RateSummary';
 import Paper from '@material-ui/core/Paper';
-
+import DeleteIcon from '@material-ui/icons/Delete';
+import Copyright from '../../../components/Copyright/Copyright';
+import * as favoriteActions from '../../../store/actions/favorite';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -20,41 +21,47 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
-  paper:{
+  paper: {
     padding: 10,
     margin: '20px 0px',
-    
     width: '100%'
-  }
+  },
+  title: {
+    fontWeight: 'bold'
+  },
 }));
 
 function CoursePage(props) {
   const classes = useStyles();
+  const [isFavorite, setIsFavorite] = useState(false)
+
   let course = props.selectedCourse;
   if (course === null) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
-  console.log(course);
+  let { favorite } = props
+  useEffect(() => {
+    setIsFavorite(favorite.includes(course.course_id))
+  }, [favorite, course])
   return (
 
     <main className={classes.content}>
       <Toolbar />
       <Grid container spacing={1}>
         <Grid item lg={2}>
-          <p></p> J
         </Grid>
         <Grid item lg={6}>
-          <Typography align='left' color='primary' variant='h3'>
+          <Typography align='left' color='textPrimary' variant='h3'>
             {course.id}
           </Typography>
 
-          <Typography align='left' color='secondary' variant='h4'>
+          <Typography align='left' color='error' variant='h4'>
             {course.name}
           </Typography>
 
-          <Typography align='left' color='primary' variant='h4'>
-            Level: {course.level}
+          <Typography align='left' color='textSecondary' variant='h5'>
+            Level {course.level}
           </Typography>
 
         </Grid>
@@ -66,13 +73,24 @@ function CoursePage(props) {
             fullWidth
             startIcon={<RateReviewIcon />}
           >Rate It!</Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            fullWidth
-            className={classes.button}
-            startIcon={<FavoriteIcon />}
-          >Add To Favorite</Button>
+          {isFavorite ?
+            <Button
+              onClick={() => { props.onRemoveFavorite(course) }}
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+            >Remove Favorite</Button> :
+            <Button
+              onClick={() => { props.onAddFavorite(course) }}
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.button}
+              startIcon={<FavoriteIcon />}
+            >Add To Favorite</Button>}
+
 
         </Grid>
         <Grid item lg={2}>
@@ -80,21 +98,25 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-        <Paper className={classes.paper} elevation={3}>
-          <Typography>Total Rate</Typography>
-          <ProgressBar/>
-          </Paper>
-          <Accordion/>
+          <RatingSummary className={classes.paper} />
         </Grid>
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-          <Typography>
-            Ratings
+          <Paper className={classes.paper} elevation={10}>
+            <Typography align="center" variant="h5" className={classes.title} >
+              Ratings
           </Typography>
-          <Rating>Hi</Rating>
+            <Rating />
+            <Rating />
+            <Rating />
+          </Paper>
+
+          <Box mt={8}>
+            <Copyright />
+          </Box>
         </Grid>
       </Grid >
     </main>
@@ -103,18 +125,28 @@ function CoursePage(props) {
 }
 
 
-
 const mapStateToProps = state => {
   return {
     loading: state.courses.loading,
     error: state.courses.error,
-    selectedCourse: state.courses.selectedCourse
+    selectedCourse: state.courses.selectedCourse,
+    isAuthenticated: state.auth.token !== null,
+    favorite: state.favorite.favorite
   };
 };
 
-
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddFavorite: (course) => {
+      dispatch(favoriteActions.addFavorite(course))
+    },
+    onRemoveFavorite: (course) => {
+      dispatch(favoriteActions.removeFavorite(course))
+    },
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CoursePage);
 
