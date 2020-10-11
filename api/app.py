@@ -152,32 +152,95 @@ def log_in():
         'jwt': encoded_jwt
 
     })
-    @app.errorhandler(404)
-    def not_found(error):
-        return jsonify({
-            'success': False,
-            'error': 404,
-            'message': 'RESOURCE NOT FOUND!'
+@app.route('/favourite', methods=['GET'])
+@requires_auth_decorator
+def get_favourite_list(name):
+    user = User.query.get(name)
+    
+    favourite = user.favourite_courses
+    favourite_format = [course.format() for course in favourite]
+    
+    return jsonify({
+        "username": name,
+        "favourite": favourite_format,
+        'result_count': len(favourite_format)
+    })
 
-        }), 404
+@app.route('/favourite', methods=['POST'])
+@requires_auth_decorator
+def create_favourite_list(name):
+    body = request.get_json()
+    course_id = body.get('course')
+    if 'course' not in body:
+        abort(422)
+    user = User.query.get(name)
+    course = Course.query.get(course_id)
+    favourite_check = FavouriteList.query.filter_by(user_id=name, course_id=body.get('course')).first()
+    if favourite_check is not None:
+        abort(422)
+    favourite = FavouriteList(user_id=name, course_id=body.get('course'))
+    
+    favourite.insert()
+    favourite = user.favourite_courses
+    favourite_format = [course.format() for course in favourite]
+    
+    return jsonify({
+        "username": name,
+        'favourite_courses': favourite_format,
+        'result_count': len(favourite_format)
+    })
 
-    @app.errorhandler(422)
-    def unproccesable(error):
-        return jsonify({
-            'success': False,
-            'error': 422,
-            'message': 'UNPROCESSABLE ENTITY!'
+@app.route('/favourite', methods=['DELETE'])
+@requires_auth_decorator
+def delete_favourite_list(name):
+    body = request.get_json()
+    course_id = body.get('course')
+    if 'course' not in body:
+        abort(422)
+    user = User.query.get(name)
+    course = Course.query.get(course_id)
+    favourite = FavouriteList.query.filter_by(user_id=name, course_id=body.get('course')).first()
+    if favourite is None:
+        abort(404)
+    favourite.delete()
+    favourite = user.favourite_courses
+    favourite_format = [course.format() for course in favourite]
+    
+    return jsonify({
+        "username": name,
+        'favourite_courses': favourite_format,
+        'result_count': len(favourite_format)
+    })
+    
 
-        }), 422
 
-    @app.errorhandler(405)
-    def not_allowed(error):
-        return jsonify({
-            'success': False,
-            'error': 405,
-            'message': 'METHOD NOT ALLOWED!'
 
-        }), 405
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        'success': False,
+        'error': 404,
+        'message': 'RESOURCE NOT FOUND!'
+
+    }), 404
+
+@app.errorhandler(422)
+def unproccesable(error):
+    return jsonify({
+        'success': False,
+        'error': 422,
+        'message': 'UNPROCESSABLE ENTITY!'
+
+    }), 422
+
+@app.errorhandler(405)
+def not_allowed(error):
+    return jsonify({
+        'success': False,
+        'error': 405,
+        'message': 'METHOD NOT ALLOWED!'
+
+    }), 405
 
 @app.errorhandler(AuthError)
 def auth_error(e):

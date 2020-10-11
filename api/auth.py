@@ -15,7 +15,7 @@ def get_auth_token():
     if request.get_json() is None:
         return None
     body = request.get_json()
-    if jwt not in body:
+    if 'jwt' not in body:
         return None
     auth = body.get('jwt')
     if auth is None:
@@ -35,6 +35,11 @@ def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
             token = get_auth_token()
+            if token is None:
+                raise AuthError({
+                'code': 'authorization_header_missing',
+                'description': 'Authorization header is expected.'
+                }, 401)
             name = verify_decode_jwt(token)
 
             return f(name, *args, **kwargs)

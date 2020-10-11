@@ -74,7 +74,6 @@ class Course(db.Model):
             'content_update': self.content_update,
             'total_rate': self.total_rate,
             'satisfaction': self.satisfaction,
-            'favourite_by': self.favourite_by,
             'ratings': self.ratings
         }
     def insert(self):
@@ -107,7 +106,7 @@ class FavouriteList(db.Model):
     def format(self):
         return {
             'user_id': self.user_id,
-            'course_id': self.course_id
+            'course': Course.query.get(self.course_id).format()
         }
 
 class Rating(db.Model):
