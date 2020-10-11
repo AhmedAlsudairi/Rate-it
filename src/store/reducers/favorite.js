@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionsTypes';
 
 const initalState = {
-    favorite: [],
+    favorite: ["ENGS 100"],
     loading: false,
     error: null
 }

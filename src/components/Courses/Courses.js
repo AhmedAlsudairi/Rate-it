@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Course from './Course/Course';
 import {connect} from 'react-redux';
-import * as actions from '../../store/actions/courses';
-
+import * as courseActions from '../../store/actions/courses';
+import * as favoriteActions from '../../store/actions/favorite';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +29,11 @@ function Courses(props) {
   const classes = useStyles();
 
   const { onFetchCourses } = props;
+  const { onFetchFavorite } = props;
   const { courses } = props;
   useEffect(() => {
 
-   props.isFavorite? console.log('hi') : onFetchCourses(1);
+   props.isFavorite? onFetchFavorite() : onFetchCourses(1);
   }, [onFetchCourses]);
 
 
@@ -43,14 +44,7 @@ function Courses(props) {
       return(
       <Grid item xs={4} key={course.course_id}>
       <Course 
-      id={course.course_id}
-      name={course.name}
-      level={course.level}
-      content_density={course.content_density}
-      content_update={course.content_update}
-      difficulty_level={course.difficulty_level}
-      satisfaction={course.satisfaction}
-      total_rate={course.total_rate}
+      course={course}
       /></Grid>
       
     )});
@@ -80,9 +74,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchCourses: (level) =>
-      dispatch(actions.fetchCourses(level,null)),
+      dispatch(courseActions.fetchCourses(level,null)),
     onSelectCourse: (course) => {
-      dispatch(actions.selectCourse(course))
+      dispatch(courseActions.selectCourse(course))
+    },
+    onFetchFavorite: (favorite) => {
+      dispatch(favoriteActions.fetchFavorite(favorite))
     }  
   };
 };

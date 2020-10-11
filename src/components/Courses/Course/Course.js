@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -12,7 +12,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/courses';
-
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles({
   root: {
@@ -25,28 +25,39 @@ const useStyles = makeStyles({
 
 function Course(props) {
   const classes = useStyles();
+  const [isFavorite,setIsFavorite] = useState(false)
+  let {favorite}= props
+  useEffect(()=>{
+    console.log(favorite);
+    console.log(props.course.course_id);
+    console.log(favorite.includes(props.course.course_id));
+    setIsFavorite(favorite.includes(props.course.course_id))
+  },[favorite])
   return (
     <Card className={classes.root}>
         
-      <CardActionArea component={Link} to={'/coursepage'} onClick={()=>{props.onSelectCourse(props)}}>
+      <CardActionArea component={Link} to={'/coursepage'} onClick={()=>{props.onSelectCourse(props.course)}}>
         <CardMedia 
           className={classes.media}
-          image="./swe_img.jpg"
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.id}
+            {props.course.course_id}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.name}
+            {props.course.name}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
+      {isFavorite? 
       <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+      <FavoriteIcon />
+    </IconButton> : 
+      <IconButton aria-label="add to favorites">
+          <FavoriteBorderIcon />
+        </IconButton>}
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
@@ -54,6 +65,16 @@ function Course(props) {
     </Card>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.courses.loading,
+    error: state.courses.error,
+    selectedCourse: state.courses.selectedCourse,
+    isAuthenticated: state.auth.token !== null,
+    favorite: state.favorite.favorite
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -64,7 +85,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Course);
 

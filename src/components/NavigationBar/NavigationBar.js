@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Button, Hidden, List } from '@material-ui/core';
-import {NavLink } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accountButton: {
     marginLeft: theme.spacing(2),
-    
+
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -112,29 +112,32 @@ function NavigationBar(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Hidden smUp>
-          <React.Fragment>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-             onClick={toggleDrawer(true)}><MenuIcon /></IconButton>
-          <Drawer open={state} onClose={toggleDrawer(false)}>
-            <SideDrawer open={state}/>
-          </Drawer>
-        </React.Fragment>
+            <React.Fragment>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer(true)}><MenuIcon /></IconButton>
+              <Drawer open={state} onClose={toggleDrawer(false)}>
+                <SideDrawer open={state} />
+              </Drawer>
+            </React.Fragment>
           </Hidden>
-        
-        <NavLink to='/' style={{textDecoration: 'none'}} className={classes.title}>
-          <Button>
-            <Typography className={classes.title} variant="h6" noWrap>
-            Rate It
-          </Typography>
-          </Button>
-           
-        </NavLink>
-         
-          
+
+          <div className={classes.title}>
+            <Button >
+              <Link to='/' style={{ textDecoration: 'none' }} >
+                <Typography className={classes.title} variant="h6" noWrap>
+                  Rate It
+                </Typography>
+              </Link>
+            </Button></div>
+
+
+
+
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -146,79 +149,79 @@ function NavigationBar(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-            onChange={(event)=>searchHandler(event)}/>
+              onChange={(event) => searchHandler(event)} />
           </div>
-          {props.isAuthenticated?
-          <List>
-            <Hidden xsDown>
-            <NavLink to='/signin' activeStyle={{color: 'white'}}>
-            <IconButton
-            
-            edge="start"
-            className={classes.accountButton}
-            aria-label="open drawer"
-          >
-            <NotificationsIcon style={{ color: 'white' }}/>
-          </IconButton>
-          </NavLink>
-            <NavLink to='/logout' >
-          <IconButton
-          
-          edge="start"
-          className={classes.accountButton}
-          color="inherit"
-          aria-label="open drawer"
-        >
-          <ExitToAppIcon style={{ color: 'white' }}/>
-        </IconButton>
-        </NavLink>
-            </Hidden>
-        
-        <NavLink to='/signin' activeStyle={{color: 'white'}}>
-            <IconButton
-            
-            edge="start"
-            className={classes.accountButton}
-            aria-label="open drawer"
-            onClick={handleClick}
-            aria-controls="simple-menu" 
-            aria-haspopup="true"
-          >
-            <AccountCircleIcon style={{ color: 'white' }}/>
-          </IconButton>
-          </NavLink>
+          {props.isAuthenticated ?
+            <List>
+              <Hidden xsDown>
+                <NavLink to='' activeStyle={{ color: 'white' }}>
+                  <IconButton
 
-          <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem disabled>{props.username}</MenuItem>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My ratings</MenuItem>
-        <Hidden smUp>
-        <MenuItem onClick={handleClose}>Notifications</MenuItem>
-        <MenuItem onClick={()=>{props.onLogout(); handleClose();}}>Logout</MenuItem>
-        </Hidden>
-      </Menu>
-          </List>
-          
-        :
-        
-          <NavLink to='/signin' activeStyle={{color: 'white'}}>
-            <IconButton
-            
-            edge="start"
-            className={classes.accountButton}
-            aria-label="open drawer"
-          >
-            <AccountCircleIcon style={{ color: 'white' }}/>
-          </IconButton>
-          </NavLink> }
-          
-          
+                    edge="start"
+                    className={classes.accountButton}
+                    aria-label="open drawer"
+                  >
+                    <NotificationsIcon style={{ color: 'white' }} />
+                  </IconButton>
+                </NavLink>
+                <NavLink to='/logout' >
+                  <IconButton
+
+                    edge="start"
+                    className={classes.accountButton}
+                    color="inherit"
+                    aria-label="open drawer"
+                  >
+                    <ExitToAppIcon style={{ color: 'white' }} />
+                  </IconButton>
+                </NavLink>
+              </Hidden>
+
+              <NavLink to={props.isAuthenticated ? props.location.pathname : '/signin'} activeStyle={{ color: 'white' }}>
+                <IconButton
+
+                  edge="start"
+                  className={classes.accountButton}
+                  aria-label="open drawer"
+                  onClick={handleClick}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                >
+                  <AccountCircleIcon style={{ color: 'white' }} />
+                </IconButton>
+              </NavLink>
+
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem disabled>{props.username}</MenuItem>
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My ratings</MenuItem>
+                <Hidden smUp>
+                  <MenuItem onClick={handleClose}>Notifications</MenuItem>
+                  <MenuItem onClick={() => { props.onLogout(); handleClose(); }}>Logout</MenuItem>
+                </Hidden>
+              </Menu>
+            </List>
+
+            :
+
+            <NavLink to='/signin' activeStyle={{ color: 'white' }}>
+              <IconButton
+
+                edge="start"
+                className={classes.accountButton}
+                aria-label="open drawer"
+              >
+                <AccountCircleIcon style={{ color: 'white' }} />
+              </IconButton>
+            </NavLink>}
+
+
         </Toolbar>
       </AppBar>
     </div>
@@ -237,14 +240,14 @@ const mapDispatchToProps = dispatch => {
   return {
     onLogout: () =>
       dispatch(authActions.authLogout()),
-    onInit: ()=>
-        dispatch(authActions.authInitite()),
-    onSearchHandler: (keyword)=>
-        dispatch(coursesActions.fetchCourses(null,keyword))      
+    onInit: () =>
+      dispatch(authActions.authInitite()),
+    onSearchHandler: (keyword) =>
+      dispatch(coursesActions.fetchCourses(null, keyword))
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(NavigationBar);
+)(NavigationBar));
