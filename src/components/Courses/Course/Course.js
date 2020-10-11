@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as courseActions from '../../../store/actions/courses';
 import * as favoriteActions from '../../../store/actions/favorite';
@@ -53,7 +53,7 @@ function Course(props) {
       <IconButton onClick={()=>{props.onRemoveFavorite(props.course)}} aria-label="add to favorites">
       <FavoriteIcon />
     </IconButton> : 
-      <IconButton onClick={()=>{props.onAddFavorite(props.course)}} aria-label="add to favorites">
+      <IconButton onClick={() => { props.isAuthenticated? props.onAddFavorite(props.course): props.history.push('/signin') }} aria-label="add to favorites">
           <FavoriteBorderIcon />
         </IconButton>}
         <IconButton aria-label="share">
@@ -88,8 +88,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Course);
+)(Course));
 

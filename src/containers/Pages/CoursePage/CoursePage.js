@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -53,7 +54,7 @@ function CoursePage(props) {
         </Grid>
         <Grid item lg={6}>
           <Typography align='left' color='textPrimary' variant='h3'>
-            {course.id}
+            {course.course_id}
           </Typography>
 
           <Typography align='left' color='error' variant='h4'>
@@ -66,13 +67,16 @@ function CoursePage(props) {
 
         </Grid>
         <Grid item lg={2}>
+          <Link to='/rate_form' style={{ textDecoration: 'none', color: 'white' }}>
           <Button
             variant="contained"
             color="primary"
             className={classes.button}
             fullWidth
             startIcon={<RateReviewIcon />}
-          >Rate It!</Button>
+          >Rate It!
+          </Button>
+          </Link>
           {isFavorite ?
             <Button
               onClick={() => { props.onRemoveFavorite(course) }}
@@ -83,7 +87,7 @@ function CoursePage(props) {
               startIcon={<DeleteIcon />}
             >Remove Favorite</Button> :
             <Button
-              onClick={() => { props.onAddFavorite(course) }}
+              onClick={() => { props.isAuthenticated? props.onAddFavorite(course): props.history.push('/signin') }}
               variant="contained"
               color="secondary"
               fullWidth
