@@ -38,12 +38,8 @@ def after_request(response):
 @check_log_in
 def get_root(name):
     courseName = request.args.get('courseName', type = str)
-    courseId = request.args.get('courseId', type = str)
     if courseName is not None:
-        courses = Course.query.filter(Course.name.ilike(f'%{courseName}%')).all()
-    elif courseId is not None:
-        print(courseId)
-        courses = Course.query.filter(Course.course_id.like(f'%{courseId}%')).all()
+        courses = Course.query.filter(Course.name.ilike(f'%{courseName}%') | Course.course_id.ilike(f'%{courseName}%')).all()
     else:
         level = request.args.get('level', 1, type = int)
         courses = Course.query.filter_by(level = level).all()
