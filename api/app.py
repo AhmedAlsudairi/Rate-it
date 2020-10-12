@@ -162,7 +162,7 @@ def get_favourite_list(name):
     
     return jsonify({
         "username": name,
-        "favourite_course": favourite_format,
+        "favourite_courses": favourite_format,
         'result_count': len(favourite_format)
     })
 
