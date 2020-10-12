@@ -175,7 +175,7 @@ def create_favourite_list(name):
         abort(422)
     user = User.query.get(name)
     course = Course.query.get(course_id)
-    favourite_check = FavouriteList.query.filter_by(user_id=name, course_id=body.get('course')).first()
+    favourite = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
     if favourite_check is not None:
         abort(422)
     favourite = FavouriteList(user_id=name, course_id=body.get('course'))
@@ -193,13 +193,12 @@ def create_favourite_list(name):
 @app.route('/favourite', methods=['DELETE'])
 @requires_auth_decorator
 def delete_favourite_list(name):
-    body = request.get_json()
-    course_id = body.get('course')
-    if 'course' not in body:
-        abort(422)
+    course_id = request.args.get('course', None, type = str)
+    if course_id is None:
+        abort(404)
     user = User.query.get(name)
     course = Course.query.get(course_id)
-    favourite = FavouriteList.query.filter_by(user_id=name, course_id=body.get('course')).first()
+    favourite = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
     if favourite is None:
         abort(404)
     favourite.delete()
