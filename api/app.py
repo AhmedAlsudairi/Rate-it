@@ -169,16 +169,15 @@ def get_favourite_list(name):
 @app.route('/favourite', methods=['POST'])
 @requires_auth_decorator
 def create_favourite_list(name):
-    body = request.get_json()
-    course_id = body.get('course')
-    if 'course' not in body:
-        abort(422)
+    course_id = request.args.get('course', None, type = str)
+    if course_id is None:
+        abort(404)
     user = User.query.get(name)
     course = Course.query.get(course_id)
-    favourite = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
+    favourite_check = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
     if favourite_check is not None:
         abort(422)
-    favourite = FavouriteList(user_id=name, course_id=body.get('course'))
+    favourite = FavouriteList(user_id=name, course_id=course_id)
     
     favourite.insert()
     favourite = user.favourite_courses
