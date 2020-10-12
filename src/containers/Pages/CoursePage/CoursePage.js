@@ -41,10 +41,11 @@ function CoursePage(props) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
-  let { favorite } = props
-  useEffect(() => {
-    setIsFavorite(favorite.includes(course.course_id))
-  }, [favorite, course])
+  let {favoriteIDs}= props
+  useEffect(()=>{
+    
+    setIsFavorite(favoriteIDs.includes(course.course_id))
+  },[favoriteIDs,course])
   return (
 
     <main className={classes.content}>
@@ -79,15 +80,15 @@ function CoursePage(props) {
           </Link>
           {isFavorite ?
             <Button
-              onClick={() => { props.onRemoveFavorite(course) }}
+            onClick={()=>{props.onRemoveFavorite(props.selectedCourse,props.token)}}
               variant="contained"
-              color="secondary"
+              style={{backgroundColor: '#bc0000', color: 'white'}}
               fullWidth
               className={classes.button}
               startIcon={<DeleteIcon />}
             >Remove Favorite</Button> :
             <Button
-              onClick={() => { props.isAuthenticated? props.onAddFavorite(course): props.history.push('/signin') }}
+            onClick={() => { props.isAuthenticated? props.onAddFavorite(props.selectedCourse,props.token): props.history.push('/signin') }}
               variant="contained"
               color="secondary"
               fullWidth
@@ -135,17 +136,19 @@ const mapStateToProps = state => {
     error: state.courses.error,
     selectedCourse: state.courses.selectedCourse,
     isAuthenticated: state.auth.token !== null,
-    favorite: state.favorite.favorite
+    favorite: state.favorite.favorite,
+    favoriteIDs: state.favorite.favoriteIDs,
+    token: state.auth.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFavorite: (course) => {
-      dispatch(favoriteActions.addFavorite(course))
+    onAddFavorite: (course,token) => {
+      dispatch(favoriteActions.addFavorite(course,token))
     },
-    onRemoveFavorite: (course) => {
-      dispatch(favoriteActions.removeFavorite(course))
+    onRemoveFavorite: (course,token) => {
+      dispatch(favoriteActions.removeFavorite(course,token))
     },
   };
 };
