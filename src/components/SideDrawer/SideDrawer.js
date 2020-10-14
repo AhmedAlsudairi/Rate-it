@@ -113,11 +113,6 @@ function SideDrawer(props) {
       
       <Toolbar />
       <div className={classes.drawerContainer}>
-        <ListItem >
-          <ListItemIcon><FilterListIcon/></ListItemIcon>
-          <ListItemText primary="Fillter" />
-        </ListItem>
-        <Divider />
         <List>
 
           {listItems.map((item, index) => {

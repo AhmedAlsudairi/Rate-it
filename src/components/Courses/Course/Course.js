@@ -51,7 +51,7 @@ function Course(props) {
       <CardActions>
       {isFavorite? 
       <IconButton onClick={()=>{props.onRemoveFavorite(props.course,props.token)}} aria-label="remove from favorites">
-      <FavoriteIcon style={{color: '#ce0000'}}/>
+      <FavoriteIcon color="secondary"/>
     </IconButton> : 
       <IconButton onClick={() => { props.isAuthenticated? props.onAddFavorite(props.course,props.token): props.history.push('/signin') }} aria-label="add to favorites">
           <FavoriteBorderIcon />

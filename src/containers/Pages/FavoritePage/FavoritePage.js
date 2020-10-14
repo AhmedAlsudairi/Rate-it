@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import SideDrawer from '../../../components/SideDrawer/SideDrawer';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box, Typography } from '@material-ui/core';
 import Courses from '../../../components/Courses/Courses';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/auth';
@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 100
+  }
 }));
 
 function FavoritePage(props) {
@@ -28,6 +33,7 @@ function FavoritePage(props) {
           <Toolbar />
 
           {localStorage.getItem('token') !== null ? <div><Courses isFavorite={true} /></div> : <Redirect to='/signin' />}
+          {props.favorite.length=== 0? <Typography variant='h4' className={classes.empty} align='center'>Your Favorite list is Empty!</Typography>:null}
           <Box mt={8}>
             <Copyright />
           </Box>
@@ -42,7 +48,8 @@ const mapStateToProps = state => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticated: state.auth.token !== null,
-    username: state.auth.username
+    username: state.auth.username,
+    favorite: state.favorite.favorite,
   };
 };
 

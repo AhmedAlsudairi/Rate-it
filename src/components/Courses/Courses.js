@@ -33,8 +33,12 @@ function Courses(props) {
   const { courses } = props;
   const { favorite } = props;
   useEffect(() => {
-   props.isFavorite? onFetchFavorite(props.token) : onFetchCourses(1);
-  }, [onFetchCourses,onFetchFavorite,props.isFavorite]);
+    if(props.isAuthenticated){
+      onFetchFavorite(props.token);
+    }
+    onFetchCourses(1);
+  
+  }, [onFetchCourses,onFetchFavorite,props.isFavorite,props.isAuthenticated,props.token]);
 
 
   
@@ -81,7 +85,8 @@ const mapStateToProps = state => {
     courses: state.courses.courses,
     favorite: state.favorite.favorite,
     selectedLevel: state.courses.selectedLevel,
-    token: state.auth.token
+    token: state.auth.token,
+    isAuthenticated: state.auth.token !== null
   };
 };
 
