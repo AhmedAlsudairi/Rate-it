@@ -17,7 +17,6 @@ import Filter5Icon from '@material-ui/icons/Filter5';
 import Filter6Icon from '@material-ui/icons/Filter6';
 import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-router-dom';
 import { Hidden } from '@material-ui/core';

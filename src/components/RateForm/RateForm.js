@@ -5,8 +5,8 @@ import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function valuetext(value) {
-    return `${value}°C`;
-}
-
-
 
 function DiscreteSlider(props) {
     const classes = useStyles();
@@ -39,7 +34,7 @@ function DiscreteSlider(props) {
     const [contentDensity,setContentDensity] = useState(30);
     const [contentUpdate,setContentUpdate] = useState(30);
     const [satisfaction,setSatisfaction] = useState(30);
-
+    const [comment,setComment] = useState('');
     let course = props.selectedCourse;
     if (course === null) {
         course = JSON.parse(localStorage.getItem('course'));
@@ -61,27 +56,30 @@ function DiscreteSlider(props) {
         setSatisfaction(value)
     }
     
+    const onCommentChangeHandler = (event) => {
+        setComment(event.target.value)
+    }
     const submitHandler = event => {
         event.preventDefault();
-        const average = (difficultyLevel+contentDensity+contentUpdate+satisfaction) / 100;
-        
+        const totalRate = (difficultyLevel+contentDensity+contentUpdate+satisfaction) / 4;
+
     };
 
     const cancelHandler = event => {
         event.preventDefault();
-        // props.onAuth(username.value, password.value);
+        props.history.goBack();
     };
 
     return (
         <div className={classes.root} >
             <Grid container spacing={1}>
-                <Grid item lg={3} md={4} sm={3}></Grid>
-                <Grid item lg={6} md={4} sm={3}>
-                    <Grid item lg={12} md={4} sm={3}>
+                <Grid item lg={3} ></Grid>
+                <Grid item lg={6} >
+                    <Grid item lg={12} >
                         <Typography variant="h3">Rate {course.course_id} </Typography>
                         <Typography variant="h5" color="textSecondary">Plese fill the form to post the rate:</Typography>
                     </Grid>
-                    <Grid item lg={12} md={4} sm={3}>
+                    <Grid item lg={12} >
                         <Typography id="discrete-slider" gutterBottom>
                             Difficulty Level
       </Typography>
@@ -94,10 +92,10 @@ function DiscreteSlider(props) {
                             marks
                             min={0}
                             max={100}
-                            
+                            value={difficultyLevel}
                         />
                     </Grid>
-                    <Grid item lg={12} md={4} sm={3}>
+                    <Grid item lg={12} >
                         <Typography id="discrete-slider" gutterBottom>
                             Content Density
       </Typography>
@@ -110,9 +108,10 @@ function DiscreteSlider(props) {
                             marks
                             min={0}
                             max={100}
+                            value={contentDensity}
                         />
                     </Grid>
-                    <Grid item lg={12} md={4} sm={3}>
+                    <Grid item lg={12} >
                         <Typography id="discrete-slider" gutterBottom>
                             Content Update
       </Typography>
@@ -125,9 +124,10 @@ function DiscreteSlider(props) {
                             marks
                             min={0}
                             max={100}
+                            value={contentUpdate}
                         />
                     </Grid>
-                    <Grid item lg={12} md={4} sm={3}>
+                    <Grid item lg={12} >
                         <Typography id="discrete-slider" gutterBottom>
                             Satisfaction
       </Typography>
@@ -140,9 +140,10 @@ function DiscreteSlider(props) {
                             marks
                             min={0}
                             max={100}
+                            value={satisfaction}
                         />
                     </Grid>
-                    <Grid item lg={12} md={4} sm={3}>
+                    <Grid item lg={12} >
                         <TextField
                             id="outlined-multiline-static"
                             label="Comment"
@@ -151,9 +152,10 @@ function DiscreteSlider(props) {
                             placeholder="Write comment..."
                             variant="outlined"
                             className={classes.comment}
+                            onChange={onCommentChangeHandler}
                         />
                     </Grid>
-                    <Grid item lg={8} md={4} sm={3} className={classes.root}>
+                    <Grid item lg={8}  className={classes.root}>
                         <Button
                             type="submit"
                             fullWidth
@@ -178,7 +180,7 @@ function DiscreteSlider(props) {
       </Button>
                     </Grid>
                 </Grid>
-                <Grid item lg={3} md={4} sm={3}></Grid>
+                <Grid item lg={3} ></Grid>
 
             </Grid>
         </div>
@@ -196,7 +198,7 @@ const mapDispatchToProps = dispatch => {
 
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(DiscreteSlider);
+)(DiscreteSlider));
