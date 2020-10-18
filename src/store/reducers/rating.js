@@ -1,7 +1,9 @@
 import * as actionType from '../actions/actionsTypes';
 
 const intialState = {
-    loading: false
+    loading: false,
+    rating: null,
+    loadingRatings: false
 } 
 
 const reducer = (state=intialState , action) => {
@@ -16,9 +18,6 @@ const reducer = (state=intialState , action) => {
                 loading: true
             }
         case actionType.RATE_SUCCESS:
-            const newRate= {
-                ...action.rateData
-            }
             return {
                 ...state,
                 loading:false
@@ -28,6 +27,23 @@ const reducer = (state=intialState , action) => {
         return {
             ...state,
             loading: false
+        }
+
+        case actionType.FETCH_RATINGS_START: 
+        return {
+            ...state,
+            loadingRatings: true
+        }
+        case actionType.FETCH_RATINGS_SUCCESS: 
+        return {
+            ...state,
+            loadingRatings: false,
+            rating: action.rating
+        }
+        case actionType.FETCH_RATINGS_FAIL: 
+        return {
+            ...state,
+            loadingRatings: false
         }
         default: 
         return state;

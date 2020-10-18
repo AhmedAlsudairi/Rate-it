@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
+import * as ratingActions from '../../../store/actions/rating';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -23,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   paper: {
-    padding: 10,
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
     margin: '20px 0px',
     width: '100%'
   },
@@ -45,6 +48,7 @@ function CoursePage(props) {
   useEffect(()=>{
     
     setIsFavorite(favoriteIDs.includes(course.course_id))
+    props.onFetchRatings(course)
   },[favoriteIDs,course])
   return (
 
@@ -149,6 +153,9 @@ const mapDispatchToProps = dispatch => {
     },
     onRemoveFavorite: (course,token) => {
       dispatch(favoriteActions.removeFavorite(course,token))
+    },
+    onFetchRatings: (course) => {
+      dispatch(ratingActions.fetchRatings(course))
     },
   };
 };

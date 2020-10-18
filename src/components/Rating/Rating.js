@@ -71,12 +71,13 @@ export default function Rating(props) {
           <ProgressBar/>
         </Grid>
         <Grid item lg={12} className={classes.rateSection}>
-          <Accordion/>
-        </Grid>
-        <Grid item lg={12} className={classes.rateSection}>
           <Typography variant="h6">Comment</Typography>
           <Typography>This is the most good course ever!</Typography>
         </Grid>
+        <Grid item lg={12} className={classes.rateSection}>
+          <Accordion/>
+        </Grid>
+
       </Grid>
         
         

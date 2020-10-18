@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as actions from '../../store/actions/rating';
+import { Paper } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
@@ -22,47 +24,62 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
+    },
+    paper: {
+        padding: 20,
+        margin: '20px 0px',
+        width: '100%'
       },
-    buttons: {}
 }));
 
 
 
 function DiscreteSlider(props) {
     const classes = useStyles();
-    const [difficultyLevel,setDifficultyLevel] = useState(30);
-    const [contentDensity,setContentDensity] = useState(30);
-    const [contentUpdate,setContentUpdate] = useState(30);
-    const [satisfaction,setSatisfaction] = useState(30);
-    const [comment,setComment] = useState('');
+    const [difficultyLevel, setDifficultyLevel] = useState(30);
+    const [contentDensity, setContentDensity] = useState(30);
+    const [contentUpdate, setContentUpdate] = useState(30);
+    const [satisfaction, setSatisfaction] = useState(30);
+    const [comment, setComment] = useState('');
     let course = props.selectedCourse;
     if (course === null) {
         course = JSON.parse(localStorage.getItem('course'));
     }
 
-    const onDifficultyLevelChange = (event,value) => {
+    const onDifficultyLevelChange = (event, value) => {
         setDifficultyLevel(value)
     }
 
-    const onContentDensityChange = (event,value) => {
+    const onContentDensityChange = (event, value) => {
         setContentDensity(value)
     }
 
-    const onContentUpdateChange = (event,value) => {
+    const onContentUpdateChange = (event, value) => {
         setContentUpdate(value)
     }
 
-    const onSatisfactionChange = (event,value) => {
+    const onSatisfactionChange = (event, value) => {
         setSatisfaction(value)
     }
-    
+
     const onCommentChangeHandler = (event) => {
         setComment(event.target.value)
     }
     const submitHandler = event => {
         event.preventDefault();
-        const totalRate = (difficultyLevel+contentDensity+contentUpdate+satisfaction) / 4;
+        const totalRate = (difficultyLevel + contentDensity + contentUpdate + satisfaction) / 4;
+        const rate = {
+            username: props.username,
+            courseID: course.course_id,
+            difficultyLevel: difficultyLevel,
+            contentDensity: contentDensity,
+            contentUpdate: contentUpdate,
+            satisfaction: satisfaction,
+            totalRate: totalRate,
+            comment: comment
+        }
 
+        props.onRatePost(rate)
     };
 
     const cancelHandler = event => {
@@ -79,16 +96,17 @@ function DiscreteSlider(props) {
                         <Typography variant="h3">Rate {course.course_id} </Typography>
                         <Typography variant="h5" color="textSecondary">Plese fill the form to post the rate:</Typography>
                     </Grid>
+                    <Paper className={classes.paper} elevation={10}>
                     <Grid item lg={12} >
                         <Typography id="discrete-slider" gutterBottom>
                             Difficulty Level
       </Typography>
                         <Slider
-                        onChange={onDifficultyLevelChange}
+                            onChange={onDifficultyLevelChange}
                             defaultValue={30}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
-                            step={1}
+                            step={5}
                             marks
                             min={0}
                             max={100}
@@ -100,11 +118,11 @@ function DiscreteSlider(props) {
                             Content Density
       </Typography>
                         <Slider
-                        onChange={onContentDensityChange}
+                            onChange={onContentDensityChange}
                             defaultValue={30}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
-                            step={1}
+                            step={5}
                             marks
                             min={0}
                             max={100}
@@ -116,11 +134,11 @@ function DiscreteSlider(props) {
                             Content Update
       </Typography>
                         <Slider
-                        onChange={onContentUpdateChange}
+                            onChange={onContentUpdateChange}
                             defaultValue={30}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
-                            step={1}
+                            step={5}
                             marks
                             min={0}
                             max={100}
@@ -132,19 +150,20 @@ function DiscreteSlider(props) {
                             Satisfaction
       </Typography>
                         <Slider
-                        onChange={onSatisfactionChange}
+                            onChange={onSatisfactionChange}
                             defaultValue={30}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
-                            step={1}
+                            step={5}
                             marks
                             min={0}
                             max={100}
                             value={satisfaction}
                         />
                     </Grid>
-                    <Grid item lg={12} >
+                    <Grid item lg={11} >
                         <TextField
+                        fullWidth
                             id="outlined-multiline-static"
                             label="Comment"
                             multiline
@@ -155,7 +174,8 @@ function DiscreteSlider(props) {
                             onChange={onCommentChangeHandler}
                         />
                     </Grid>
-                    <Grid item lg={8}  className={classes.root}>
+                    </Paper>
+                    <Grid item lg={8} className={classes.root}>
                         <Button
                             type="submit"
                             fullWidth
@@ -178,7 +198,8 @@ function DiscreteSlider(props) {
                         >
                             Cancel
       </Button>
-                    </Grid>
+      </Grid>
+                   
                 </Grid>
                 <Grid item lg={3} ></Grid>
 
@@ -189,13 +210,14 @@ function DiscreteSlider(props) {
 
 const mapStateToProps = state => {
     return {
-        selectedCourse: state.courses.selectedCourse
+        selectedCourse: state.courses.selectedCourse,
+        username: state.auth.username
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onRatePost: (rate) => dispatch(actions.rateProcess(rate))
     };
 };
 export default withRouter(connect(
