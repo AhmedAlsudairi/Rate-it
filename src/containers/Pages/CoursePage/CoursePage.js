@@ -46,10 +46,10 @@ function CoursePage(props) {
 
   let {favoriteIDs}= props
   useEffect(()=>{
-    
     setIsFavorite(favoriteIDs.includes(course.course_id))
     props.onFetchRatings(course)
-  },[favoriteIDs,course])
+  },[favoriteIDs,course,props.onFetchRatings])
+
   return (
 
     <main className={classes.content}>
@@ -107,7 +107,14 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-          <RatingSummary className={classes.paper} />
+          <RatingSummary 
+          totalRate={course.total_rate}
+          difficulty={course.difficulty_level}
+          density={course.content_density}
+          update={course.content_update}
+          satisfaction={course.satisfaction}
+          className={classes.paper}
+           />
         </Grid>
         <Grid item lg={2}>
         </Grid>
