@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Box , Paper, Typography} from '@material-ui/core';
+import { Grid, Box, Paper, Typography } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import * as actions from '../../../store/actions/auth';
+import * as authActions from '../../../store/actions/auth';
+import * as myRatings from '../../../store/actions/myRatings';
 import { connect } from 'react-redux';
 import Copyright from '../../../components/Copyright/Copyright';
 import RateForm from '../../../components/RateForm/RateForm';
@@ -19,33 +20,38 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: 10,
         margin: '20px 0px',
         width: '100%'
-      },
-      title: {
+    },
+    title: {
         fontWeight: 'bold'
-      },
+    },
 }));
+
+
 
 function FavoritePage(props) {
     const classes = useStyles();
 
+    useEffect(() => {
+        props.onFetchMyRatings(props.username)
+    }, [props.onFetchMyRatings, props.username])
     return (
         <Grid container spacing={1}>
             <Grid item lg={12} md={8} sm={9}>
                 <main className={classes.content}>
                     <Toolbar />
 
-                    {localStorage.getItem('token') !== null?
+                    {localStorage.getItem('token') !== null ?
                         (<Grid container spacing={1}>
                             <Grid item lg={2}>
                             </Grid>
                             <Grid item lg={8}>
                                 <Paper className={classes.paper} elevation={10}>
                                     <Typography align="center" variant="h5" className={classes.title} >
-                                      My Ratings
+                                        My Ratings
           </Typography>
-                                    <Rating isMyRating={true}/>
-                                    <Rating isMyRating={true}/>
-                                    <Rating isMyRating={true}/>
+                                    <Rating isMyRating={true} />
+                                    <Rating isMyRating={true} />
+                                    <Rating isMyRating={true} />
                                 </Paper>
                             </Grid>
                         </Grid>) : <Redirect to='/signin' />}
@@ -73,9 +79,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (username, password) =>
-            dispatch(actions.authSignIn(username, password)),
+            dispatch(authActions.authSignIn(username, password)),
         onInit: () =>
-            dispatch(actions.authInitite())
+            dispatch(authActions.authInitite()),
+        onFetchMyRatings: (username) =>
+            dispatch(myRatings.fetchMyRatings(username))
     };
 };
 

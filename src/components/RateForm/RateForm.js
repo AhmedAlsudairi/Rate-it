@@ -175,7 +175,7 @@ function DiscreteSlider(props) {
                         />
                     </Grid>
                     </Paper>
-                    <Grid item lg={8} className={classes.root}>
+                    <Grid item lg={12} className={classes.root}>
                         <Button
                             type="submit"
                             fullWidth

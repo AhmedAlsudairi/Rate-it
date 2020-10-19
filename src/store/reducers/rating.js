@@ -2,7 +2,7 @@ import * as actionType from '../actions/actionsTypes';
 
 const intialState = {
     loading: false,
-    rating: null,
+    rating: [],
     loadingRatings: false
 } 
 
