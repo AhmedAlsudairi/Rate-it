@@ -27,10 +27,10 @@ const useStyles = makeStyles({
 function Course(props) {
   const classes = useStyles();
   const [isFavorite,setIsFavorite] = useState(false)
-  let {favorite}= props
+  let {favoriteIDs}= props
   useEffect(()=>{
-    setIsFavorite(favorite.includes(props.course.course_id))
-  },[favorite])
+    setIsFavorite(favoriteIDs.includes(props.course.course_id))
+  },[favoriteIDs])
   return (
     <Card className={classes.root}>
         
@@ -50,10 +50,10 @@ function Course(props) {
       </CardActionArea>
       <CardActions>
       {isFavorite? 
-      <IconButton onClick={()=>{props.onRemoveFavorite(props.course)}} aria-label="add to favorites">
-      <FavoriteIcon />
+      <IconButton onClick={()=>{props.onRemoveFavorite(props.course,props.token)}} aria-label="remove from favorites">
+      <FavoriteIcon color="secondary"/>
     </IconButton> : 
-      <IconButton onClick={() => { props.isAuthenticated? props.onAddFavorite(props.course): props.history.push('/signin') }} aria-label="add to favorites">
+      <IconButton onClick={() => { props.isAuthenticated? props.onAddFavorite(props.course,props.token): props.history.push('/signin') }} aria-label="add to favorites">
           <FavoriteBorderIcon />
         </IconButton>}
         <IconButton aria-label="share">
@@ -70,7 +70,9 @@ const mapStateToProps = state => {
     error: state.courses.error,
     selectedCourse: state.courses.selectedCourse,
     isAuthenticated: state.auth.token !== null,
-    favorite: state.favorite.favorite
+    favorite: state.favorite.favorite,
+    favoriteIDs: state.favorite.favoriteIDs,
+    token: state.auth.token
   };
 };
 
@@ -79,11 +81,11 @@ const mapDispatchToProps = dispatch => {
     onSelectCourse: (course) => {
       dispatch(courseActions.selectCourse(course))
     },
-    onAddFavorite: (course) => {
-      dispatch(favoriteActions.addFavorite(course))
+    onAddFavorite: (course,token) => {
+      dispatch(favoriteActions.addFavorite(course,token))
     },
-    onRemoveFavorite: (course) => {
-      dispatch(favoriteActions.removeFavorite(course))
+    onRemoveFavorite: (course,token) => {
+      dispatch(favoriteActions.removeFavorite(course,token))
     },
   };
 };

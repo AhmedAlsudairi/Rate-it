@@ -10,6 +10,7 @@ import LogoutPage from '../Pages/LogoutPage/LogoutPage';
 import FavoritePage from '../Pages/FavoritePage/FavoritePage';
 import CoursePage from '../Pages/CoursePage/CoursePage';
 import RatingPage from '../Pages/RatingPage/RatingPage';
+import MyRatingsPage from '../Pages/MyRatingsPage/MyRatings';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -39,6 +40,7 @@ export default function MainContainer(props) {
         <Route exact path='/' component={HomePage} />
         <Route exact path='/coursepage' component={CoursePage} />
         <Route exact path='/rate_form' component={RatingPage} />
+        <Route exact path='/my_ratings' component={MyRatingsPage} />
       </Switch>
 
     </div>

@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
+import * as ratingActions from '../../../store/actions/rating';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -23,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   paper: {
-    padding: 10,
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
     margin: '20px 0px',
     width: '100%'
   },
@@ -41,10 +44,12 @@ function CoursePage(props) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
-  let { favorite } = props
-  useEffect(() => {
-    setIsFavorite(favorite.includes(course.course_id))
-  }, [favorite, course])
+  let {favoriteIDs}= props
+  useEffect(()=>{
+    setIsFavorite(favoriteIDs.includes(course.course_id))
+    props.onFetchRatings(course)
+  },[favoriteIDs,course,props.onFetchRatings])
+
   return (
 
     <main className={classes.content}>
@@ -79,15 +84,15 @@ function CoursePage(props) {
           </Link>
           {isFavorite ?
             <Button
-              onClick={() => { props.onRemoveFavorite(course) }}
+            onClick={()=>{props.onRemoveFavorite(props.selectedCourse,props.token)}}
               variant="contained"
-              color="secondary"
+              style={{backgroundColor: '#bc0000', color: 'white'}}
               fullWidth
               className={classes.button}
               startIcon={<DeleteIcon />}
             >Remove Favorite</Button> :
             <Button
-              onClick={() => { props.isAuthenticated? props.onAddFavorite(course): props.history.push('/signin') }}
+            onClick={() => { props.isAuthenticated? props.onAddFavorite(props.selectedCourse,props.token): props.history.push('/signin') }}
               variant="contained"
               color="secondary"
               fullWidth
@@ -102,7 +107,14 @@ function CoursePage(props) {
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={8}>
-          <RatingSummary className={classes.paper} />
+          <RatingSummary 
+          totalRate={course.total_rate}
+          difficulty={course.difficulty_level}
+          density={course.content_density}
+          update={course.content_update}
+          satisfaction={course.satisfaction}
+          className={classes.paper}
+           />
         </Grid>
         <Grid item lg={2}>
         </Grid>
@@ -135,17 +147,22 @@ const mapStateToProps = state => {
     error: state.courses.error,
     selectedCourse: state.courses.selectedCourse,
     isAuthenticated: state.auth.token !== null,
-    favorite: state.favorite.favorite
+    favorite: state.favorite.favorite,
+    favoriteIDs: state.favorite.favoriteIDs,
+    token: state.auth.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFavorite: (course) => {
-      dispatch(favoriteActions.addFavorite(course))
+    onAddFavorite: (course,token) => {
+      dispatch(favoriteActions.addFavorite(course,token))
     },
-    onRemoveFavorite: (course) => {
-      dispatch(favoriteActions.removeFavorite(course))
+    onRemoveFavorite: (course,token) => {
+      dispatch(favoriteActions.removeFavorite(course,token))
+    },
+    onFetchRatings: (course) => {
+      dispatch(ratingActions.fetchRatings(course))
     },
   };
 };

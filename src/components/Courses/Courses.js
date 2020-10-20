@@ -31,16 +31,31 @@ function Courses(props) {
   const { onFetchCourses } = props;
   const { onFetchFavorite } = props;
   const { courses } = props;
+  const { favorite } = props;
   useEffect(() => {
+    if(props.isAuthenticated){
+      onFetchFavorite(props.token);
+    }
+    onFetchCourses(1);
+  
+  }, [onFetchCourses,onFetchFavorite,props.isFavorite,props.isAuthenticated,props.token]);
 
-   props.isFavorite? onFetchFavorite() : onFetchCourses(1);
-  }, [onFetchCourses,onFetchFavorite,props.isFavorite]);
 
-
+  
   let fetchedCourses = (<div className={classes.spinner}><CircularProgress/></div>);
   
   if (!props.loading && !props.favLoading) {
-    fetchedCourses = courses.map(course=>{
+    fetchedCourses = props.isFavorite?
+    favorite.map(item=>{
+      return(
+      <Grid item xs={4} key={item.course.course_id}>
+      <Course 
+      course={item.course}
+      /></Grid>
+      
+    )})
+    :
+     courses.map(course=>{
       return(
       <Grid item xs={4} key={course.course_id}>
       <Course 
@@ -68,7 +83,10 @@ const mapStateToProps = state => {
     favLoading: state.favorite.loading,
     error: state.courses.error,
     courses: state.courses.courses,
-    selectedLevel: state.courses.selectedLevel
+    favorite: state.favorite.favorite,
+    selectedLevel: state.courses.selectedLevel,
+    token: state.auth.token,
+    isAuthenticated: state.auth.token !== null
   };
 };
 
@@ -79,8 +97,8 @@ const mapDispatchToProps = dispatch => {
     onSelectCourse: (course) => {
       dispatch(courseActions.selectCourse(course))
     },
-    onFetchFavorite: (favorite) => {
-      dispatch(favoriteActions.fetchFavorite(favorite))
+    onFetchFavorite: (token) => {
+      dispatch(favoriteActions.fetchFavorite(token))
     }  
   };
 };

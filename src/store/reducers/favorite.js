@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionsTypes';
 
 const initalState = {
-    favorite: ["ENGS 100"],
+    favorite: [],
+    favoriteIDs: [],
     loading: false,
     error: null
 }
@@ -11,7 +12,8 @@ const favoriteStart = (state,action) => {
 }
 
 const favoriteSuccess = (state,action) => {
-    return {...state,...{loading: false, error: null,  favorite: action.favorite}};
+    let IDs = action.favorite.map((item)=> item.course.course_id);
+    return {...state,...{loading: false, error: null,  favorite: action.favorite, favoriteIDs: IDs}};
 }
 
 const favoriteFail = (state,action) => {

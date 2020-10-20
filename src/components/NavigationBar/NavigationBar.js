@@ -96,6 +96,11 @@ function NavigationBar(props) {
     setAnchorEl(null);
   };
 
+  const handleMyRatings = () => {
+    setAnchorEl(null);
+    props.history.push('/my_ratings')
+  };
+
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -202,7 +207,7 @@ function NavigationBar(props) {
               >
                 <MenuItem disabled>{props.username}</MenuItem>
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My ratings</MenuItem>
+                <MenuItem onClick={handleMyRatings}>My ratings</MenuItem>
                 <Hidden smUp>
                   <MenuItem onClick={handleClose}>Notifications</MenuItem>
                   <MenuItem onClick={() => { props.onLogout(); handleClose(); }}>Logout</MenuItem>

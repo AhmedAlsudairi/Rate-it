@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ProgressBar from '..//ProgressBar/ProgressBar'
+import { Grid } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -14,28 +15,28 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
-  difficultyLevelPrimary:{
+  difficultyLevelPrimary: {
     backgroundColor: 'red'
   },
-  difficultyLevelSecondary:{
+  difficultyLevelSecondary: {
     backgroundColor: '#dfb2b2'
   },
-  contentDensityPrimary:{
+  contentDensityPrimary: {
     backgroundColor: 'yellow'
   },
-  contentDensitySecondary:{
+  contentDensitySecondary: {
     backgroundColor: '#dedfb2'
   },
-  contentUpdatePrimary:{
+  contentUpdatePrimary: {
     backgroundColor: 'purple'
   },
-  contentUpdateSecondary:{
+  contentUpdateSecondary: {
     backgroundColor: '#cbb2df'
   },
-  SatisfactionPrimary:{
+  SatisfactionPrimary: {
     backgroundColor: 'green'
   },
-  SatisfactionSecondary:{
+  SatisfactionSecondary: {
     backgroundColor: '#b3dfb2'
   },
 
@@ -52,46 +53,27 @@ export default function SimpleAccordion() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Difficulty Level</Typography>
+          <Typography className={classes.heading}>Rate Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <ProgressBar classes={{colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary}}/>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography className={classes.heading}>Content Density</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            <ProgressBar classes={{colorPrimary: classes.contentDensitySecondary, barColorPrimary: classes.contentDensityPrimary}}/>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Content Update</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-        <ProgressBar classes={{colorPrimary: classes.contentUpdateSecondary, barColorPrimary: classes.contentUpdatePrimary}}/>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Satisfaction</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-        <ProgressBar classes={{colorPrimary: classes.SatisfactionSecondary, barColorPrimary: classes.SatisfactionPrimary}}/>
+          <Grid container={true} spacing={1}>
+            <Grid item lg={12}><Typography className={classes.heading}>Difficulty Level</Typography>
+              <ProgressBar classes={{ colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary }} />
+            </Grid>
+            <Grid item lg={12}>
+              <Typography className={classes.heading}>Content Density</Typography>
+              <ProgressBar classes={{ colorPrimary: classes.contentDensitySecondary, barColorPrimary: classes.contentDensityPrimary }} />
+            </Grid>
+            <Grid item lg={12}>
+              <Typography className={classes.heading}>Content Update</Typography>
+              <ProgressBar classes={{ colorPrimary: classes.contentUpdateSecondary, barColorPrimary: classes.contentUpdatePrimary }} />
+            </Grid>
+            <Grid item lg={12}>
+              <Typography className={classes.heading}>Satisfaction</Typography>
+              <ProgressBar classes={{ colorPrimary: classes.SatisfactionSecondary, barColorPrimary: classes.SatisfactionPrimary }} />
+            </Grid>
+
+          </Grid>
         </AccordionDetails>
       </Accordion>
     </div>

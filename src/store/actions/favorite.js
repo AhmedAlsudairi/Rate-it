@@ -23,14 +23,43 @@ export const fetchFavoriteFail = (error) => {
     }
 }
 
-export const fetchFavorite = () => {
+export const fetchFavorite = (token) => {
+    
     return dispatch => {
         dispatch(fetchFavoriteStart());
-
-        axios.get('http://127.0.0.1:5000/favorite?')
+        
+        console.log(token);
+        axios.get('http://127.0.0.1:5000/favourite',{
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          })
         .then(res => {
             let fechedFavorite = [];
-            fechedFavorite=[...res.data.favorite];
+            fechedFavorite=[...res.data.favourite_courses];
+            console.log(res.data.favourite_courses);
+            dispatch(fetchFavoriteSuccess(fechedFavorite));
+            
+        })
+        .catch(err=>{
+            console.log(err);
+            dispatch(fetchFavoriteFail(err));
+        });
+    }
+}
+
+export const addFavorite = (course,token) => {
+    return dispatch => {
+        
+        axios.post('http://127.0.0.1:5000/favourite?course='+course.course_id,null,{
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          })
+        .then(res => {
+            let fechedFavorite = [];
+            fechedFavorite=[...res.data.favourite_courses];
+            console.log(res.data.favourite_courses);
             dispatch(fetchFavoriteSuccess(fechedFavorite));
             
         })
@@ -40,31 +69,18 @@ export const fetchFavorite = () => {
     }
 }
 
-export const addFavorite = (course) => {
+export const removeFavorite = (course,token) => {
     return dispatch => {
-        dispatch(fetchFavoriteStart());
 
-        axios.get('http://127.0.0.1:5000/favorite?/add')
+        axios.delete('http://127.0.0.1:5000/favourite?course='+course.course_id,{
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          })
         .then(res => {
             let fechedFavorite = [];
-            fechedFavorite=[...res.data.favorite];
-            dispatch(fetchFavoriteSuccess(fechedFavorite));
-            
-        })
-        .catch(err=>{
-            dispatch(fetchFavoriteFail(err));
-        });
-    }
-}
-
-export const removeFavorite = (course) => {
-    return dispatch => {
-        dispatch(fetchFavoriteStart());
-
-        axios.get('http://127.0.0.1:5000/favorite?/remove')
-        .then(res => {
-            let fechedFavorite = [];
-            fechedFavorite=[...res.data.favorite];
+            fechedFavorite=[...res.data.favourite_courses];
+            console.log(res.data.favourite_courses);
             dispatch(fetchFavoriteSuccess(fechedFavorite));
             
         })

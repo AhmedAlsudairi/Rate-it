@@ -9,10 +9,12 @@ import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
 import coursesReducer from './store/reducers/courses';
 import favoriteReducer from './store/reducers/favorite';
+import ratingReducer from './store/reducers/rating';
 const rootReducer = combineReducers({
   auth: authReducer,
   courses: coursesReducer,
-  favorite: favoriteReducer
+  favorite: favoriteReducer,
+  rating: ratingReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
