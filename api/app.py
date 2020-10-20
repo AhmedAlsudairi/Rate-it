@@ -171,7 +171,7 @@ def get_favourite_list(name):
 def create_favourite_list(name):
     course_id = request.args.get('course', None, type = str)
     if course_id is None:
-        abort(404)
+        abort(422)
     user = User.query.get(name)
     course = Course.query.get(course_id)
     favourite_check = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
@@ -194,7 +194,7 @@ def create_favourite_list(name):
 def delete_favourite_list(name):
     course_id = request.args.get('course', None, type = str)
     if course_id is None:
-        abort(404)
+        abort(422)
     user = User.query.get(name)
     course = Course.query.get(course_id)
     favourite = FavouriteList.query.filter(FavouriteList.user_id==name, FavouriteList.course_id.ilike(f'%{course_id}%')).first()
@@ -209,8 +209,103 @@ def delete_favourite_list(name):
         'favourite_courses': favourite_format,
         'result_count': len(favourite_format)
     })
+
+
+def update_rating(course):
+    length = 1
+    if len(course.ratings) != 0:
+        length = len(course.ratings)
+    total_difficulty, total_density, total_update, total_satisfaction, total_rating = 0,0,0,0,0
+    for rating in course.ratings:
+        total_difficulty = total_difficulty + rating.difficulty_level
+        total_density = total_density + rating.content_density
+        total_update = total_update + rating.content_update
+        total_satisfaction = total_satisfaction + rating.satisfaction
+        total_rating = total_rating + rating.total_rate
     
 
+    course.difficulty_level = total_difficulty/length
+    course.content_density = total_density/length
+    course.content_update = total_update/length
+    course.satisfaction = total_satisfaction/length
+    course.total_rate = total_rating/length
+
+    
+    course.update()
+
+
+@app.route('/ratings', methods=['GET'])
+def get_ratings():
+    course_id = request.args.get('course_id', None, type = str)
+    if course_id is None:
+        abort(422)
+    
+    course = Course.query.get(course_id)
+    ratings = [rating.format() for rating in course.ratings]
+    if course is None:
+        abort(404)
+    
+    return jsonify({
+        'ratings': course.format()
+    })
+    
+@app.route('/ratings', methods=['POST'])
+def create_rating():
+    body = request.get_json()
+    if 'username' not in body:
+        abort(422)
+    course_id = body.get('course_id')
+    username = body.get('username')
+    difficulty_level = body.get('difficulty_level')
+    content_density = body.get('content_density')
+    content_update = body.get('content_update')
+    satisfaction = body.get('satisfaction')
+
+    course = Course.query.get(course_id)
+    user = User.query.get(username)
+    if course is None or user is None:
+        abort(404)
+    
+    total_rate = (difficulty_level+content_density+content_update+satisfaction)/4
+    rating = Rating(user_id = username, course_id = course_id, difficulty_level = difficulty_level,
+     content_density=content_density, content_update=content_update, satisfaction=satisfaction, total_rate=total_rate)
+    
+    rating.insert()
+    update_rating(course)
+
+    return jsonify({
+        'ratings': rating.format()
+    })
+
+@app.route('/ratings', methods=['DELETE'])
+def delete_rating():
+    username = request.args.get('username', None, type = str)
+    course_id = request.args.get('course_id', None, type = str)
+    if username is None or course_id is None:
+        abort(422)
+    rating = Rating.query.get((username,course_id))
+    course = Course.query.get(course_id)
+
+    if rating is None or course is None:
+        abort(404)
+    
+    rating.delete()
+    update_rating(course)
+
+    return jsonify({
+        'success': True
+    })
+
+@app.route('/myRatings', methods=['GET'])
+def get_myRatings():
+    username = request.args.get('username', None, type = str)
+    
+    ratings = User.query.get(username).ratings
+
+    return jsonify({
+        'ratings': [rating.format() for rating in ratings]
+    })
+    
 
 
 @app.errorhandler(404)

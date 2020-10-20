@@ -74,10 +74,12 @@ class Course(db.Model):
             'content_update': self.content_update,
             'total_rate': self.total_rate,
             'satisfaction': self.satisfaction,
-            'ratings': self.ratings
+            'ratings': [rating.format() for rating in self.ratings]
         }
     def insert(self):
         db.session.add(self)
+        db.session.commit()
+    def update(self):
         db.session.commit()
 
 
