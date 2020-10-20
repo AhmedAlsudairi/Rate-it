@@ -251,6 +251,7 @@ def get_ratings():
     
 @app.route('/ratings', methods=['POST'])
 def create_rating():
+
     body = request.get_json()
     if 'username' not in body:
         abort(422)
@@ -260,6 +261,10 @@ def create_rating():
     content_density = body.get('content_density')
     content_update = body.get('content_update')
     satisfaction = body.get('satisfaction')
+
+    rating = Rating.query.get((username,course_id))
+    if rating is not None:
+        abort(422)
 
     course = Course.query.get(course_id)
     user = User.query.get(username)
