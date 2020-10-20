@@ -46,7 +46,10 @@ GET '/emails/<string:emails>'
 GET '/favourite'
 POST '/favourite'
 DELETE '/favourite'
-
+GET '/ratings'
+POST '/ratings'
+DELETE '/ratings'
+GET '/myRatings'
 
 GET '/'
 - main page for the website
@@ -225,4 +228,103 @@ Response:
     "favourite_courses": [],
     "result_count": 0,
     "username": "test1234"
+}
+
+GET '/ratings'
+- Get all ratings for a course
+- Request Arguments: course_id
+
+Request:
+http://127.0.0.1:5000/ratings?course_id=SWE 434
+Response:
+{
+    "ratings": {
+        "content_density": 45,
+        "content_update": 47,
+        "course_id": "SWE 434",
+        "difficulty_level": 24.5,
+        "level": 7,
+        "name": "Software testing and validation",
+        "ratings": [
+            {
+                "content_density": 75,
+                "content_update": 80,
+                "course_id": "SWE 434",
+                "difficulty_level": 35.0,
+                "satisfaction": 60,
+                "total_rate": 63,
+                "user_id": "test1234"
+            },
+            {
+                "content_density": 14,
+                "content_update": 14,
+                "course_id": "SWE 434",
+                "difficulty_level": 14.0,
+                "satisfaction": 14,
+                "total_rate": 14,
+                "user_id": "234"
+            }
+        ],
+        "satisfaction": 37,
+        "total_rate": 39
+    }
+}
+
+
+POST '/ratings'
+- create a new rating for a course
+Request:
+{
+    "username": "234",
+    "course_id": "SWE 434",
+    "content_density": 14,
+    "content_update": 14,
+    "difficulty_level": 14,
+    "satisfaction": 14
+}
+Response:
+{
+    "ratings": {
+        "content_density": 14,
+        "content_update": 14,
+        "course_id": "SWE 434",
+        "difficulty_level": 14.0,
+        "satisfaction": 14,
+        "total_rate": 14,
+        "user_id": "12345"
+    }
+}
+DELETE '/ratings'
+- Delete a raitng from a course
+- Request Arguments: course_id, username
+Request:
+{
+    http://127.0.0.1:5000/ratings?username=12345&course_id=SWE 434
+}
+Response:
+{
+    "success": true
+}
+
+
+GET '/myRatings'
+- Get all ratings for a given user
+- Request Arguments: username
+Request:
+{
+    http://127.0.0.1:5000/myRatings?username=234
+}
+Response:
+{
+    "ratings": [
+        {
+            "content_density": 14,
+            "content_update": 14,
+            "course_id": "SWE 434",
+            "difficulty_level": 14.0,
+            "satisfaction": 14,
+            "total_rate": 14,
+            "user_id": "234"
+        }
+    ]
 }
