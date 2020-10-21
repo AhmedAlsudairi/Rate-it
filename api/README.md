@@ -247,6 +247,7 @@ Response:
         "name": "Software testing and validation",
         "ratings": [
             {
+                "comment": "test",
                 "content_density": 75,
                 "content_update": 80,
                 "course_id": "SWE 434",
@@ -256,6 +257,7 @@ Response:
                 "user_id": "test1234"
             },
             {
+                "comment": "test",
                 "content_density": 14,
                 "content_update": 14,
                 "course_id": "SWE 434",
@@ -277,6 +279,7 @@ Request:
 {
     "username": "234",
     "course_id": "SWE 434",
+    "comment": "test",
     "content_density": 14,
     "content_update": 14,
     "difficulty_level": 14,
@@ -285,6 +288,7 @@ Request:
 Response:
 {
     "ratings": {
+        "comment": "test",
         "content_density": 14,
         "content_update": 14,
         "course_id": "SWE 434",
@@ -297,19 +301,33 @@ Response:
 DELETE '/ratings'
 - Delete a raitng from a course
 - Request Arguments: course_id, username
+- returns : success, all ratings for course_id after the process
 Request:
 {
     http://127.0.0.1:5000/ratings?username=12345&course_id=SWE 434
 }
 Response:
 {
-    "success": true
+    "ratings": [
+        {
+            "comment": "test",
+            "content_density": 25,
+            "content_update": 25,
+            "course_id": "SWE 434",
+            "difficulty_level": 50.0,
+            "satisfaction": 100,
+            "total_rate": 50,
+            "user_id": "test1234"
+        }
+    ],
+    "success": true           
 }
 
 
 GET '/myRatings'
 - Get all ratings for a given user
 - Request Arguments: username
+
 Request:
 {
     http://127.0.0.1:5000/myRatings?username=234
