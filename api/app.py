@@ -257,6 +257,7 @@ def create_rating():
         abort(422)
     course_id = body.get('course_id')
     username = body.get('username')
+    comment = body.get('comment')
     difficulty_level = body.get('difficulty_level')
     content_density = body.get('content_density')
     content_update = body.get('content_update')
@@ -272,14 +273,14 @@ def create_rating():
         abort(404)
     
     total_rate = (difficulty_level+content_density+content_update+satisfaction)/4
-    rating = Rating(user_id = username, course_id = course_id, difficulty_level = difficulty_level,
+    rating = Rating(user_id = username, course_id = course_id,comment = comment,  difficulty_level = difficulty_level,
      content_density=content_density, content_update=content_update, satisfaction=satisfaction, total_rate=total_rate)
     
     rating.insert()
     update_rating(course)
 
     return jsonify({
-        'ratings': rating.format()
+        'ratings': [rating.format() for rating in course.ratings]
     })
 
 @app.route('/ratings', methods=['DELETE'])
@@ -298,7 +299,8 @@ def delete_rating():
     update_rating(course)
 
     return jsonify({
-        'success': True
+        'success': True,
+        'ratings': [rating.format() for rating in course.ratings]
     })
 
 @app.route('/myRatings', methods=['GET'])
