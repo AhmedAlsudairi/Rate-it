@@ -70,12 +70,12 @@ function DiscreteSlider(props) {
         const totalRate = (difficultyLevel + contentDensity + contentUpdate + satisfaction) / 4;
         const rate = {
             username: props.username,
-            courseID: course.course_id,
-            difficultyLevel: difficultyLevel,
-            contentDensity: contentDensity,
-            contentUpdate: contentUpdate,
+            course_id: course.course_id,
+            content_density: contentDensity,
+            content_update: contentUpdate,
+            difficulty_level: difficultyLevel,
             satisfaction: satisfaction,
-            totalRate: totalRate,
+            total_rate: totalRate,
             comment: comment
         }
 

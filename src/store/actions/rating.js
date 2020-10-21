@@ -23,14 +23,13 @@ export const rateStart = () => {
 
 export const rateProcess = (rateData) => {
     return dispatch => {
-        console.log(rateData);
         dispatch(rateStart());
 
-        axios.post('/rates.json',rateData)
+        axios.post('http://127.0.0.1:5000/ratings',rateData)
         .then(resonse=>{
             console.log(resonse.data);
             
-           dispatch(rateSuccess(resonse.data.name,rateData));
+           dispatch(rateSuccess(rateData));
            
         })
         .catch(error=>{
@@ -71,12 +70,11 @@ export const fetchRatings = (course) => {
     
     return dispatch => {
         dispatch(fetchRatingsStart());
-        console.log(course);
-        axios.get('http://127.0.0.1:5000/ratings')
+        axios.get('http://127.0.0.1:5000/ratings?course_id='+course)
         .then(res => {
             let fechedRatings = [];
-            fechedRatings=[...res.data.favourite_courses];
-            console.log(res.data.favourite_courses);
+            fechedRatings=[...res.data.ratings.ratings];
+            console.log(res.data.ratings.ratings);
             dispatch(fetchRatingsSuccess(fechedRatings));
             
         })

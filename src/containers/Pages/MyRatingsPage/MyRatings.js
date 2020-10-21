@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import Copyright from '../../../components/Copyright/Copyright';
 import RateForm from '../../../components/RateForm/RateForm';
 import Rating from '../../../components/Rating/Rating';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
@@ -34,6 +36,12 @@ function FavoritePage(props) {
     useEffect(() => {
         props.onFetchMyRatings(props.username)
     }, [props.onFetchMyRatings, props.username])
+
+    let allMyRatings = <CircularProgress/>;
+
+    if (!props.loading){
+        allMyRatings =  props.ratings.map((item) => <Rating rating={item} isMyRating={true}/>)
+    }
     return (
         <Grid container spacing={1}>
             <Grid item lg={12} md={8} sm={9}>
@@ -49,9 +57,7 @@ function FavoritePage(props) {
                                     <Typography align="center" variant="h5" className={classes.title} >
                                         My Ratings
           </Typography>
-                                    <Rating isMyRating={true} />
-                                    <Rating isMyRating={true} />
-                                    <Rating isMyRating={true} />
+                                   {allMyRatings}
                                 </Paper>
                             </Grid>
                         </Grid>) : <Redirect to='/signin' />}
@@ -72,7 +78,9 @@ const mapStateToProps = state => {
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
-        username: state.auth.username
+        username: state.auth.username,
+        ratings: state.myRatings.rating,
+        loading: state.myRatings.loading
     };
 };
 

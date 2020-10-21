@@ -7,6 +7,8 @@ import Accordion from '../Accordion/Accordion';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { connect } from 'react-redux';
+import * as myRatings from '../../../store/actions/myRatings';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -36,15 +38,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Rating(props) {
+function Rating(props) {
   const classes = useStyles();
 
+  const onRemoveRatingHandler = () => {
+    props.onRemoveRating(props.username, props.rating.course_id);
+  }
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square className={classes.paper}>
         <Grid container spacing={1}>
           <Grid item lg={9}>
-            <Typography variant="h5">{props.isMyRating ? 'Course' : 'User'}</Typography>
+            <Typography variant="h5">{props.isMyRating ? props.rating.course_id : props.rating.user_id}</Typography>
           </Grid>
 
           {props.isMyRating ?
@@ -55,6 +60,7 @@ export default function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
+                onClick={onRemoveRatingHandler}
               >
                 <DeleteIcon />
               </IconButton>
@@ -83,14 +89,14 @@ export default function Rating(props) {
 
           <Grid item lg={12} className={classes.rateSection}>
             <Typography variant="h6">Total Rate</Typography>
-            <ProgressBar />
+            <ProgressBar value={props.rating.total_rate}/>
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
             <Typography variant="h6">Comment</Typography>
             <Typography>This is the most good course ever!</Typography>
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
-            <Accordion />
+            <Accordion rating={props.rating}/>
           </Grid>
 
         </Grid>
@@ -100,3 +106,23 @@ export default function Rating(props) {
     </div>
   );
 }
+
+
+const mapStateToProps = state => {
+  return {
+      isAuthenticated: state.auth.token !== null,
+      username: state.auth.username
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRemoveRating: (username, course) =>
+          dispatch(myRatings.removeRating(username, course))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Rating);
