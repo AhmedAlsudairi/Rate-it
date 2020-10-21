@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ProgressBar from '..//ProgressBar/ProgressBar'
 import { Grid } from '@material-ui/core';
+import { propTypes } from 'react-bootstrap/esm/Image';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SimpleAccordion() {
+export default function SimpleAccordion(props) {
   const classes = useStyles();
 
   return (
@@ -58,19 +59,19 @@ export default function SimpleAccordion() {
         <AccordionDetails>
           <Grid container={true} spacing={1}>
             <Grid item lg={12}><Typography className={classes.heading}>Difficulty Level</Typography>
-              <ProgressBar classes={{ colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary }} />
+              <ProgressBar  value={props.rating.difficulty_level} classes={{ colorPrimary: classes.difficultyLevelSecondary, barColorPrimary: classes.difficultyLevelPrimary }} />
             </Grid>
             <Grid item lg={12}>
               <Typography className={classes.heading}>Content Density</Typography>
-              <ProgressBar classes={{ colorPrimary: classes.contentDensitySecondary, barColorPrimary: classes.contentDensityPrimary }} />
+              <ProgressBar value={props.rating.content_density} classes={{ colorPrimary: classes.contentDensitySecondary, barColorPrimary: classes.contentDensityPrimary }} />
             </Grid>
             <Grid item lg={12}>
               <Typography className={classes.heading}>Content Update</Typography>
-              <ProgressBar classes={{ colorPrimary: classes.contentUpdateSecondary, barColorPrimary: classes.contentUpdatePrimary }} />
+              <ProgressBar value={props.rating.content_update} classes={{ colorPrimary: classes.contentUpdateSecondary, barColorPrimary: classes.contentUpdatePrimary }} />
             </Grid>
             <Grid item lg={12}>
               <Typography className={classes.heading}>Satisfaction</Typography>
-              <ProgressBar classes={{ colorPrimary: classes.SatisfactionSecondary, barColorPrimary: classes.SatisfactionPrimary }} />
+              <ProgressBar value={props.rating.satisfaction} classes={{ colorPrimary: classes.SatisfactionSecondary, barColorPrimary: classes.SatisfactionPrimary }} />
             </Grid>
 
           </Grid>

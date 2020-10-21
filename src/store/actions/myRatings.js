@@ -27,12 +27,11 @@ export const fetchMyRatings = (username) => {
     
     return dispatch => {
         dispatch(fetchMyRatingsStart());
-        console.log(course);
-        axios.get('http://127.0.0.1:5000/ratings')
+        axios.get('http://127.0.0.1:5000/myRatings?username='+username)
         .then(res => {
             let fechedRatings = [];
-            fechedRatings=[...res.data.favourite_courses];
-            console.log(res.data.favourite_courses);
+            fechedRatings=[...res.data.ratings];
+            console.log(res.data.ratings);
             dispatch(fetchMyRatingsSuccess(fechedRatings));
             
         })

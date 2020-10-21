@@ -20,7 +20,8 @@ const reducer = (state=intialState , action) => {
         case actionType.RATE_SUCCESS:
             return {
                 ...state,
-                loading:false
+                loading:false,
+                rating: action.rateData
             }
 
         case actionType.RATE_FAIL: 

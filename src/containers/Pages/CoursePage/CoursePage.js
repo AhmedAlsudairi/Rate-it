@@ -47,8 +47,8 @@ function CoursePage(props) {
   let {favoriteIDs}= props
   useEffect(()=>{
     setIsFavorite(favoriteIDs.includes(course.course_id))
-    props.onFetchRatings(course)
-  },[favoriteIDs,course,props.onFetchRatings])
+    props.onFetchRatings(course.course_id)
+  },[favoriteIDs,course.course_id,props.onFetchRatings])
 
   return (
 
@@ -125,9 +125,12 @@ function CoursePage(props) {
             <Typography align="center" variant="h5" className={classes.title} >
               Ratings
           </Typography>
-            <Rating />
-            <Rating />
-            <Rating />
+          
+            {//فيه مشكلة هنا
+            props.ratings!==null? props.ratings.map((item)=>{
+                console.log(item);
+             return <Rating rating={item}/>;
+            }) : null}
           </Paper>
 
           <Box mt={8}>
@@ -149,7 +152,8 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.token !== null,
     favorite: state.favorite.favorite,
     favoriteIDs: state.favorite.favoriteIDs,
-    token: state.auth.token
+    token: state.auth.token,
+    ratings: state.rating.rating
   };
 };
 
