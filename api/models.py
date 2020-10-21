@@ -115,16 +115,18 @@ class Rating(db.Model):
     __tablename__ = "ratings"
     user_id = db.Column(db.String(), db.ForeignKey("users.username"), primary_key=True)
     course_id = db.Column(db.String(), db.ForeignKey("courses.course_id"), primary_key=True)
+    comment = db.Column(db.String(), nullable = False)
     difficulty_level = db.Column(db.Float(), nullable=False)
     content_density = db.Column(db.Integer, nullable=False)
     content_update = db.Column(db.Integer, nullable=False)
     satisfaction = db.Column(db.Integer, nullable=False)
     total_rate = db.Column(db.Integer, nullable=False)
 
-    def __init__(self,user_id ,course_id, difficulty_level, content_density, content_update, satisfaction, total_rate):
+    def __init__(self,user_id ,course_id, comment, difficulty_level, content_density, content_update, satisfaction, total_rate):
 
         self.user_id = user_id
         self.course_id = course_id
+        self.comment = comment
         self.difficulty_level = difficulty_level
         self.content_density = content_density
         self.content_update = content_update
@@ -146,6 +148,7 @@ class Rating(db.Model):
         return {
             'user_id': self.user_id,
             'course_id': self.course_id,
+            'comment': self.comment,
             'difficulty_level': self.difficulty_level,
             'content_density': self.content_density,
             'content_update': self.content_update,
