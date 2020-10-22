@@ -312,7 +312,28 @@ def get_myRatings():
     return jsonify({
         'ratings': [rating.format() for rating in ratings]
     })
-    
+
+@app.route('/myRatings', methods=['DELETE'])
+def delete_myRatings():
+    username = request.args.get('username', None, type = str)
+    course_id = request.args.get('course_id', None, type = str)
+    if username is None or course_id is None:
+        abort(422)
+    rating = Rating.query.get((username,course_id))
+    course = Course.query.get(course_id)
+    user = User.query.get(username)
+
+    if rating is None or course is None:
+        abort(404)
+
+    user = User.query.get(username)
+    rating.delete()
+    update_rating(course)
+
+    return jsonify({
+        'success': True,
+        'ratings': [rating.format() for rating in user.ratings]
+    })
 
 
 @app.errorhandler(404)
