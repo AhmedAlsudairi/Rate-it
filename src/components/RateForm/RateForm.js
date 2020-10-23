@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/rating';
 import { Paper } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 20,
         margin: '20px 0px',
         width: '100%'
-      },
+    },
 }));
 
 
@@ -80,6 +81,7 @@ function DiscreteSlider(props) {
         }
 
         props.onRatePost(rate)
+        props.history.goBack();
     };
 
     const cancelHandler = event => {
@@ -97,83 +99,83 @@ function DiscreteSlider(props) {
                         <Typography variant="h5" color="textSecondary">Plese fill the form to post the rate:</Typography>
                     </Grid>
                     <Paper className={classes.paper} elevation={10}>
-                    <Grid item lg={12} >
-                        <Typography id="discrete-slider" gutterBottom>
-                            Difficulty Level
+                        <Grid item lg={12} >
+                            <Typography id="discrete-slider" gutterBottom>
+                                Difficulty Level
       </Typography>
-                        <Slider
-                            onChange={onDifficultyLevelChange}
-                            defaultValue={30}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={5}
-                            marks
-                            min={0}
-                            max={100}
-                            value={difficultyLevel}
-                        />
-                    </Grid>
-                    <Grid item lg={12} >
-                        <Typography id="discrete-slider" gutterBottom>
-                            Content Density
+                            <Slider
+                                onChange={onDifficultyLevelChange}
+                                defaultValue={30}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={0}
+                                max={100}
+                                value={difficultyLevel}
+                            />
+                        </Grid>
+                        <Grid item lg={12} >
+                            <Typography id="discrete-slider" gutterBottom>
+                                Content Density
       </Typography>
-                        <Slider
-                            onChange={onContentDensityChange}
-                            defaultValue={30}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={5}
-                            marks
-                            min={0}
-                            max={100}
-                            value={contentDensity}
-                        />
-                    </Grid>
-                    <Grid item lg={12} >
-                        <Typography id="discrete-slider" gutterBottom>
-                            Content Update
+                            <Slider
+                                onChange={onContentDensityChange}
+                                defaultValue={30}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={0}
+                                max={100}
+                                value={contentDensity}
+                            />
+                        </Grid>
+                        <Grid item lg={12} >
+                            <Typography id="discrete-slider" gutterBottom>
+                                Content Update
       </Typography>
-                        <Slider
-                            onChange={onContentUpdateChange}
-                            defaultValue={30}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={5}
-                            marks
-                            min={0}
-                            max={100}
-                            value={contentUpdate}
-                        />
-                    </Grid>
-                    <Grid item lg={12} >
-                        <Typography id="discrete-slider" gutterBottom>
-                            Satisfaction
+                            <Slider
+                                onChange={onContentUpdateChange}
+                                defaultValue={30}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={0}
+                                max={100}
+                                value={contentUpdate}
+                            />
+                        </Grid>
+                        <Grid item lg={12} >
+                            <Typography id="discrete-slider" gutterBottom>
+                                Satisfaction
       </Typography>
-                        <Slider
-                            onChange={onSatisfactionChange}
-                            defaultValue={30}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={5}
-                            marks
-                            min={0}
-                            max={100}
-                            value={satisfaction}
-                        />
-                    </Grid>
-                    <Grid item lg={11} >
-                        <TextField
-                        fullWidth
-                            id="outlined-multiline-static"
-                            label="Comment"
-                            multiline
-                            rows={4}
-                            placeholder="Write comment..."
-                            variant="outlined"
-                            className={classes.comment}
-                            onChange={onCommentChangeHandler}
-                        />
-                    </Grid>
+                            <Slider
+                                onChange={onSatisfactionChange}
+                                defaultValue={30}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={0}
+                                max={100}
+                                value={satisfaction}
+                            />
+                        </Grid>
+                        <Grid item lg={11} >
+                            <TextField
+                                fullWidth
+                                id="outlined-multiline-static"
+                                label="Comment"
+                                multiline
+                                rows={4}
+                                placeholder="Write comment..."
+                                variant="outlined"
+                                className={classes.comment}
+                                onChange={onCommentChangeHandler}
+                            />
+                        </Grid>
                     </Paper>
                     <Grid item lg={12} className={classes.root}>
                         <Button
@@ -198,8 +200,8 @@ function DiscreteSlider(props) {
                         >
                             Cancel
       </Button>
-      </Grid>
-                   
+                    </Grid>
+
                 </Grid>
                 <Grid item lg={3} ></Grid>
 
@@ -211,7 +213,8 @@ function DiscreteSlider(props) {
 const mapStateToProps = state => {
     return {
         selectedCourse: state.courses.selectedCourse,
-        username: state.auth.username
+        username: state.auth.username,
+        ratingError: state.rating.error
     };
 };
 

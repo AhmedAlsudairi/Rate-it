@@ -8,7 +8,7 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux';
-import * as myRatings from '../../../store/actions/myRatings';
+import * as myRatings from '../../store/actions/myRatings';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -93,7 +93,7 @@ function Rating(props) {
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
             <Typography variant="h6">Comment</Typography>
-            <Typography>This is the most good course ever!</Typography>
+            <Typography>{props.rating.comment}</Typography>
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
             <Accordion rating={props.rating}/>

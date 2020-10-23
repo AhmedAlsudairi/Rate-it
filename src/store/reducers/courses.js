@@ -20,7 +20,6 @@ const coursesFail = (state,action) => {
 }
 
 const selectCourse = (state,action) => {
-    console.log(action.course);
     return {...state,...{selectedCourse: action.course}};
 }
 

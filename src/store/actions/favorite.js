@@ -27,8 +27,7 @@ export const fetchFavorite = (token) => {
     
     return dispatch => {
         dispatch(fetchFavoriteStart());
-        
-        console.log(token);
+    
         axios.get('http://127.0.0.1:5000/favourite',{
             headers: {
               authorization: `Bearer ${token}`
@@ -37,7 +36,6 @@ export const fetchFavorite = (token) => {
         .then(res => {
             let fechedFavorite = [];
             fechedFavorite=[...res.data.favourite_courses];
-            console.log(res.data.favourite_courses);
             dispatch(fetchFavoriteSuccess(fechedFavorite));
             
         })

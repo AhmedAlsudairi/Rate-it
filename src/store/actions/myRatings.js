@@ -42,19 +42,15 @@ export const fetchMyRatings = (username) => {
     }
 }
 
-export const removeRating = (course,token) => {
+export const removeRating = (username, course) => {
     return dispatch => {
 
-        axios.delete('http://127.0.0.1:5000/favourite?course='+course.course_id,{
-            headers: {
-              authorization: `Bearer ${token}`
-            }
-          })
+        axios.delete(`http://127.0.0.1:5000/myRatings?username=${username}&course_id=${course}`)
         .then(res => {
-            let fechedFavorite = [];
-            fechedFavorite=[...res.data.favourite_courses];
-            console.log(res.data.favourite_courses);
-            dispatch(fetchMyRatingsSuccess(fechedFavorite));
+            let fechedRatings = [];
+            fechedRatings=[...res.data.ratings];
+            console.log(res.data);
+            dispatch(fetchMyRatingsSuccess(fechedRatings));
             
         })
         .catch(err=>{
