@@ -84,3 +84,21 @@ export const fetchRatings = (course) => {
         });
     }
 }
+
+export const likeOrDislikeRating = (username,course,helpful) => {
+    
+    return dispatch => {
+        dispatch(fetchRatingsStart());
+        axios.post('http://127.0.0.1:5000/ratings?course_id='+course,'&username='+username+'&helpful='+helpful)
+        .then(res => {
+            let fechedRatings = [];
+            fechedRatings=[...res.data.ratings.ratings];
+            dispatch(fetchRatingsSuccess(fechedRatings));
+            
+        })
+        .catch(err=>{
+            console.log(err);
+            dispatch(fetchRatingsFail(err));
+        });
+    }
+}
