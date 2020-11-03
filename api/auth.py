@@ -37,9 +37,14 @@ def get_auth_token():
     return token
 
 def verify_decode_jwt(token):
-    decoded_jwt = jwt.decode(token, secret,options={'require': ['exp']}, algorithms = algo)
-    name = decoded_jwt.get('name')
-
+    try:
+        decoded_jwt = jwt.decode(token, secret,options={'require': ['exp']}, algorithms = algo)
+        name = decoded_jwt.get('name')
+    except jwt.ExpiredSignatureError:
+            raise AuthError({
+                'code': 'token_expired',
+                'description': 'Token expired.'
+            }, 401)
     return name
 
 def requires_auth_decorator(f):
