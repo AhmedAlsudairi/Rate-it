@@ -406,6 +406,9 @@ def delete_notification():
         abort(422)
     user = User.query.get(username)
     notify = Notification.query.get(notify)
+    if notify is None or user is None:
+        abort(404)
+    notify.delete()
     notifications = [notification.format() for notification in user.notifications]
 
     return jsonify({
