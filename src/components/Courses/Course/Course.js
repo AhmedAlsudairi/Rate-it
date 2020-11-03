@@ -49,7 +49,7 @@ function Course(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-      {isFavorite? 
+      {isFavorite&&props.isAuthenticated? 
       <IconButton onClick={()=>{props.onRemoveFavorite(props.course,props.token)}} aria-label="remove from favorites">
       <FavoriteIcon color="secondary"/>
     </IconButton> : 

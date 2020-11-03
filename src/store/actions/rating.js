@@ -27,9 +27,10 @@ export const rateProcess = (rateData) => {
 
         axios.post('http://127.0.0.1:5000/ratings',rateData)
         .then(resonse=>{
-            console.log(resonse.data);
+            let ratings = resonse.data.ratings
+            console.log(resonse.data.ratings);
             
-           dispatch(rateSuccess(rateData));
+           dispatch(rateSuccess(ratings));
            
         })
         .catch(error=>{
@@ -74,7 +75,24 @@ export const fetchRatings = (course) => {
         .then(res => {
             let fechedRatings = [];
             fechedRatings=[...res.data.ratings.ratings];
-            console.log(res.data.ratings.ratings);
+            dispatch(fetchRatingsSuccess(fechedRatings));
+            
+        })
+        .catch(err=>{
+            console.log(err);
+            dispatch(fetchRatingsFail(err));
+        });
+    }
+}
+
+export const likeOrDislikeRating = (username,course,helpful) => {
+    
+    return dispatch => {
+        dispatch(fetchRatingsStart());
+        axios.post('http://127.0.0.1:5000/ratings?course_id='+course,'&username='+username+'&helpful='+helpful)
+        .then(res => {
+            let fechedRatings = [];
+            fechedRatings=[...res.data.ratings.ratings];
             dispatch(fetchRatingsSuccess(fechedRatings));
             
         })

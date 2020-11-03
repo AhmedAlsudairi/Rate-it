@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import Copyright from '../../../components/Copyright/Copyright';
 import RateForm from '../../../components/RateForm/RateForm';
 import Rating from '../../../components/Rating/Rating';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
@@ -18,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         paddingTop: 30,
+        paddingBottom: 30,
         paddingLeft: 10,
         paddingRight: 10,
         margin: '20px 0px',
@@ -26,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontWeight: 'bold'
     },
+    empty: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 100,
+        marginBottom: 100
+    }
 }));
 
 
@@ -37,11 +42,6 @@ function FavoritePage(props) {
         props.onFetchMyRatings(props.username)
     }, [props.onFetchMyRatings, props.username])
 
-    let allMyRatings = <CircularProgress/>;
-
-    if (!props.loading){
-        allMyRatings =  props.ratings.map((item) => <Rating rating={item} isMyRating={true}/>)
-    }
     return (
         <Grid container spacing={1}>
             <Grid item lg={12} md={8} sm={9}>
@@ -54,10 +54,13 @@ function FavoritePage(props) {
                             </Grid>
                             <Grid item lg={8}>
                                 <Paper className={classes.paper} elevation={10}>
-                                    <Typography align="center" variant="h5" className={classes.title} >
+                                    <Typography align="center" variant="h4" className={classes.title} >
                                         My Ratings
           </Typography>
-                                   {allMyRatings}
+                                    {props.ratings.length === 0 ? <Typography variant='h5' className={classes.empty} align='center'>You didn't post any rating!</Typography> : null}
+                                    {props.ratings.map((item) => {
+                                        return <Rating rating={item} isMyRating={true} />;
+                                    })}
                                 </Paper>
                             </Grid>
                         </Grid>) : <Redirect to='/signin' />}

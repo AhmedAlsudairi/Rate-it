@@ -8,7 +8,8 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux';
-import * as myRatings from '../../../store/actions/myRatings';
+import * as myRatings from '../../store/actions/myRatings';
+import * as rating from '../../store/actions/rating';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -44,6 +45,11 @@ function Rating(props) {
   const onRemoveRatingHandler = () => {
     props.onRemoveRating(props.username, props.rating.course_id);
   }
+
+  const onLikeOrDislikeRatingHandler = (helpful) => {
+    props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, helpful);
+  }
+  
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square className={classes.paper}>
@@ -72,6 +78,7 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
+                onClick={()=>onLikeOrDislikeRatingHandler(1)}
               >
                 <ThumbUpAltIcon />
               </IconButton>
@@ -82,6 +89,7 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
+                onClick={()=>onLikeOrDislikeRatingHandler(-1)}
               >
                 <ThumbDownIcon />
               </IconButton>
@@ -89,14 +97,14 @@ function Rating(props) {
 
           <Grid item lg={12} className={classes.rateSection}>
             <Typography variant="h6">Total Rate</Typography>
-            <ProgressBar value={props.rating.total_rate}/>
+            <ProgressBar value={props.rating.total_rate} />
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
             <Typography variant="h6">Comment</Typography>
-            <Typography>This is the most good course ever!</Typography>
+            <Typography>{props.rating.comment}</Typography>
           </Grid>
           <Grid item lg={12} className={classes.rateSection}>
-            <Accordion rating={props.rating}/>
+            <Accordion rating={props.rating} />
           </Grid>
 
         </Grid>
@@ -110,15 +118,17 @@ function Rating(props) {
 
 const mapStateToProps = state => {
   return {
-      isAuthenticated: state.auth.token !== null,
-      username: state.auth.username
+    isAuthenticated: state.auth.token !== null,
+    username: state.auth.username
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onRemoveRating: (username, course) =>
-          dispatch(myRatings.removeRating(username, course))
+      dispatch(myRatings.removeRating(username, course)),
+    onLikeOrDislikeRating: (username, course, helpful) =>
+      dispatch(rating.likeOrDislikeRating(username, course, helpful)),
   };
 };
 

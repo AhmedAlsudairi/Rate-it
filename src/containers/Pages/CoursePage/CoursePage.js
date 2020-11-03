@@ -15,6 +15,7 @@ import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
 import * as ratingActions from '../../../store/actions/rating';
 import { Link } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     paddingTop: 30,
+    paddingBottom: 30,
     paddingLeft: 10,
     paddingRight: 10,
     margin: '20px 0px',
@@ -33,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold'
   },
+    empty: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 100,
+      margin: 100
+    }
 }));
 
 function CoursePage(props) {
@@ -55,6 +63,7 @@ function CoursePage(props) {
     <main className={classes.content}>
       <Toolbar />
       <Grid container spacing={1}>
+        
         <Grid item lg={2}>
         </Grid>
         <Grid item lg={6}>
@@ -125,10 +134,8 @@ function CoursePage(props) {
             <Typography align="center" variant="h5" className={classes.title} >
               Ratings
           </Typography>
-          
-            {//فيه مشكلة هنا
-            props.ratings!==null? props.ratings.map((item)=>{
-                console.log(item);
+          {props.ratings.length=== 0? <Typography variant='h5' className={classes.empty} align='center'>{course.course_id} didn't have any rating!</Typography>:null}
+            {props.ratings!==null? props.ratings.map((item)=>{
              return <Rating rating={item}/>;
             }) : null}
           </Paper>
@@ -153,7 +160,9 @@ const mapStateToProps = state => {
     favorite: state.favorite.favorite,
     favoriteIDs: state.favorite.favoriteIDs,
     token: state.auth.token,
-    ratings: state.rating.rating
+    username: state.auth.username,
+    ratings: state.rating.rating,
+    ratingError: state.rating.error
   };
 };
 
