@@ -48,8 +48,11 @@ POST '/favourite'
 DELETE '/favourite'
 GET '/ratings'
 POST '/ratings'
+PATCH '/ratings'
 DELETE '/ratings'
 GET '/myRatings'
+GET '/notifications'
+DELETE '/notifications'
 
 GET '/'
 - main page for the website
@@ -298,6 +301,41 @@ Response:
         "user_id": "12345"
     }
 }
+
+PATCH '/ratings'
+- create a like or a dislike for a rating
+Request:
+for a like put the username in liked_by and leave disliked_by empty
+Request: 
+{
+    "username": "test3", //the user that liked or disliked the rating
+    "course_id": "SWE 333",
+    "liked_by": "test2",
+    "disliked_by": ""
+}
+
+Response:
+{
+    "ratings": [
+        {
+            "comment": "test",
+            "content_density": 25,
+            "content_update": 25,
+            "course_id": "SWE 333",
+            "difficulty_level": 50.0,
+            "disliked_by": [],
+            "liked_by": [
+                "test2"
+            ],
+            "num_of_likes": 1,
+            "rating_id": 14,
+            "satisfaction": 100,
+            "total_rate": 50,
+            "user_id": "test3"
+        }
+    ]
+}
+
 DELETE '/ratings'
 - Delete a raitng from a course
 - Request Arguments: course_id, username
@@ -345,4 +383,46 @@ Response:
             "user_id": "234"
         }
     ]
+}
+
+GET '/notifications'
+- Gets all notifications for a given user
+- Request Arguments: username
+Request:
+{
+http://127.0.0.1:5000/notifications?username=test4
+}
+
+Response:
+{
+    "notifications": [
+        {
+            "course_id": "SWE 314",
+            "notify_id": 2
+        },
+        {
+            "course_id": "SWE 333",
+            "notify_id": 3
+        }
+    ],
+    "num_of_notifications": 2
+}
+
+DELETE '/notifications'
+- Delete a notification from a user notifications
+- Request Arguments: username and notify_id
+Request:
+{
+http://127.0.0.1:5000/notifications?username=test4&notify_id=3
+}
+
+Response:
+{
+    "notifications": [
+        {
+            "course_id": "SWE 314",
+            "notify_id": 2
+        }
+    ],
+    "num_of_notifications": 1
 }
