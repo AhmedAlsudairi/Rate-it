@@ -319,11 +319,15 @@ def update_ratings():
         user = User.query.get(liked_by)
         if user is None:
             abort(404)
-        like = Like.query.get((liked_by, rating.rating_id))
+        like = Like.query.get((rating.rating_id, liked_by))
         if like is not None:
             abort(422)
+        dislike = DisLike.query.get((rating.rating_id, liked_by))
+        if dislike is not None:
+            dislike.delete()
         like = Like(rating_id=rating.rating_id, liked_by=liked_by)
         like.insert()
+
 
     else:
         user = User.query.get(disliked_by)
@@ -332,6 +336,9 @@ def update_ratings():
         dislike = DisLike.query.get((rating.rating_id, disliked_by))
         if dislike is not None:
             abort(422)
+        like = Like.query.get((rating.rating_id, disliked_by))
+        if like is not None:
+            like.delete()
         dislike = DisLike(rating_id=rating.rating_id, disliked_by=disliked_by)
         dislike.insert()
 
@@ -399,6 +406,9 @@ def delete_notification():
         abort(422)
     user = User.query.get(username)
     notify = Notification.query.get(notify)
+    if notify is None or user is None:
+        abort(404)
+    notify.delete()
     notifications = [notification.format() for notification in user.notifications]
 
     return jsonify({
