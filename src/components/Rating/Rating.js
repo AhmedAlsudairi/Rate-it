@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect,useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Typography, IconButton } from '@material-ui/core';
@@ -41,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Rating(props) {
   const classes = useStyles();
+  const [isLiked,setIsLiked] = useState(false);
+  const [isDisliked,setIsDisliked] = useState(false);
+
+  
+  useEffect(()=>{
+    setIsLiked(props.rating.liked_by.includes(props.username));
+    setIsDisliked(props.rating.disliked_by.includes(props.username));
+
+  },[props.rating.liked_by,props.rating.disliked_by])
 
   const onRemoveRatingHandler = () => {
     props.onRemoveRating(props.username, props.rating.course_id);
@@ -79,6 +88,7 @@ function Rating(props) {
                 color="inherit"
                 aria-label="open drawer"
                 onClick={()=>onLikeOrDislikeRatingHandler(props.username,"")}
+                disabled={isLiked}
               >
                 <ThumbUpAltIcon />
               </IconButton>
@@ -90,6 +100,7 @@ function Rating(props) {
                 color="inherit"
                 aria-label="open drawer"
                 onClick={()=>onLikeOrDislikeRatingHandler("",props.username)}
+                disabled={isDisliked}
               >
                 <ThumbDownIcon />
               </IconButton>
@@ -119,7 +130,7 @@ function Rating(props) {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
-    username: state.auth.username
+    username: state.auth.username,
   };
 };
 
