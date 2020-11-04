@@ -46,8 +46,8 @@ function Rating(props) {
     props.onRemoveRating(props.username, props.rating.course_id);
   }
 
-  const onLikeOrDislikeRatingHandler = (helpful) => {
-    props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, helpful);
+  const onLikeOrDislikeRatingHandler = (liked_by, disliked_by) => {
+    props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, liked_by, disliked_by);
   }
   
   return (
@@ -78,18 +78,18 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler(1)}
+                onClick={()=>onLikeOrDislikeRatingHandler(props.username,"")}
               >
                 <ThumbUpAltIcon />
               </IconButton>
-              <span className={classes.span}>5</span>
+              <span className={classes.span}>{props.rating.num_of_likes}</span>
               <IconButton
 
                 edge="start"
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler(-1)}
+                onClick={()=>onLikeOrDislikeRatingHandler("",props.username)}
               >
                 <ThumbDownIcon />
               </IconButton>
@@ -127,8 +127,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onRemoveRating: (username, course) =>
       dispatch(myRatings.removeRating(username, course)),
-    onLikeOrDislikeRating: (username, course, helpful) =>
-      dispatch(rating.likeOrDislikeRating(username, course, helpful)),
+    onLikeOrDislikeRating: (username, course, liked_by, disliked_by) =>
+      dispatch(rating.likeOrDislikeRating(username, course, liked_by, disliked_by)),
   };
 };
 
