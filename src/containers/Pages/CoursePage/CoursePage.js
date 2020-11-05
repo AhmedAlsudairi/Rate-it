@@ -136,7 +136,7 @@ function CoursePage(props) {
           </Typography>
           {props.ratings.length=== 0? <Typography variant='h5' className={classes.empty} align='center'>{course.course_id} didn't have any rating!</Typography>:null}
             {props.ratings!==null? props.ratings.map((item)=>{
-             return <Rating rating={item}/>;
+             return <Rating key={item.user_id} rating={item}/>;
             }) : null}
           </Paper>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,6 +19,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as authActions from '../../store/actions/auth';
 import * as coursesActions from '../../store/actions/courses';
+import * as notificationsActions from '../../store/actions/notifications';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -88,6 +89,11 @@ function NavigationBar(props) {
   const [state, setState] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      props.onFetchNotifications(props.username);
+    }
+  }, [props.onFetchNotifications])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -240,7 +246,8 @@ const mapStateToProps = state => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticated: state.auth.token !== null,
-    username: state.auth.username
+    username: state.auth.username,
+    numNotifications: state.notifications.num_of_notifications
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -250,7 +257,9 @@ const mapDispatchToProps = dispatch => {
     onInit: () =>
       dispatch(authActions.authInitite()),
     onSearchHandler: (keyword) =>
-      dispatch(coursesActions.fetchCourses(null, keyword))
+      dispatch(coursesActions.fetchCourses(null, keyword)),
+    onFetchNotifications: (username) =>
+      dispatch(notificationsActions.fetchNotifications(username))
   };
 };
 

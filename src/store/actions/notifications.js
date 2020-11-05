@@ -24,7 +24,7 @@ export const fetchNotificationsFail = (error) => {
 }
 
 
-export const fetchCourses = (username) => {
+export const fetchNotifications = (username) => {
     return dispatch => {
         dispatch(fetchNotificationsStart());
         
