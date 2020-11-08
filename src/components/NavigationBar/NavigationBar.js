@@ -90,10 +90,12 @@ function NavigationBar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   useEffect(() => {
-    if (props.isAuthenticated) {
+    console.log(props.username);
+    if (props.username) {
+      console.log(props.username);
       props.onFetchNotifications(props.username);
     }
-  }, [props.onFetchNotifications])
+  }, [props.onFetchNotifications,props.username])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

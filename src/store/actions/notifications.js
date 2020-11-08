@@ -25,6 +25,7 @@ export const fetchNotificationsFail = (error) => {
 
 
 export const fetchNotifications = (username) => {
+    console.log(username);
     return dispatch => {
         dispatch(fetchNotificationsStart());
         
