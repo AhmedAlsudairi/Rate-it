@@ -1,4 +1,4 @@
-import React ,{useEffect,useState}from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Typography, IconButton } from '@material-ui/core';
@@ -41,15 +41,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Rating(props) {
   const classes = useStyles();
-  const [isLiked,setIsLiked] = useState(false);
-  const [isDisliked,setIsDisliked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [isSameUser, setIsSameUser] = useState(false)
 
-  
-  useEffect(()=>{
+  useEffect(() => {
     setIsLiked(props.rating.liked_by.includes(props.username));
     setIsDisliked(props.rating.disliked_by.includes(props.username));
 
-  },[props.rating.liked_by,props.rating.disliked_by])
+    
+      if (props.rating.user_id === props.username) {
+        setIsSameUser(true);
+      }
+    
+
+  }, [props.rating.liked_by, props.rating.disliked_by])
 
   const onRemoveRatingHandler = () => {
     props.onRemoveRating(props.username, props.rating.course_id);
@@ -58,7 +64,7 @@ function Rating(props) {
   const onLikeOrDislikeRatingHandler = (liked_by, disliked_by) => {
     props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, liked_by, disliked_by);
   }
-  
+
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square className={classes.paper}>
@@ -87,8 +93,8 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler(props.username,"")}
-                disabled={isLiked}
+                onClick={() => onLikeOrDislikeRatingHandler(props.username, "")}
+                disabled={isLiked||isSameUser}
               >
                 <ThumbUpAltIcon />
               </IconButton>
@@ -99,8 +105,8 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler("",props.username)}
-                disabled={isDisliked}
+                onClick={() => onLikeOrDislikeRatingHandler("", props.username)}
+                disabled={isDisliked||isSameUser}
               >
                 <ThumbDownIcon />
               </IconButton>

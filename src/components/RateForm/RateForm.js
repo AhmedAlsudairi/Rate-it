@@ -81,12 +81,12 @@ function DiscreteSlider(props) {
         }
 
         props.onRatePost(rate)
-        props.history.goBack();
+        props.history.push('/coursepage');
     };
 
     const cancelHandler = event => {
         event.preventDefault();
-        props.history.goBack();
+        props.history.push('/coursepage');
     };
 
     return (

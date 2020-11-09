@@ -46,15 +46,23 @@ const useStyles = makeStyles((theme) => ({
 function CoursePage(props) {
   const classes = useStyles();
   const [isFavorite, setIsFavorite] = useState(false)
-
+  const [isRated, setIsRated] = useState(false)
   let course = props.selectedCourse;
   if (course === null) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
   let {favoriteIDs}= props
+  let {ratings}= props
   useEffect(()=>{
     setIsFavorite(favoriteIDs.includes(course.course_id))
+    
+    
+    // for(const rating of ratings){
+    //   if(rating.user_id===props.username&&rating.course_id===course.course_id){
+    //     setIsRated(true);
+    //   }
+    // }
     props.onFetchRatings(course.course_id)
   },[favoriteIDs,course.course_id,props.onFetchRatings])
 
@@ -88,6 +96,7 @@ function CoursePage(props) {
             className={classes.button}
             fullWidth
             startIcon={<RateReviewIcon />}
+            disabled={isRated}
           >Rate It!
           </Button>
           </Link>
