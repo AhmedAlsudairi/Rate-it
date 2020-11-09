@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import SideDrawer from '../../../components/SideDrawer/SideDrawer';
 import { Grid, Box ,Typography} from '@material-ui/core';
-import Courses from '../../../components/Courses/Courses';
 import Copyright from '../../../components/Copyright/Copyright';
 import Map from '../../../components/Map/Map';
 const useStyles = makeStyles((theme) => ({

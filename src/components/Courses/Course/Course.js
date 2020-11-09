@@ -30,7 +30,7 @@ function Course(props) {
   let {favoriteIDs}= props
   useEffect(()=>{
     setIsFavorite(favoriteIDs.includes(props.course.course_id))
-  },[favoriteIDs])
+  },[favoriteIDs,props.course.course_id])
   return (
     <Card className={classes.root}>
         

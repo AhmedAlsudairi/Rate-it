@@ -31,9 +31,10 @@ export const fetchNotifications = (username) => {
         
         axios.get('http://127.0.0.1:5000/notifications?username='+username)
         .then(res => {
+            console.log(res.data);
             let notifications = [];
-            notifications=[...res.data];
-            let num_of_notifications=res.data
+            notifications=[...res.data.notifications];
+            let num_of_notifications=res.data.num_of_notifications;
             dispatch(fetchNotificationsSuccess(notifications,num_of_notifications));
             
         })

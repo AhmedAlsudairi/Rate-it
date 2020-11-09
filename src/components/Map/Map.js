@@ -1,30 +1,11 @@
 import React from 'react';
 import { Map, Marker,GoogleApiWrapper } from 'google-maps-react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '100%'
-    },
-
-  },
-  paper: {
-    padding: 30,
-    margin: '20px 0px',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-}));
 
 function MapContainer(props) {
   
-  const classes = useStyles();
+  
   
   const mapStyles = {
     width: '45%',
@@ -48,5 +29,5 @@ function MapContainer(props) {
 };
 
 export default GoogleApiWrapper({
-  apiKey: ''
+  apiKey: 'AIzaSyCdFaiBroUHDutRgeiCeNqx_zkiX4S32G4'
 })(MapContainer);

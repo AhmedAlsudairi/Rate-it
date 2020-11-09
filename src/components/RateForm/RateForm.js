@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/rating';
 import { Paper } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',

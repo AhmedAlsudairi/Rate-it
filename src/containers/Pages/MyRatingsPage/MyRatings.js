@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Grid, Box, Paper, Typography } from '@material-ui/core';
@@ -7,7 +7,6 @@ import * as authActions from '../../../store/actions/auth';
 import * as myRatings from '../../../store/actions/myRatings';
 import { connect } from 'react-redux';
 import Copyright from '../../../components/Copyright/Copyright';
-import RateForm from '../../../components/RateForm/RateForm';
 import Rating from '../../../components/Rating/Rating';
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -40,7 +39,7 @@ function FavoritePage(props) {
 
     useEffect(() => {
         props.onFetchMyRatings(props.username)
-    }, [props.onFetchMyRatings, props.username])
+    }, [props.onFetchMyRatings, props.username,props])
 
     return (
         <Grid container spacing={1}>
@@ -78,7 +77,6 @@ function FavoritePage(props) {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
         username: state.auth.username,

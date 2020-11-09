@@ -55,7 +55,7 @@ function Rating(props) {
       }
     
 
-  }, [props.rating.liked_by, props.rating.disliked_by])
+  }, [props.rating.liked_by, props.rating.disliked_by,props.rating.user_id,props.username])
 
   const onRemoveRatingHandler = () => {
     props.onRemoveRating(props.username, props.rating.course_id);

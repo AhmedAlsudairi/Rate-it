@@ -15,7 +15,6 @@ import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
 import * as ratingActions from '../../../store/actions/rating';
 import { Link } from 'react-router-dom';
-import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -58,13 +57,13 @@ function CoursePage(props) {
     setIsFavorite(favoriteIDs.includes(course.course_id))
     
     
-    // for(const rating of ratings){
-    //   if(rating.user_id===props.username&&rating.course_id===course.course_id){
-    //     setIsRated(true);
-    //   }
-    // }
+    for(const rating of ratings){
+      if(rating.user_id===props.username&&rating.course_id===course.course_id){
+        setIsRated(true);
+      }
+    }
     props.onFetchRatings(course.course_id)
-  },[favoriteIDs,course.course_id,props.onFetchRatings])
+  },[favoriteIDs,course.course_id,props.onFetchRatings,ratings,course,props.username,props])
 
   return (
 
