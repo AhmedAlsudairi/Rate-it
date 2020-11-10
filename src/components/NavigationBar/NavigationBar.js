@@ -9,7 +9,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Button, Hidden, List } from '@material-ui/core';
+import { Button, Hidden, List,Badge } from '@material-ui/core';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
@@ -176,7 +176,10 @@ function NavigationBar(props) {
                     className={classes.accountButton}
                     aria-label="open drawer"
                   >
-                    <NotificationsIcon style={{ color: 'white' }} />
+                    <Badge badgeContent={props.numNotifications} color="secondary">
+                      <NotificationsIcon style={{ color: 'white' }} />
+                    </Badge>
+                    
                   </IconButton>
                 </NavLink>
                 <NavLink to='/logout' >

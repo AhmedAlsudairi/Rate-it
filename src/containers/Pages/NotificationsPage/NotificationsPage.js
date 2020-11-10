@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function MyRatings(props) {
+function NotificationsPage(props) {
     const classes = useStyles();
 
     useEffect(() => {
@@ -99,4 +99,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MyRatings);
+)(NotificationsPage);

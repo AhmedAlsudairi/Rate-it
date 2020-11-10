@@ -12,6 +12,7 @@ import CoursePage from '../Pages/CoursePage/CoursePage';
 import RatingPage from '../Pages/RatingPage/RatingPage';
 import MyRatingsPage from '../Pages/MyRatingsPage/MyRatings';
 import KSUInfoPage from '../Pages/KSUInfoPage/KSUInfoPage';
+import NotificationsPage from '../Pages/NotificationsPage/NotificationsPage';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -43,6 +44,7 @@ export default function MainContainer(props) {
         <Route exact path='/rate_form' component={RatingPage} />
         <Route exact path='/my_ratings' component={MyRatingsPage} />
         <Route exact path='/ksu_info' component={KSUInfoPage} />
+        <Route exact path='/notifications' component={NotificationsPage} />
       </Switch>
 
     </div>

@@ -56,9 +56,6 @@ function Course(props) {
       <IconButton onClick={() => { props.isAuthenticated? props.onAddFavorite(props.course,props.token): props.history.push('/signin') }} aria-label="add to favorites">
           <FavoriteBorderIcon />
         </IconButton>}
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
       </CardActions>
     </Card>
   );

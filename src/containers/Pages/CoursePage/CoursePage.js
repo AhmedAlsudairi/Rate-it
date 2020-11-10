@@ -88,7 +88,7 @@ function CoursePage(props) {
 
         </Grid>
         <Grid item lg={2}>
-          <Link to='/rate_form' style={{ textDecoration: 'none', color: 'white' }}>
+          
           <Button
             variant="contained"
             color="primary"
@@ -96,9 +96,10 @@ function CoursePage(props) {
             fullWidth
             startIcon={<RateReviewIcon />}
             disabled={isRated}
+            onClick={()=>props.history.push('/rate_form')}
           >Rate It!
           </Button>
-          </Link>
+          
           {isFavorite ?
             <Button
             onClick={()=>{props.onRemoveFavorite(props.selectedCourse,props.token)}}
