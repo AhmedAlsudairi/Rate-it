@@ -365,7 +365,7 @@ def delete_myRatings():
     course_id = request.args.get('course_id', None, type=str)
     if username is None or course_id is None:
         abort(422)
-    rating = Rating.query.get((username, course_id))
+    rating = Rating.query.filter(Rating.user_id == username, Rating.course_id == course_id)
     course = Course.query.get(course_id)
     user = User.query.get(username)
 
