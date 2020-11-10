@@ -43,3 +43,23 @@ export const fetchNotifications = (username) => {
         });
     }
 }
+
+export const deleteNotifications = (username,notifyId) => {
+    console.log(username,notifyId);
+    return dispatch => {
+        dispatch(fetchNotificationsStart());
+        
+        axios.delete(`http://127.0.0.1:5000/notifications?username=${username}&notify_id=${notifyId}`)
+        .then(res => {
+            console.log(res.data);
+            let notifications = [];
+            notifications=[...res.data.notifications];
+            let num_of_notifications=res.data.num_of_notifications;
+            dispatch(fetchNotificationsSuccess(notifications,num_of_notifications));
+            
+        })
+        .catch(err=>{
+            dispatch(fetchNotificationsFail(err));
+        });
+    }
+}

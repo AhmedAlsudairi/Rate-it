@@ -169,9 +169,9 @@ function NavigationBar(props) {
           {props.isAuthenticated ?
             <List>
               <Hidden xsDown>
-                <NavLink to='' activeStyle={{ color: 'white' }}>
+                
                   <IconButton
-
+                    onClick={()=>{ props.history.push('/notifications');}}
                     edge="start"
                     className={classes.accountButton}
                     aria-label="open drawer"
@@ -181,10 +181,9 @@ function NavigationBar(props) {
                     </Badge>
                     
                   </IconButton>
-                </NavLink>
-                <NavLink to='/logout' >
+                
                   <IconButton
-
+                    onClick={()=>{ props.history.push('/logout');}}
                     edge="start"
                     className={classes.accountButton}
                     color="inherit"
@@ -192,7 +191,7 @@ function NavigationBar(props) {
                   >
                     <ExitToAppIcon style={{ color: 'white' }} />
                   </IconButton>
-                </NavLink>
+                
               </Hidden>
 
               <NavLink to={props.isAuthenticated ? props.location.pathname : '/signin'} activeStyle={{ color: 'white' }}>
