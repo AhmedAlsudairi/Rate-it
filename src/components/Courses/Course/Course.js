@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import { Link, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as courseActions from '../../../store/actions/courses';
@@ -21,6 +20,7 @@ const useStyles = makeStyles({
   },
   media: {
     height: 140,
+    
   },
 });
 
@@ -33,11 +33,12 @@ function Course(props) {
   },[favoriteIDs,props.course.course_id])
   return (
     <Card className={classes.root}>
-        
       <CardActionArea component={Link} to={'/coursepage'} onClick={()=>{props.onSelectCourse(props.course)}}>
         <CardMedia 
+        //logo.png
+          image={require('./logo.png')}
           className={classes.media}
-          title="Contemplative Reptile"
+          title={props.course.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

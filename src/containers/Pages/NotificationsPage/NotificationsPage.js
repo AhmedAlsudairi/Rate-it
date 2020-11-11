@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Box, Paper, Typography } from '@material-ui/core';
+import { Grid, Box, Paper, Typography,  } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import * as authActions from '../../../store/actions/auth';
 import * as notifications from '../../../store/actions/notifications';

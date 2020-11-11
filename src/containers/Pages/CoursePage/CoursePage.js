@@ -14,7 +14,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
 import * as ratingActions from '../../../store/actions/rating';
-import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,

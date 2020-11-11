@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Grid, Typography, IconButton, Button } from '@material-ui/core';
-import ProgressBar from '../ProgressBar/ProgressBar';
+import { Grid, Typography, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import * as notifications from '../../store/actions/notifications';
 
@@ -40,6 +39,7 @@ function Rating(props) {
 
     const classes = useStyles();
 
+    
 
   return (
     <div className={classes.root}>
@@ -52,10 +52,10 @@ function Rating(props) {
           
             <Grid item lg={2}>
               <Button
-
+                 variant="contained"
+                 color="default"
                 edge="start"
                 className={classes.accountButton}
-                color="inherit"
                 aria-label="open drawer"
                 onClick={()=> props.onDeleteNotification(props.username,props.notification.notify_id)}
               >
@@ -77,6 +77,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
     username: state.auth.username,
+    loading: state.notifications.loading
   };
 };
 
