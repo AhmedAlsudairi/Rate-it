@@ -39,7 +39,7 @@ function NotificationsPage(props) {
 
     useEffect(() => {
         props.onFetchNotifications(props.username)
-    }, [props.onFetchNotifications, props.username,props])
+    }, [props.onFetchNotifications, props.username])
 
     return (
         <Grid container spacing={1}>

@@ -102,8 +102,14 @@ function NavigationBar(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+
   };
 
+  const handleProfile = () => {
+    setAnchorEl(null);
+    props.history.push('/profile')
+
+  };
   const handleMyRatings = () => {
     setAnchorEl(null);
     props.history.push('/my_ratings')
@@ -216,7 +222,7 @@ function NavigationBar(props) {
                 onClose={handleClose}
               >
                 <MenuItem disabled>{props.username}</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleMyRatings}>My ratings</MenuItem>
                 <Hidden smUp>
                   <MenuItem onClick={handleClose}>Notifications</MenuItem>

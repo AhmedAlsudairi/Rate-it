@@ -158,7 +158,7 @@ function SideDrawer(props) {
         <List>
             <ListItem component={Link} to={'/ksu_info'}  button key='KSUInfo' >
               <ListItemIcon ><InfoIcon /></ListItemIcon>
-              <ListItemText primary='King Saud University' style={favoritSelected? {color: 'blue'}: null}/>
+              <ListItemText primary='King Saud University'/>
             </ListItem>
         </List>
       </div>

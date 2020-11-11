@@ -39,7 +39,7 @@ function MyRatings(props) {
 
     useEffect(() => {
         props.onFetchMyRatings(props.username)
-    }, [props.onFetchMyRatings, props.username,props])
+    }, [props.onFetchMyRatings, props.username])
 
     return (
         <Grid container spacing={1}>
@@ -58,7 +58,7 @@ function MyRatings(props) {
           </Typography>
                                     {props.ratings.length === 0 ? <Typography variant='h5' className={classes.empty} align='center'>You didn't post any rating!</Typography> : null}
                                     {props.ratings.map((item) => {
-                                        return <Rating rating={item} isMyRating={true} />;
+                                        return <Rating key={item.course_id} rating={item} isMyRating={true} />;
                                     })}
                                 </Paper>
                             </Grid>

@@ -13,6 +13,7 @@ import RatingPage from '../Pages/RatingPage/RatingPage';
 import MyRatingsPage from '../Pages/MyRatingsPage/MyRatings';
 import KSUInfoPage from '../Pages/KSUInfoPage/KSUInfoPage';
 import NotificationsPage from '../Pages/NotificationsPage/NotificationsPage';
+import Profile from '../Pages/Profile/Profile';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -45,6 +46,7 @@ export default function MainContainer(props) {
         <Route exact path='/my_ratings' component={MyRatingsPage} />
         <Route exact path='/ksu_info' component={KSUInfoPage} />
         <Route exact path='/notifications' component={NotificationsPage} />
+        <Route exact path='/profile' component={Profile} />
       </Switch>
 
     </div>
