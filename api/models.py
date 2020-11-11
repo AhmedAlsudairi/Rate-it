@@ -99,9 +99,9 @@ class Course(db.Model):
 class FavouriteList(db.Model):
     __tablename__ = "lists"
     user_id = db.Column(db.String(), db.ForeignKey(
-        "users.username"), primary_key=True)
+        "users.username", ondelete="CASCADE"), primary_key=True)
     course_id = db.Column(db.String(), db.ForeignKey(
-        "courses.course_id"), primary_key=True)
+        "courses.course_id", ondelete="CASCADE"), primary_key=True)
 
     def __init__(self, user_id, course_id):
 
@@ -129,8 +129,8 @@ class FavouriteList(db.Model):
 class Rating(db.Model):
     __tablename__ = "ratings"
     rating_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(), db.ForeignKey("users.username"))
-    course_id = db.Column(db.String(), db.ForeignKey("courses.course_id"))
+    user_id = db.Column(db.String(), db.ForeignKey("users.username", ondelete="CASCADE"))
+    course_id = db.Column(db.String(), db.ForeignKey("courses.course_id", ondelete="CASCADE"))
     comment = db.Column(db.String(), nullable=False)
     difficulty_level = db.Column(db.Float(), nullable=False)
     content_density = db.Column(db.Integer, nullable=False)
@@ -187,9 +187,9 @@ class Rating(db.Model):
 class Like(db.Model):
     __tablename__ = "likes"
     raitng_id = db.Column(db.Integer(), db.ForeignKey(
-        "ratings.rating_id"), primary_key=True)
+        "ratings.rating_id", ondelete="CASCADE"), primary_key=True)
     liked_by = db.Column(db.String(), db.ForeignKey(
-        "users.username"), primary_key=True)
+        "users.username", ondelete="CASCADE"), primary_key=True)
 
     def __init__(self, rating_id, liked_by):
 
@@ -217,9 +217,9 @@ class Like(db.Model):
 class DisLike(db.Model):
     __tablename__ = "dislikes"
     raitng_id = db.Column(db.Integer(), db.ForeignKey(
-        "ratings.rating_id"), primary_key=True)
+        "ratings.rating_id", ondelete="CASCADE"), primary_key=True)
     disliked_by = db.Column(db.String(), db.ForeignKey(
-        "users.username"), primary_key=True)
+        "users.username", ondelete="CASCADE"), primary_key=True)
 
     def __init__(self, rating_id, disliked_by):
 
@@ -247,8 +247,8 @@ class DisLike(db.Model):
 class Notification(db.Model):
 
     __tablename__ = 'notifications'
-    user_id = db.Column(db.String(), db.ForeignKey("users.username"), nullable = False)
-    course_id = db.Column(db.String(), db.ForeignKey("courses.course_id"), nullable = False)
+    user_id = db.Column(db.String(), db.ForeignKey("users.username", ondelete="CASCADE"), nullable = False)
+    course_id = db.Column(db.String(), db.ForeignKey("courses.course_id", ondelete="CASCADE"), nullable = False)
     notify_id = db.Column(db.Integer,  primary_key=True)
 
     def __init__(self, user_id, course_id):
