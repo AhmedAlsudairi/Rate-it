@@ -347,6 +347,43 @@ def update_ratings():
 
     })
 
+@app.route('/likes', methods=['DELETE'])
+def delete_like():
+    rating_id = request.args.get('rating_id', None, type=str)
+    username = request.args.get('username', None, type=str)
+    if rating_id is None or username is None:
+        abort(422)
+    
+    like = Like.query.filter(Like.raitng_id==rating_id, Like.liked_by==username).first()
+    if like is None:
+        abort (404)
+    
+    like.delete()
+    rating = Rating.query.get(rating_id)
+    course = Course.query.get(rating.course_id)
+    return jsonify({
+        'ratings': [rating.format() for rating in course.ratings]
+    })
+@app.route('/disLikes', methods=['DELETE'])
+def delete_dislike():
+    rating_id = request.args.get('rating_id', None, type=str)
+    username = request.args.get('username', None, type=str)
+    if rating_id is None or username is None:
+        abort(422)
+    
+    dislike = DisLike.query.filter(DisLike.raitng_id==rating_id, DisLike.disliked_by==username).first()
+    if dislike is None:
+        abort (404)
+    
+    dislike.delete()
+    rating = Rating.query.get(rating_id)
+    course = Course.query.get(rating.course_id)
+    
+    return jsonify({
+        'ratingss': [rating.format() for rating in course.ratings]
+    })
+
+
 
 @app.route('/myRatings', methods=['GET'])
 def get_myRatings():
