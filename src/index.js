@@ -11,13 +11,15 @@ import coursesReducer from './store/reducers/courses';
 import favoriteReducer from './store/reducers/favorite';
 import ratingReducer from './store/reducers/rating';
 import myRatingsReducer from './store/reducers/myRatings';
+import notificationsReducer from './store/reducers/notifications';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   courses: coursesReducer,
   favorite: favoriteReducer,
   rating: ratingReducer,
-  myRatings: myRatingsReducer
+  myRatings: myRatingsReducer,
+  notifications: notificationsReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

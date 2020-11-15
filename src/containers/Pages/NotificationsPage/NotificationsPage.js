@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grid, Box, Paper, Typography } from '@material-ui/core';
+import { Grid, Box, Paper, Typography,  } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import * as authActions from '../../../store/actions/auth';
-import * as myRatings from '../../../store/actions/myRatings';
+import * as notifications from '../../../store/actions/notifications';
 import { connect } from 'react-redux';
 import Copyright from '../../../components/Copyright/Copyright';
-import Rating from '../../../components/Rating/Rating';
+import Notification from '../../../components/Notification/Notification';
 const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
@@ -34,12 +34,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function MyRatings(props) {
+function NotificationsPage(props) {
     const classes = useStyles();
 
     useEffect(() => {
-        props.onFetchMyRatings(props.username)
-    }, [props.onFetchMyRatings, props.username])
+        props.onFetchNotifications(props.username)
+    }, [props.onFetchNotifications, props.username])
 
     return (
         <Grid container spacing={1}>
@@ -54,11 +54,11 @@ function MyRatings(props) {
                             <Grid item lg={8}>
                                 <Paper className={classes.paper} elevation={10}>
                                     <Typography align="center" variant="h4" className={classes.title} >
-                                        My Ratings
+                                        My Notifications
           </Typography>
-                                    {props.ratings.length === 0 ? <Typography variant='h5' className={classes.empty} align='center'>You didn't post any rating!</Typography> : null}
-                                    {props.ratings.map((item) => {
-                                        return <Rating key={item.course_id} rating={item} isMyRating={true} />;
+                                    {props.num_of_notifications === 0 ? <Typography variant='h5' className={classes.empty} align='center'>You didn't receive any notification!</Typography> : null}
+                                    {props.notifications.map((item) => {
+                                        return <Notification notification={item} />;
                                     })}
                                 </Paper>
                             </Grid>
@@ -80,8 +80,8 @@ const mapStateToProps = state => {
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
         username: state.auth.username,
-        ratings: state.myRatings.rating,
-        loading: state.myRatings.loading
+        notifications: state.notifications.notifications,
+        num_of_notifications: state.notifications.num_of_notifications
     };
 };
 
@@ -91,12 +91,12 @@ const mapDispatchToProps = dispatch => {
             dispatch(authActions.authSignIn(username, password)),
         onInit: () =>
             dispatch(authActions.authInitite()),
-        onFetchMyRatings: (username) =>
-            dispatch(myRatings.fetchMyRatings(username))
+        onFetchNotifications: (username) =>
+            dispatch(notifications.fetchNotifications(username))
     };
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MyRatings);
+)(NotificationsPage);

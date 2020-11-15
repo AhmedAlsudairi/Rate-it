@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ProgressBar from '..//ProgressBar/ProgressBar'
 import { Grid } from '@material-ui/core';
-import { propTypes } from 'react-bootstrap/esm/Image';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',

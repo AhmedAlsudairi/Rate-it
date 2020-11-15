@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/rating';
 import { Paper } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
@@ -81,12 +80,12 @@ function DiscreteSlider(props) {
         }
 
         props.onRatePost(rate)
-        props.history.goBack();
+        props.history.push('/coursepage');
     };
 
     const cancelHandler = event => {
         event.preventDefault();
-        props.history.goBack();
+        props.history.push('/coursepage');
     };
 
     return (

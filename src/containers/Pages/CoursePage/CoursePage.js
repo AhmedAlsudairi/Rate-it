@@ -14,8 +14,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Copyright from '../../../components/Copyright/Copyright';
 import * as favoriteActions from '../../../store/actions/favorite';
 import * as ratingActions from '../../../store/actions/rating';
-import { Link } from 'react-router-dom';
-import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -46,17 +44,25 @@ const useStyles = makeStyles((theme) => ({
 function CoursePage(props) {
   const classes = useStyles();
   const [isFavorite, setIsFavorite] = useState(false)
-
+  const [isRated, setIsRated] = useState(false)
   let course = props.selectedCourse;
   if (course === null) {
     course = JSON.parse(localStorage.getItem('course'));
   }
 
   let {favoriteIDs}= props
+  let {ratings}= props
   useEffect(()=>{
     setIsFavorite(favoriteIDs.includes(course.course_id))
+    
+    
+    for(const rating of ratings){
+      if(rating.user_id===props.username&&rating.course_id===course.course_id){
+        setIsRated(true);
+      }
+    }
     props.onFetchRatings(course.course_id)
-  },[favoriteIDs,course.course_id,props.onFetchRatings])
+  },[favoriteIDs,course.course_id,props.onFetchRatings,ratings,course,props.username,props])
 
   return (
 
@@ -81,16 +87,18 @@ function CoursePage(props) {
 
         </Grid>
         <Grid item lg={2}>
-          <Link to='/rate_form' style={{ textDecoration: 'none', color: 'white' }}>
+          
           <Button
             variant="contained"
             color="primary"
             className={classes.button}
             fullWidth
             startIcon={<RateReviewIcon />}
+            disabled={isRated}
+            onClick={()=>props.history.push('/rate_form')}
           >Rate It!
           </Button>
-          </Link>
+          
           {isFavorite ?
             <Button
             onClick={()=>{props.onRemoveFavorite(props.selectedCourse,props.token)}}
@@ -136,7 +144,7 @@ function CoursePage(props) {
           </Typography>
           {props.ratings.length=== 0? <Typography variant='h5' className={classes.empty} align='center'>{course.course_id} didn't have any rating!</Typography>:null}
             {props.ratings!==null? props.ratings.map((item)=>{
-             return <Rating rating={item}/>;
+             return <Rating key={item.user_id} rating={item}/>;
             }) : null}
           </Paper>
 

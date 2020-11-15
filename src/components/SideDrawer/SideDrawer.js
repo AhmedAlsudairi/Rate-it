@@ -17,6 +17,7 @@ import Filter5Icon from '@material-ui/icons/Filter5';
 import Filter6Icon from '@material-ui/icons/Filter6';
 import Filter7Icon from '@material-ui/icons/Filter7';
 import Filter8Icon from '@material-ui/icons/Filter8';
+import InfoIcon from '@material-ui/icons/Info';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-router-dom';
 import { Hidden } from '@material-ui/core';
@@ -154,7 +155,12 @@ function SideDrawer(props) {
               <ListItemText primary='Favorite' style={favoritSelected? {color: 'blue'}: null}/>
             </ListItem>
         </List>
-
+        <List>
+            <ListItem component={Link} to={'/ksu_info'}  button key='KSUInfo' >
+              <ListItemIcon ><InfoIcon /></ListItemIcon>
+              <ListItemText primary='King Saud University'/>
+            </ListItem>
+        </List>
       </div>
     </Drawer>
     </Hidden>

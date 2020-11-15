@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,7 +9,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Button, Hidden, List } from '@material-ui/core';
+import { Button, Hidden, List,Badge } from '@material-ui/core';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as authActions from '../../store/actions/auth';
 import * as coursesActions from '../../store/actions/courses';
+import * as notificationsActions from '../../store/actions/notifications';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -88,14 +89,27 @@ function NavigationBar(props) {
   const [state, setState] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  useEffect(() => {
+    console.log(props.username);
+    if (props.username) {
+      console.log(props.username);
+      props.onFetchNotifications(props.username);
+    }
+  }, [props.onFetchNotifications,props.username,props])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+
   };
 
+  const handleProfile = () => {
+    setAnchorEl(null);
+    props.history.push('/profile')
+
+  };
   const handleMyRatings = () => {
     setAnchorEl(null);
     props.history.push('/my_ratings')
@@ -161,19 +175,21 @@ function NavigationBar(props) {
           {props.isAuthenticated ?
             <List>
               <Hidden xsDown>
-                <NavLink to='' activeStyle={{ color: 'white' }}>
+                
                   <IconButton
-
+                    onClick={()=>{ props.history.push('/notifications');}}
                     edge="start"
                     className={classes.accountButton}
                     aria-label="open drawer"
                   >
-                    <NotificationsIcon style={{ color: 'white' }} />
+                    <Badge badgeContent={props.numNotifications} color="secondary">
+                      <NotificationsIcon style={{ color: 'white' }} />
+                    </Badge>
+                    
                   </IconButton>
-                </NavLink>
-                <NavLink to='/logout' >
+                
                   <IconButton
-
+                    onClick={()=>{ props.history.push('/logout');}}
                     edge="start"
                     className={classes.accountButton}
                     color="inherit"
@@ -181,7 +197,7 @@ function NavigationBar(props) {
                   >
                     <ExitToAppIcon style={{ color: 'white' }} />
                   </IconButton>
-                </NavLink>
+                
               </Hidden>
 
               <NavLink to={props.isAuthenticated ? props.location.pathname : '/signin'} activeStyle={{ color: 'white' }}>
@@ -206,7 +222,7 @@ function NavigationBar(props) {
                 onClose={handleClose}
               >
                 <MenuItem disabled>{props.username}</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleMyRatings}>My ratings</MenuItem>
                 <Hidden smUp>
                   <MenuItem onClick={handleClose}>Notifications</MenuItem>
@@ -240,7 +256,8 @@ const mapStateToProps = state => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticated: state.auth.token !== null,
-    username: state.auth.username
+    username: state.auth.username,
+    numNotifications: state.notifications.num_of_notifications
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -250,7 +267,9 @@ const mapDispatchToProps = dispatch => {
     onInit: () =>
       dispatch(authActions.authInitite()),
     onSearchHandler: (keyword) =>
-      dispatch(coursesActions.fetchCourses(null, keyword))
+      dispatch(coursesActions.fetchCourses(null, keyword)),
+    onFetchNotifications: (username) =>
+      dispatch(notificationsActions.fetchNotifications(username))
   };
 };
 

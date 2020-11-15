@@ -85,14 +85,21 @@ export const fetchRatings = (course) => {
     }
 }
 
-export const likeOrDislikeRating = (username,course,helpful) => {
+export const likeOrDislikeRating = (username, course, liked_by="", disliked_by="") => {
     
     return dispatch => {
         dispatch(fetchRatingsStart());
-        axios.post('http://127.0.0.1:5000/ratings?course_id='+course,'&username='+username+'&helpful='+helpful)
+        let ratingData = { 
+            username: username,  
+            course_id: course, 
+            liked_by: liked_by, 
+            disliked_by: disliked_by }
+
+        axios.patch('http://127.0.0.1:5000/ratings',ratingData)
         .then(res => {
+            console.log(res.data.ratings);
             let fechedRatings = [];
-            fechedRatings=[...res.data.ratings.ratings];
+            fechedRatings=[...res.data.ratings];
             dispatch(fetchRatingsSuccess(fechedRatings));
             
         })

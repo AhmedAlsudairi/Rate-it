@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Typography, IconButton } from '@material-ui/core';
@@ -41,15 +41,30 @@ const useStyles = makeStyles((theme) => ({
 
 function Rating(props) {
   const classes = useStyles();
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [isSameUser, setIsSameUser] = useState(false)
+
+  useEffect(() => {
+    setIsLiked(props.rating.liked_by.includes(props.username));
+    setIsDisliked(props.rating.disliked_by.includes(props.username));
+
+    
+      if (props.rating.user_id === props.username) {
+        setIsSameUser(true);
+      }
+    
+
+  }, [props.rating.liked_by, props.rating.disliked_by,props.rating.user_id,props.username])
 
   const onRemoveRatingHandler = () => {
     props.onRemoveRating(props.username, props.rating.course_id);
   }
 
-  const onLikeOrDislikeRatingHandler = (helpful) => {
-    props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, helpful);
+  const onLikeOrDislikeRatingHandler = (liked_by, disliked_by) => {
+    props.onLikeOrDislikeRating(props.rating.user_id, props.rating.course_id, liked_by, disliked_by);
   }
-  
+
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square className={classes.paper}>
@@ -78,18 +93,20 @@ function Rating(props) {
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler(1)}
+                onClick={() => onLikeOrDislikeRatingHandler(props.username, "")}
+                disabled={isLiked||isSameUser}
               >
                 <ThumbUpAltIcon />
               </IconButton>
-              <span className={classes.span}>5</span>
+              <span className={classes.span}>{props.rating.num_of_likes}</span>
               <IconButton
 
                 edge="start"
                 className={classes.accountButton}
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>onLikeOrDislikeRatingHandler(-1)}
+                onClick={() => onLikeOrDislikeRatingHandler("", props.username)}
+                disabled={isDisliked||isSameUser}
               >
                 <ThumbDownIcon />
               </IconButton>
@@ -119,7 +136,7 @@ function Rating(props) {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
-    username: state.auth.username
+    username: state.auth.username,
   };
 };
 
@@ -127,8 +144,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onRemoveRating: (username, course) =>
       dispatch(myRatings.removeRating(username, course)),
-    onLikeOrDislikeRating: (username, course, helpful) =>
-      dispatch(rating.likeOrDislikeRating(username, course, helpful)),
+    onLikeOrDislikeRating: (username, course, liked_by, disliked_by) =>
+      dispatch(rating.likeOrDislikeRating(username, course, liked_by, disliked_by)),
   };
 };
 
