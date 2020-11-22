@@ -95,7 +95,7 @@ function NavigationBar(props) {
       console.log(props.username);
       props.onFetchNotifications(props.username);
     }
-  }, [props.onFetchNotifications,props.username,props])
+  }, [props.onFetchNotifications,props.username])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

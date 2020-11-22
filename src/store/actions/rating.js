@@ -75,6 +75,7 @@ export const fetchRatings = (course) => {
         .then(res => {
             let fechedRatings = [];
             fechedRatings=[...res.data.ratings.ratings];
+            console.log(res.data);
             dispatch(fetchRatingsSuccess(fechedRatings));
             
         })

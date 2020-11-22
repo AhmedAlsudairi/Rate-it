@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/rating';
+import * as courseActions from '../../store/actions/courses';
 import { Paper } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,9 +79,11 @@ function DiscreteSlider(props) {
             total_rate: totalRate,
             comment: comment
         }
-
-        props.onRatePost(rate)
+        
+        props.onRatePost(rate);
+        
         props.history.push('/coursepage');
+        
     };
 
     const cancelHandler = event => {
@@ -219,7 +222,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRatePost: (rate) => dispatch(actions.rateProcess(rate))
+        onRatePost: (rate) => dispatch(actions.rateProcess(rate)),
+        onSelectCourse: (course) => {
+            dispatch(courseActions.selectCourse(course))
+          },
     };
 };
 export default withRouter(connect(
