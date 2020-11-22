@@ -62,7 +62,7 @@ function CoursePage(props) {
       }
     }
     props.onFetchRatings(course.course_id)
-  },[course.course_id,props.onFetchRatings,props.username])
+  },[favoriteIDs,ratings,course.course_id,props.onFetchRatings,props.username])
 
   return (
 
