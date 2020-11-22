@@ -67,6 +67,14 @@ export const fetchRatingsFail = (error) => {
     }
 }
 
+export const selectCourse = (course) => {
+    localStorage.setItem('course', JSON.stringify(course));
+    return{
+        type: actionTypes.SELECT_COURSE,
+        course: course
+    }
+}
+
 export const fetchRatings = (course) => {
     
     return dispatch => {
@@ -77,7 +85,7 @@ export const fetchRatings = (course) => {
             fechedRatings=[...res.data.ratings.ratings];
             console.log(res.data);
             dispatch(fetchRatingsSuccess(fechedRatings));
-            
+            dispatch(selectCourse(res.data.ratings))
         })
         .catch(err=>{
             console.log(err);
