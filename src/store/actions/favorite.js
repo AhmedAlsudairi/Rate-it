@@ -28,7 +28,7 @@ export const fetchFavorite = (token) => {
     return dispatch => {
         dispatch(fetchFavoriteStart());
     
-        axios.get('http://127.0.0.1:5000/favourite',{
+        axios.get('https://rateitbackend.herokuapp.com/favourite',{
             headers: {
               authorization: `Bearer ${token}`
             }
@@ -49,7 +49,7 @@ export const fetchFavorite = (token) => {
 export const addFavorite = (course,token) => {
     return dispatch => {
         
-        axios.post('http://127.0.0.1:5000/favourite?course='+course.course_id,null,{
+        axios.post('https://rateitbackend.herokuapp.com/favourite?course='+course.course_id,null,{
             headers: {
               authorization: `Bearer ${token}`
             }
@@ -70,7 +70,7 @@ export const addFavorite = (course,token) => {
 export const removeFavorite = (course,token) => {
     return dispatch => {
 
-        axios.delete('http://127.0.0.1:5000/favourite?course='+course.course_id,{
+        axios.delete('https://rateitbackend.herokuapp.com/favourite?course='+course.course_id,{
             headers: {
               authorization: `Bearer ${token}`
             }

@@ -27,7 +27,7 @@ export const fetchMyRatings = (username) => {
     
     return dispatch => {
         dispatch(fetchMyRatingsStart());
-        axios.get('http://127.0.0.1:5000/myRatings?username='+username)
+        axios.get('https://rateitbackend.herokuapp.com/myRatings?username='+username)
         .then(res => {
             let fechedRatings = [];
             fechedRatings=[...res.data.ratings];
@@ -45,7 +45,7 @@ export const fetchMyRatings = (username) => {
 export const removeRating = (username, course) => {
     return dispatch => {
 
-        axios.delete(`http://127.0.0.1:5000/myRatings?username=${username}&course_id=${course}`)
+        axios.delete(`https://rateitbackend.herokuapp.com/myRatings?username=${username}&course_id=${course}`)
         .then(res => {
             let fechedRatings = [];
             fechedRatings=[...res.data.ratings];

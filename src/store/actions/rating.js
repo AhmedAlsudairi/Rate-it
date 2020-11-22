@@ -25,7 +25,7 @@ export const rateProcess = (rateData) => {
     return dispatch => {
         dispatch(rateStart());
 
-        axios.post('http://127.0.0.1:5000/ratings',rateData)
+        axios.post('https://rateitbackend.herokuapp.com/ratings',rateData)
         .then(resonse=>{
             let ratings = resonse.data.ratings
             console.log(resonse.data.ratings);
@@ -79,7 +79,7 @@ export const fetchRatings = (course) => {
     
     return dispatch => {
         dispatch(fetchRatingsStart());
-        axios.get('http://127.0.0.1:5000/ratings?course_id='+course)
+        axios.get('https://rateitbackend.herokuapp.com/ratings?course_id='+course)
         .then(res => {
             let fechedRatings = [];
             fechedRatings=[...res.data.ratings.ratings];
@@ -104,7 +104,7 @@ export const likeOrDislikeRating = (username, course, liked_by="", disliked_by="
             liked_by: liked_by, 
             disliked_by: disliked_by }
 
-        axios.patch('http://127.0.0.1:5000/ratings',ratingData)
+        axios.patch('https://rateitbackend.herokuapp.com/ratings',ratingData)
         .then(res => {
             console.log(res.data.ratings);
             let fechedRatings = [];

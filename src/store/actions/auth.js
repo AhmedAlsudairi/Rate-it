@@ -51,7 +51,7 @@ export const authSignIn = (username, password) => {
             password: password
         }
 
-        let url = 'http://127.0.0.1:5000/login';
+        let url = 'https://rateitbackend.herokuapp.com/login';
 
         axios.post(url,authData)
         .then(response=>{
@@ -78,7 +78,7 @@ export const authSignUp = (username, password,email) => {
             email: email
         }
 
-        let url = 'http://127.0.0.1:5000/signup';
+        let url = 'https://rateitbackend.herokuapp.com/signup';
 
         axios.post(url,authData)
         .then(response=>{

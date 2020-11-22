@@ -29,7 +29,7 @@ export const fetchNotifications = (username) => {
     return dispatch => {
         dispatch(fetchNotificationsStart());
         
-        axios.get('http://127.0.0.1:5000/notifications?username='+username)
+        axios.get('https://rateitbackend.herokuapp.com/notifications?username='+username)
         .then(res => {
             console.log(res.data);
             let notifications = [];
@@ -49,7 +49,7 @@ export const deleteNotifications = (username,notifyId) => {
     return dispatch => {
         dispatch(fetchNotificationsStart());
         
-        axios.delete(`http://127.0.0.1:5000/notifications?username=${username}&notify_id=${notifyId}`)
+        axios.delete(`https://rateitbackend.herokuapp.com/notifications?username=${username}&notify_id=${notifyId}`)
         .then(res => {
             console.log(res.data);
             let notifications = [];
