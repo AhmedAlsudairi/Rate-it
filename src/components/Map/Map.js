@@ -17,12 +17,12 @@ function MapContainer(props) {
           google={props.google}
           zoom={14}
           style={mapStyles}
-          initialCenter={{ lat: 24.725396524498763, lng: 46.62368517580898}}
+          initialCenter={{ lat: 24.723103299480055, lng: 46.61989630231371}}
 
         >
           <Marker 
-          position={{ lat: 24.725396524498763, lng: 46.62368517580898}}
-          title="king saud university" />
+          position={{ lat: 24.723103299480055, lng: 46.61989630231371}}
+          title="ccis" />
         </Map>
       
   );

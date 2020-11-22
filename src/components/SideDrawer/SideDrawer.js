@@ -158,7 +158,7 @@ function SideDrawer(props) {
         <List>
             <ListItem component={Link} to={'/ksu_info'}  button key='KSUInfo' >
               <ListItemIcon ><InfoIcon /></ListItemIcon>
-              <ListItemText primary='King Saud University'/>
+              <ListItemText primary='Department of Software Engineering'/>
             </ListItem>
         </List>
       </div>
